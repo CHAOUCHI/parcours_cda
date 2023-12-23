@@ -1,0 +1,25 @@
+body{
+    background-color: rgb(247, 93, 93);
+}
+.container{
+    display:grid;
+    grid-template-columns: repeat(4,1fr);
+    gap:50px;
+}
+
+.pokemon{
+    padding : 20px;
+    font-family: Arial;
+    display: flex;
+    gap : 50px;
+    background-color: rgb(233, 77, 77);
+    color :white;
+    font-weight: bold;
+    box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.24);
+}
+.pokemon:hover{
+    scale:1.05;
+}
+img{
+    width : 100px;
+}

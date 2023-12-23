@@ -1,0 +1,38 @@
+body{
+    color:white;
+    font-family: "Ubuntu";
+    margin : 0px;
+}
+.meteo_widget{
+    background-color: #6DDDEC;
+    display: flex;
+    flex-direction: column;
+    gap : 0px;
+    padding: 30px;
+}
+.meteo_widget>*{
+    margin: 0px;
+}
+.location_name{
+    font-size: 120px;
+    margin : 0px;
+}
+.gps_coord, .gps_coord *{
+    font-size: 20px;
+    letter-spacing: 2px;
+}
+.temp_info{
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    gap : 50px;
+}
+.temperature{
+    font-size: 60px;
+}
+
+input{
+    background-color: transparent;
+    border: none;
+    color: white;
+}
