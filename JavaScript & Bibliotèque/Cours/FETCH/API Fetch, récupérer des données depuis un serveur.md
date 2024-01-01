@@ -195,7 +195,9 @@ console.log("3");
 On recupère le résultat d'une promise en tant que paramètre de la fonction callback présente dans le `then`, ce qui signifie que le résultat est accesible uniquement localement dans cette fonction callback. Cela n'est pas génant et nous permettra tout de même d'effecter des `querySelector`, `createElement`, ou `addEventListener`; il nous faudra cependant les écrires dans la fonction callback du `then`.
 
 ## L'objet Response
-L'objet Response est le resultat d'une promise fabriqué par la méthode `fetch`. C'est la representation objet d'une résponse HTTP.
+L'objet Response est le resultat d'une promise fabriqué par la méthode `fetch`. C'est la representation objet d'une réponse HTTP.
+
+
 TODO screen shoot d'une réposne HTTP de Rest Client
 TODO screen shoot d'une réposne HTTP de fetch
 TODO accéder au elements d'une reponse
