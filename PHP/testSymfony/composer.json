@@ -1,0 +1,6 @@
+{
+    "require": {
+        "symfony/finder": "^6.4",
+        "symfony/http-foundation": "^6.4"
+    }
+}
