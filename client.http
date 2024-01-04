@@ -1,2 +1,1 @@
-GET /v1/forecast?latitude=48.8534&longitude=2.3488 HTTP/2
-Host: api.open-meteo.com
+GET https://localhost:8000 HTTP/2

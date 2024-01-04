@@ -64,7 +64,6 @@ body-->h1
 body-->img
 body-->script
 ```
-
 ## Le Contenu : le texte interne ou une balise fille
 C'est le contenu d'une balise qui peut être soit un texte soit une balise fille.
 
