@@ -25,7 +25,7 @@ docker run -name my-ubuntu ubuntu
 docker exec my-ubuntu ls
 ```
 
-## Accèder un un cli dans un container
+## Accèder à un cli dans un container
 ```linux
 docker exec -it container-name programm
 docker exec -it my-ubuntu bash
