@@ -30,4 +30,4 @@ Cart{
 |Tâches| Description | Contraintes |
 |---|---|---|
 |Intégrer la table `Client`|Intégrer la table `Client` selon le diagramme d'ER||
-|Intégrer la table `Cart`| Intégrer la table `Cart` selon le diagramme d'ER | La liste des produits est un texte contenant les clés primaire des produits séparées par des virgules |
+|Intégrer la table `Cart`| Intégrer la table `Cart` selon le diagramme d'ER | La liste des produits est un texte contenant les clés primaires des produits séparées par des virgules, exemple : "3,6,1,8" |

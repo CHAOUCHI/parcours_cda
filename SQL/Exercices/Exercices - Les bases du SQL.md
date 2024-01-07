@@ -1,6 +1,6 @@
 ### Exercices MySQL les bases
 ## Pré-requis
-- Eventuellemnt la documention W3S : https://www.w3schools.com/sql/default.asp
+- La documention W3S : https://www.w3schools.com/sql/default.asp
 - Type de donnée SQL : https://www.w3schools.com/sql/sql_datatypes.asp
 - `CREATE DATABASE`
 - `USE`

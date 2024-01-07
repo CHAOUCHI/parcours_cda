@@ -32,5 +32,5 @@ Category{
 
 |Tâches| Description | Contraintes |
 |---|---|---|
-|Intégrer la table Category|Intégréer la table catégroie selon le diagramme d'ER||
-|Intégrer la table Product| Intégrer la table Product selon le diagramme d'ER | Chaque produit doit obligatoirement avec un nom, un prix, et une catégorie |
+|Intégrer la table `Category`|Intégrer la table `Category` selon le diagramme d'ER||
+|Intégrer la table `Product`| Intégrer la table `Product` selon le diagramme d'ER | Chaque produit doit obligatoirement avec un nom, un prix, et une catégorie |

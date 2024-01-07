@@ -3,7 +3,7 @@
 Le client veut créer le prochain jeu *Pokemon*, vous êtes chargez de la création de la base de donnée du jeu.
 *Pokemon* est un jeu video où un dresseur capture des pokemons pour les faire apparaitres dans son *Pokedex*.
 
-Concevez les tables de données neccessaire au fonctionnement du jeu en vous basant sur les détails donnée par le client et l'entretien que vous faite avec lui (moi héhé).
+Concevez les tables de données neccessaires au fonctionnement du jeu en vous basant sur les détails fournis par le client et l'entretien que vous faites avec lui (moi héhé).
 
 ## Déroulement du TP
 Formez des groupes de deux, ou de trois si il y a un nombre impaire de personne. Chaque personne devra concevoir sa BDD de son coté mais vous réfléchirez ensemble au projet et passerez les entretiens avec le client ensemble également.
@@ -18,7 +18,7 @@ Formez des groupes de deux, ou de trois si il y a un nombre impaire de personne.
 
 > Le client, bien évidement, c'est moi. Mais vous pouvez tout de même me demandez de l'aide pendant le déroulement du projet.;)
 
-> Ce projet pourra servir de base pour les projets futur, ont peut très bien y rajouter un back-end en PHP ou Java et un front-end avec JavaScript ou AndroidStudio ou faire une application full-stack en PHP.
+> Ce projet pourra servir de base pour les projets futurs, ont peut très bien y rajouter un back-end en PHP ou Java et un front-end avec JavaScript ou AndroidStudio ou faire une application full-stack en PHP.
 
 ## Pré-requis
 - MySQL et SQL

@@ -1,7 +1,7 @@
 # SQL : Théorie et installation de MySQL
 # Qu'est ce qu'une base de donnée ?
 Une base de donnée (BDD) est un ensemble d'informations structurés. Ces informations sont appelées données. En informatiques les BDD sont partout là où les données manipulées dans le logiciel doivent persistées. 
->Si vous avez déjà été dans le cas ou vous voulez concervez les valeurs de vos variables après la fin de votre programme vous aviez besoin d'une base de données.
+>Si vous avez déjà été dans le cas où vous voulez concervez les valeurs de vos variables après la fin de votre programme vous aviez besoin d'une base de données.
 
 ## Les BDD au quotidien
 Vous etes quotidiennement confrontés à des base de données :
@@ -42,14 +42,14 @@ Vous commencez à comprendre qu'une structure de donnée, y compris dans les bas
 
 
 ## Les bases de données en informatique
-En informatique une base de donnée est également un ensemble de données structuré.
-> Par donnée structuré on entend : donnée qui respecte une structure de données où chaque membre possède un type.
+En informatique une base de donnée est également un ensemble de données structurées.
+> Par donnée structurées ont entend : donnée qui respecte une structure de données où chaque membre possède un type.
 
 Quelques exemple de base de données en informatique :
 - **Tableau CSV**, format textuel qui sépare chaque colonne par une virgule et chaque ligne par un passage à la ligne résultant en une base donnée dont la structure de chaque ligne est défini par le nom des colonnes. Le format CSV est utilisé par exemple par Excel et LibreOffice pour formater des tableurs et par WordPress pour exporter ou importer des produits d'une boutique e-commerce.
 - **Tableau JSON**, format textuel qui sépare des objets par une virgule dans une syntaxe proche du JavaScript. Il est très utilisé par les serveur web pour envoyer des données ou pour paramètrer facilement un logiciel : les raccourcis de VSCode et les dépendances d'un projet NodeJS sont défini dans un fichier JSON.
 - **Le localStorage d'un navigateur**, une base de donnée qui formate ses données via une pair de clé valeur qui sont toutes les deux des string.
-- **IndexedDB**, une base de donnée qui formate ses données sous la forme de table d'objets JavaScript. A la différence du JSON IndexedDB n'est pas juste un fichier texte à modifier mais une programme complet avec ses fonctions et variables permettent de maniupler la BDD.
+- **IndexedDB**, une base de donnée qui formate ses données sous la forme de table d'objets JavaScript. A la différence du JSON IndexedDB n'est pas juste un fichier texte à modifier mais une programme complet avec ses fonctions et variables permettent de manipuler la BDD.
 - **Les base de données SQL** formatent leurs données dans des tables composées de colonnes et de lignes. Chaque colonne possède un nom et un type données. Les tables de données SQL ne sont pas isolées les unes des autres et peuvent est mises en relation. On mettre dans une base de donnée SQL plusieurs tables d'un même thême : Produits, Categories, Reductions, TarifLivraisons, etc.
 
 >Vous remarquerez qu'une bonne parties des bases de données en informatique sont representées sous la forme de tableau où chaque lignes represente une donnée et chaque données est défini par des colonnes.
@@ -149,13 +149,8 @@ docker run --name cda-mysql -e MYSQL_ROOT_PASSWORD=root -d -p 3306:3306 mysql
 - **mysql** défini le nom de l'image docker que l'on souaite utiliser.`mysql` est une image diponible en ligne, docker va donc la télécharger. Imaginez les image comme une photo instantané d'un programme que l'on peut utilisé pour refabriqué le programme à volonté.
 - **-p 3306:3306** Permet de connecter le port 3306 de votre machine avec le port 3306 du container docker. Le port 3306 est celui utilisé par le service mysql.
 > Sous linux il vous faudra peut être préciser `sudo` avant la commande pour avoir les droits administrateur.
-#### Se connecter à MySQL
-1. Installer un client mysql
-2. Tapez la commande suivante
-```linux
-> mysql -uroot -proot -h0.0.0.0
-```
-#### Se connecter à MySQL sans client MySQL
+
+#### Se connecter à MySQL via docker
 Pour se connecter à mysql sans installer un client mysql sur le pc hote il faut executer la commande linux de connection à mysql avec la commande `docker exec`.
 ```
 docker exec -it cda-mysql mysql -uroot -proot
@@ -163,6 +158,14 @@ docker exec -it cda-mysql mysql -uroot -proot
 - **-it** relie notre terminal de commande avec celui du container mysql.
 
 - **mysql -uroot -proot** : la commande linux à executer dans le container docker pour se connecter à mysql.
+
+#### Se connecter à MySQL
+Si vous souhaitez vous connecter avec un client mysql il faut : 
+1. Installer un client mysql(se réferer aux section plus bas)
+2. Tapez la commande suivante dans une console
+```linux
+> mysql -uroot -proot -h0.0.0.0
+```
 
 ### Windows
 Télécharger MySQL depuis le site officel de MySQL : 
@@ -176,6 +179,10 @@ mysql  Ver 15.1 Distrib 10.6.12-MariaDB, for debian-linux-gnu (x86_64) using  Ed
 Si la version s'affiche vous avez déjà mysql sinon installez le avec apt :
 ```linux
 sudo apt install mysql-server
+```
+ou pour installer juste le client 
+```linux
+sudo apt install mysql-client
 ```
 ### Mac
 La démarche sur Mac est similaire à la différence que le gestionnaire de paquet n'est pas `apt` mais `brew`.
@@ -221,4 +228,4 @@ SELECT user,host FROM mysql.user;
 - **La solution de préference pour un serveur mysql est Docker**, il permet une installation simple et indépendante de votre OS, pour se faire il faut d'abord installer docker desktop puis lancer une image Docker.
 - **Un serveur MySQL est accessible grâce à des identifiants de connexion**, une fois la connexion établie on peut envoyer des requêtes SQL pour accéder au données.
 - Un serveur **MySQL contient plusieurs bases de données** SQL.
-- **Une base de données SQL contient plusieurs tables SQL**, par exemple la table user contenu dans la BDD mysql contient les utilisateurs du serveur SQL.
+- **Une base de données SQL contient plusieurs tables SQL**, par exemple la table user contenu dans la BDD `mysql` contient les utilisateurs du serveur SQL.
