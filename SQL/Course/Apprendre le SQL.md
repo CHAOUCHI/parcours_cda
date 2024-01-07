@@ -1,11 +1,17 @@
 # SQL - Le Langage SQL
-Lorsque que vous accédé à un serveur MySQL vous avez un invité de commande similaire à celui ci,
+Lorsque que vous accédez à un serveur MySQL vous avez un invité de commande similaire à celui ci,
 ```sql
 mysql>
 ```
-Pour la suite du cours j'ometterai l'écriture du prompt `mysql>`.
+Pour la suite du cours j'ometterai l'écriture du prompt `mysql>` lors de la rédaction de requête.
+
+# Documentions
+-TODO
+-TODO
+-TODO
+
 # Un tour du SQL
-Ici vous retrouverez un inventaire rapide des requêtes les plus importantes du langage SQL. Il en existe bien d'autres très importantes mais celle-ci représente les bases du SQL.
+Ici vous retrouverez un inventaire rapide des requêtes les plus importantes du langage SQL. Il en existe bien d'autres très importantes mais celle-ci représentes les bases du SQL.
 
 > Par convention en SQL les mots en MAJUSCULE sont les mots réservés du langage.
 
@@ -21,23 +27,32 @@ CREATE DATABASE shoe_shop;
 ```
 Cette base de donnée contiendra les tables de l'entiéreté de la boutique en ligne.
 
-### Lister les databases;
+> Une requête SQL fini par un point-virgule : **;**
+
+### Lister les databases existantes.
 **Syntaxe:**
 ```sql
 SHOW DATABASES;
 ```
 
-## USE Accèder à la base de donnée
+## USE - Accèder à la base de donnée
 `USE` permet d'accéder à une base de donnée pour ensuite y créer,modifier ou supprimer des tables.
 #### **Cette requête est obligatoire pour le fonctionnement des requêtes suivantes !**
+**Syntaxe :**
+
+```sql
+USE database_name;
+```
+**Exemple :**
 ```sql
 USE shoe_shop;
 ```
 ## CREATE TABLE - Créer une table de donnée
 Une table de donnée est défini par des colonnes et chaque colonne est défini par un nom et un type de donnée SQL.
-Plus d'infos sur les types de données SQL ici : https://dev.mysql.com/doc/refman/8.0/en/data-types.html.
 
-Egalement **un résumé des types de données les plus commun** ici : https://www.w3schools.com/sql/sql_datatypes.asp
+**Un résumé des types de données les plus commun** ici : https://www.w3schools.com/sql/sql_datatypes.asp
+Pour des infos exhaustives sur les types de données SQL : https://dev.mysql.com/doc/refman/8.0/en/data-types.html.
+
 
 **Syntaxe :**
 ```sql
@@ -56,10 +71,6 @@ CREATE TABLE category(
     description TEXT,
 );
 ```
-> `INT` signifi integer soit un nombre entier, c'est le type de la colonne `id`.
-
-`PRIMARY KEY AUTO_INCREMENT` défini la colonne id comme etant l'identifiant unique des catégories. La majorité des tables SQL force leurs élements à avoir un identifiant unique. Celà simplifie l'accès au élement et permet la mise en relation de table. 
-
 **Résultat :**
 ```mermaid
 erDiagram
@@ -69,13 +80,23 @@ category{
     description TEXT
 }
 ```
+- `INT` signifie integer soit **un nombre entier**, c'est le type de la colonne `id`.
+- `TINYTEXT` **est un texte de 255 caractères maximum**, c'est le type de la colonne `name`.
+- `TEXT` **est un texte de 65 535 caractères maximum**, c'est le type de la colonne `description`.
+- `PRIMARY KEY` **défini la colonne id comme etant l'identifiant unique des catégories ou *clé primaire*.** La majorité des tables SQL possèdes une colonne `id` en tant que clé primaire, cela simplifie l'accès au élements et permet la mise en relation de table.
+- `AUTO_INCREMENT` **défini automatiquement l'id d'un nouvelle élement** en incrementant de +1 par rapport à l'id du dernière élement crée.
+
+> Un caratère est habituellement stocké dans 1 octet et `TEXT` peut contenir 65 535 octets, il est bon à savoir qu'un emoji peut parfois prendre 3 ou 4 octets en mémoire.
+
+
 
 ### Clé primaire et clé étrangère
-Les élement d'une table SQL sont identifiés par leurs clé primaire cette clé est un `INT` défini grâce à la commande `PRIMARY KEY`.
-Une clé primaire peut être réferencé dans la colonnes d'une autre table si les deux tables sont liés, on appel celà une clé étrangère.
+Les élements d'une table SQL sont identifiés par leurs clé primaire, cette clé est un `INT` défini grâce à la commande `PRIMARY KEY`. Une clé primaire peut être réferencé dans la colonne d'une autre table si les deux tables sont liés, on appelle cela une clé étrangère.
 
-**Création de la table produits :**
-Les produit référence la catégorie auquel il appartiennent grâce à une clé étrangère.
+Par exemple un produit contiendra l'id de sa catégorie.
+
+#### **Création de la table produits :**
+Un produit référence la catégorie auquel il appartient grâce à une clé étrangère et la commande `FOREIGN KEY`
 
 ```sql
 CREATE TABLE product(
@@ -87,9 +108,9 @@ CREATE TABLE product(
     FOREIGN KEY (categoryId) REFERENCES category(id)
     );
 ```
+> Notez que la syntaxe est différente de `PRIMARY KEY`, il faut d'abord définir la colonne puis la définir en tant que clé étrangère.
 
-
-**Ajout d'un élement:**
+#### **Ajout d'un élement:**
 ```sql
 mysql> SELECT id,name from category;
 +----+----------+
@@ -110,7 +131,7 @@ Query OK, 1 row affected (0,02 sec)
 > Si j'avais écrit 5 en tant que clé étrangère alors qu'aucune categorie n'a 5 comme id, SQL m'aurait renvoyé une erreur.
 
 ## DESCRIBE, connaitre la structure d'une table
-Pour savoir de quelles colonnes une table est faite utilisez la commande `DESCRIBE TABLE ...`
+Pour connaitre les colonnes d'une table, utilisez la commande `DESCRIBE`
 **Syntaxe :**
 ```sql
 DESCRIBE table_name;
@@ -121,19 +142,19 @@ DESCRIBE category;
 ```
 
 ## INSERT INTO
-Pour rajouter une ligne à ue table utilisez la commande `INSERT INTO ...`
+Pour rajouter une nouvelle ligne à une table utilisez la commande `INSERT INTO`
 **Syntaxe :**
 ```sql
 INSERT INTO table_name (column_name1,column_name2) VALUES (
     column_value1,
-    column_value2,
+    column_value2
     );
 ```
 **Exemple :**
 ```sql
 INSERT INTO category (name,description) VALUES (
     "sneakers",
-    "Chaussures unisexe pour la vie quotidien."
+    "Chaussures unisexe pour la vie quotidienne."
     );
 ```
 > La colonne `id` est `AUTO_INCREMENT`, c'est MySQL qui défini sa valeur il ne faut donc pas la fournir à la création.
@@ -148,9 +169,54 @@ Selectionner toutes les colonnes.
 SELECT * FROM category;
 ```
 > Notez bien que l'on parle de *selection* et pas d'*affichage*, SQL n'à pas vocation à afficher quoi que soit. Au final les données seront envoyées dans un `Array` PHP, JavaScript ou autre puis éventuellement affichées dans le front-end.
+### AS - Alias, selectionner plus qu'une simple colonne
+Il est possible de construire des resultats plus fin grace au alias.
+```sql
+SELECT CONCAT(name,",",description) AS complete_text FROM category;
++------------------------------------------------------+
+|                   complete_text                      |
++------------------------------------------------------+
+| sneakers,Chaussures unisexe pour la vie quotidienne. |
++------------------------------------------------------+
+1 row in set (0,00 sec)
+```
+> `CONCAT()` est une fonction SQL qui concatène les chaines de caractère entre elle, à la différence de JavaScript on ne peut pas juste utiliser un **+**, le **+** etant réservé à l'addition.
+
+### Jointure - JOIN
+La docuementation de W3Schools pour toutes les infos sur `JOIN` : https://www.w3schools.com/sql/sql_join.asp
+
+Vous pouvez utiliser `JOIN` pour effectuer une jointure entre deux tables et sortir un résultat qui dépend des données des deux tables.
+![Alt text](image-10.png)
+*Image provenant du site w3schools*
+**Syntaxe**
+```sql
+SELECT ... FROM table1 INNER JOIN table2 ON table1.column = table2.column;
+```
+
+**Exemple**
+Soit une table d'utilisateurs `client` et une table de commandes `order`.
+```mermaid
+erDiagram
+client ||--o{ order : has
+client{
+    id INT
+}
+order{
+    id INT
+    clientId INT
+    products JSON
+}
+
+```
+**Je selectionne tout les clients qui on une commande.**
+```sql
+SELECT * FROM client INNER JOIN commande ON client.id = commande.clientId;
+```
+
 
 ## Filtrer la sélection avec les conditions
 ### WHERE
+`WHERE` est en quelque sorte le `if` du SQL.
 ```sql
 # Test egalité
 SELECT * FROM category WHERE name = "sneakers"; 
@@ -179,27 +245,59 @@ Toutes les catégories dans l'ordre anti-alphabétique
 SELECT * FROM category ORDER BY name DESC; 
 ```
 
-### LIMIT
-Selectionne les 10 premières lignes.
+Tout les produits du moins chère au plus chère.
 ```sql
-SELECT * FROM category LIMIT 10;
+SELECT * FROM product ORDER BY price;
+```
+
+### LIMIT
+Selectionne les 50 premières lignes de la table `product`.
+```sql
+SELECT * FROM product LIMIT 50;
 ```
 
 ## DELETE - Supprimer une ligne
 ```sql
 DELETE FROM category WHERE id = 2;
 ```
+> Rechercher un élément via son `id` permettra d'ecrire des requêtes HTTP comme celle ci :
+>**Récuperer le produit qui a pour id 2.**
+>```http
+>GET https://shoe-shoes.com/product/2 HTTP/1.1
+>```
+>**Supprimer le produit qui a pour id 4.**
+>```http
+>DELETE https://shoe-shoes.com/product/4 HTTP/1.1
+>```
+> 
 
 ## UPDATE - modifier une ligne
+**Syntaxe :**
 ```sql
-UPDATE category SET name="Chaussure sneakers" WHERE name="sneakers";
+UPDATE table_name SET column_name = new_value WHERE some_column = some_value;
 ```
+**Exemple :**
+```sql
+UPDATE category SET description = "Sneakers faites à Limoges !" WHERE name = "sneakers";
+```
+### Incrémentation d'une colonne
+Comme dans les langages de programmation le SQL me permet d'effecter des incrementations ou 
 ## TRUNCATE TABLE, vider une table
-Vide tout le contenu de la table category et conserve la table.
+Vide tout le contenu d'une table sans la supprimer de la base.
+**Exemple :**
+```sql
+TRUNCATE TABLE table_name;
+```
+**Exemple :**
 ```sql
 TRUNCATE TABLE category;
 ```
 ## DROP TABLE, supprimer un table !
+**Syntaxe :**
+```sql
+DROP TABLE table_name;
+```
+**Exemple :**
 ```sql
 DROP TABLE category;
 ```
@@ -213,6 +311,10 @@ Voir la doc W3S : https://www.w3schools.com/mysql/mysql_alter.asp
 ```sql
 ALTER TABLE table_name ALTER_OPTION ...;
 ```
+`ALTER_OPTION` peut être :
+- `ADD`
+- `DROP`
+- `MODIFIY COLUMN`
 ### Ajouter une colonne
 **Syntaxe :**
 ```sql
@@ -241,16 +343,23 @@ ALTER TABLE table_name MODIFY COLUMN column_name datatype;
 ALTER TABLE product MODIFY COLUMN short_description TEXT;
 ```
 
+# Structurer sa BDD SQL
+Structurer sa base de données SQL se fait en plusieurs étapes 
+- Définir les actions CRUD de la base
+- Definir les tables principales de la base
+- Définir les relations entres le table
+- Ecrire les requêtes SQL pour créer les tables.
+
 # Comprendre les BDD grâce au opérations CRUD.
-Le **CRUD** (**C**reate, **R**ead, **U**pdate, **D**elete) désigne les quatre catégories d'opérations élementaire pour la persitance des données.
+Le **CRUD** (**C**reate, **R**ead, **U**pdate, **D**elete) désigne les quatre catégories d'opérations élementaires pour la persitance des données.
 
 Le CRUD c'est :
-- **Create**, *créer* une table, une base, inserer une ligne dans une table sont des actions de création.
-- **Read**, *lire* le contenu d'une table, la structure d'une table, récupérer des données sont des actions de lecture.
-- **Update**, *mettre à jour* le contenu d'une table, changer la structure d'une table, ajouter une nouvelle colonne, change le type de donnée d'une colonne, modifier une ligne de la table. Ce sont des actions de modifications.
-- **Delete**, *supprimer* une table, une base, une ligne, une colonne. Ce sont des actions de suppression.
+- **Create**, *créer* une table, une base ou inserer une ligne dans une table sont des actions de **création**.
+- **Read**, *lire* le contenu d'une table, la structure d'une table ou récupérer des données sont des actions de **lecture**.
+- **Update**, *mettre à jour* le contenu d'une table, changer la structure d'une table, ajouter une nouvelle colonne, change le type de donnée d'une colonne, modifier une ligne de la table. Ce sont des actions de **modifications**.
+- **Delete**, *supprimer* une table, une base, une ligne, une colonne. Ce sont des actions de **suppression**.
 
-Lorsque vous convenez la patie persitance des données d'une logiciel vous devez identifier les différentes actions neccessaire sur votre base et dans quelle catégorie CRUD elle se situe pour en déduire votre BDD.
+Lorsque vous concevez la partie persitance des données d'une logiciel vous devez identifier les différentes actions neccessaires sur votre base et dans quelle catégorie CRUD elles se situes pour en déduire votre BDD.
 
 Pour une boutique en ligne on aurait par exemple : 
 |Action|Type d'action(CRUD)|Requête SQL|
@@ -291,20 +400,20 @@ Une fois la structure élementaires des tables défini il faut réflechir au rel
 Les relations entre les tables SQL sont défini par les liaisons entre les clés primaires et clés étrangères, il existe 3 types de liaisons :
 - **One to Many**, Un élement est référencé dans plusieurs élements d'une autre table. Un categorie est referencé dans plusieurs produits de la table product.
 - **One to One**, un élement est référencé dans un seul et unique element d'une autre table. Un utilisateur est référencé dans un seul et unique element de la table panier ou encore un citoyen n'est referencé dans un seul et unique element de la table carte_vitale.
-- **Many to Many**, ce n'est pas une liaison mais un ensemble de deux liaisons. Quand deux table sont lié via une liaison one to many dans les deux sens alors on à une liaison Many to Many.
+- **Many to Many**, ce n'est pas une liaison mais un ensemble de deux liaisons. Quand deux table sont lié via une liaison one to many dans les deux sens alors on à une liaison Many to Many. Une catégorie peut évidement avoir plusieurs produit mais mon produit peut avoir plusieurs catégorie.
 
 > Dans les cas des liaisons One to Many et One to One les tables sont connectés dans l'autre sens par une liaisons One to One.
 
 Les relations entre les tables sont théoriques et leurs applications en langage SQL permet de les créer, nous verrons la manière de mettre en place ces liaisons en SQL plus tard.
 
 ## Diagrame d'entitié relations des relations
-Pour representé les relations entre les tables on utilise un diagramme UML dit d'entité relation (ER).
-> Une entité c'est simplement un element de la table.
+Pour representer les relations entre les tables on utilise un diagramme UML dit d'entité relation (ER).
+> Une entité c'est simplement un élément de la table.
 
 Voici à quoi ressemble un diagramme ER.
 ```mermaid
 erDiagram
-    category ||--o{ product : contient
+    category ||--o{ product : has
     category {
         column TYPE
     }
@@ -312,11 +421,11 @@ erDiagram
         column TYPE
     }
 ```
-Les deux table sont relié par une ligne qui défini la relation de la table category envers la table product et de la table product envers la table category.
-Le mot du centre est un verbe que l'on place pour préseide le lien qui est fait entre ces deux tables.
+Les deux table sont relié par une ligne qui défini la relation de la table `category` envers la table `product` et de la table `product` envers la table `category`.
+Le mot du centre est un verbe que l'on place pour donner un "sens humain" au lien qui est fait entre ces deux tables.
 
-On lit  : **" One category contient `Zero` or `Many` product"**.
-On lit aussi : **"One product contient `One` category"**.
+On lit  : **" One category has `Zero` or `Many` products"**.
+On lit aussi : **"One product has `One` category"**.
 
 >La lecture commence toujours par "One ..."
 ### Les symboles
@@ -330,7 +439,9 @@ On lit aussi : **"One product contient `One` category"**.
 |`One ou Many`|![Alt text](image-9.png)|
 
 > #### **Attention !**
-> Ne confondez pas le symbole `One` avec le début de phrase One. Le premier One est toujours là et ne viens pas d'un symbole.
+> Ne confondez pas le symbole `One`(double barre) avec le mot One de la phrase : "**One** to Many" ou "**One** to One". Le mot **One** est toujours présent dans la description d'une liaison.
+Le schéma represente une liaison `One to Many` de `category` vers `product`. Mais le symbole `One` (double barre) ne change rien à la phrase **One to Many**.
+> **Imaginez les liaisons comme des harpons le symbole qui compte est au bout du harpon pas au début !**
 >```mermaid
 >erDiagram
 >    category ||--o{ product : contient
@@ -341,14 +452,25 @@ On lit aussi : **"One product contient `One` category"**.
 >        column TYPE
 >    }
 >```
->Dans ce schéma je dis : One product contient One category même si le symbole collé à la table product est `Zero ou Many`, c'est une erreur courante dans la lecture de diagramme mais la phrase commence toujours par One ... peut importe le symbole après la table.
-> **Imaginez les liaisons comme des harpons le symbole qui compte est au bout du harpon pas au début !**
+> Dans le schéma suivant j'ai toujours une liaison One category to `Many` product alors que le symbole `One` été remplacé par le symbole `Many`.
+>```mermaid
+>erDiagram
+>    category }|--o{ product : contient
+>    category {
+>        column TYPE
+>    }
+>    product {
+>        column TYPE
+>    }
+>```
 >
 ### One to Many
-La clé étrangère sur la table ciblé par le symbole`Many`, ici la table product.
+La clé étrangère est sur la table ciblé par le symbole`Many`, ici la table `product`.
+*One `category` has `Many` `product`.*
+*One `product` has `One` `category`.*
 ```mermaid 
 erDiagram
-    category||--o{product : contient
+    category||--o{product : has
     category{
         pk_id INT
         column type
@@ -361,7 +483,7 @@ erDiagram
 #### Implémentation
 Soit la table category : 
 ```sql
-mysql> describe category;
+mysql> DESCRIBE category;
 +-------------+----------+------+-----+---------+----------------+
 | Field       | Type     | Null | Key | Default | Extra          |
 +-------------+----------+------+-----+---------+----------------+
@@ -371,7 +493,7 @@ mysql> describe category;
 +-------------+----------+------+-----+---------+----------------+
 3 rows in set (0,00 sec)
 ```
-A la création de la table product il vous faut définir un colonne comme étant une clé étrangère de la table categorie.
+A la création de la table `product` il vous faut définir une colonne comme étant une clé étrangère de la table `category`.
 ```sql
 CREATE TABLE product(
     id INT PRIMARY KEY AUTO_INCREMENT,
@@ -383,7 +505,11 @@ CREATE TABLE product(
 ```
 
 ### One to One 
-La clé étrangère soit être sur la table ciblé par `One` et elle doit être `UNIQUE`, la clé primaire est déjà par défaut unique.
+
+La clé étrangère doit être sur la table ciblé par `One` et elle doit être `UNIQUE`, la clé primaire est déjà par défaut unique.
+*One `user` has `One` `cart`.*
+*One `cart` has `One` `user`.*
+
 ```mermaid 
 erDiagram
     user||--||cart : has
@@ -410,12 +536,18 @@ CREATE TABLE cart(
     FOREIGN KEY (fk_user) REFERENCES user(pk_id)
 );
 ```
-Chaque element de la colonne cart.fk_user doit etre `UNIQUE` donc il ne pourra jamais avoir deux paniers qui réferences le même utilisateur. ;)
+Chaque element de la colonne `cart.fk_user` doit etre `UNIQUE` donc il ne pourra jamais avoir deux paniers qui réferences le même utilisateur. ;)
 
 ### Many to Many
-Pour effectuer une relation Many to Many, une troisème table doit être créer elle contient : une primary key, la clé étrangère de la table A et la clé étrangère de la table B.
+Pour effectuer une relation `Many to Many`, une troisème table doit être crée elle contient : 
+- une `primary key`
+- la `clé étrangère` de la table A 
+- la `clé étrangère` de la table B.
 
 Imaginons qu'un produit ai plusieurs categories.
+*One `category` has `Many` `product`.*
+*One `product` has `Many` `category`.*
+
 ```mermaid 
 erDiagram
     category}|--o{product : has
@@ -429,23 +561,48 @@ erDiagram
         column type
     }
 ```
-> Rappel en SQL peut importe que le cardinal soit [0...N] ou [1...N] c'est un liaison `Many`.
+#### Problématique
+Mon produit devrait maintenant avoir plusieurs catégories, donc plusieurs `clés étrangères` ? C'est impossible car on sais qu'une `clé étrangère` ne peut contenir qu'une une `clé primaire` !
 
-Comment faire car un clé étrangère ne peut contenir qu'une seul clé primaire et mon produit doit maintenant en contenir plusieurs.
-Il nous faut une troisème table.
+**Mon produit ne poura donc jamais contenir les clés étrangère de plusieurs catégorie !?**
+
+#### La solution
+ Une troisème table qui encaissera les liaisons `One to Many` des deux tables ou **chaque ligne contient la clé étrangère d'un produit et la clé étrangère d'une catégorie**.
+```mermaid 
+erDiagram
+    product||--o{CategoryProduct : join
+    category||--o{CategoryProduct : join
+    category{
+        pk_id INT
+        column type
+    }
+    product{
+        pk_id INT
+        column type
+    }
+    CategoryProduct{
+        pk_id INT
+        fk_category INT
+        fk_product INT
+    }
+```
+> `fk_` singifie FOREIGN KEY
+> `pk_` singifie PRIMARY KEY
+
 
 #### La table de jointure.
-Une table de jointure est une table qui ne represente pas une entité réel concrete de notre application mais sert simplement à mettre en place la liaison Many to Many, voyez cela comme une table "utilitaire".
+La troisème table est appelé table de jointure.
+Une table de jointure est une table qui ne represente pas une entité réel de notre application mais sert simplement à mettre en place la liaison `Many to Many`, voyez cela comme une "table utilitaire".
 
-Une table de jointure doit contenir le moins de chose possible elle n'a pas vocation à faire plus que joindre deux table.
+Une table de jointure doit contenir le moins de chose possible elle n'a pas vocation à faire plus que joindre deux tables.
 Elle possède comme colonnes minimales :
-- Une clé primaire, comme toute table SQL.
-- Une clé etrangère de la table A
-- une clé étrange de la table B.
+- **Une `clé primaire`**, comme toute table SQL : *pk_id*
+- **Une `clé etrangère`** de la table A : *fk_category*
+- **Une `clé étrangère`** de la table B : *fk_product*
 
->Par convention les tables de jointure on pour nom le nom des deux tables concaténés en CamelCase.
+>Par convention les tables de jointure ont comme nom le nom des deux tables concaténés en CamelCase.
 
-Pour les tables category et product :
+Pour les tables `category` et `product` :
 ```mermaid 
 erDiagram
     product||--o{CategoryProduct : join
@@ -483,8 +640,46 @@ CREATE TABLE CategoryProduct(
     FOREIGN KEY (fk_product) REFERENCES product(pk_id)
 );
 ```
+> Notez la présence de deux `FOREIGN KEY` dans la table de jointure et la disparition de `FOREIGN KEY` dans la table `product`.
 #### Ajouter un produit à une catégorie 
 Pour rajouter un produit à une catégorie il suffit d'inserer une nouvelle entrée dans la table CategoryProduct avec l'id du produit concerné et de la categorie dont il fait maintenant partie avec `INSERT INTO`.
+
+**Exemple**
+```sql
+mysql> SELECT * FROM product;
++-------+------------------------+-------+
+| pk_id | name                   | price |
++-------+------------------------+-------+
+|     1 | Talon Clarks taille 36 |    60 |
++-------+------------------------+-------+
+1 row in set (0,00 sec)
+
+mysql> SELECT * FROM category;
++-------+-------+
+| pk_id | name  |
++-------+-------+
+|     1 | talon |
++-------+-------+
+1 row in set (0,00 sec)
+
+mysql> DESCRIBE CategoryProduct;
++-------------+------+------+-----+---------+----------------+
+| Field       | Type | Null | Key | Default | Extra          |
++-------------+------+------+-----+---------+----------------+
+| pk_id       | int  | NO   | PRI | NULL    | auto_increment |
+| fk_category | int  | YES  | MUL | NULL    |                |
+| fk_product  | int  | YES  | MUL | NULL    |                |
++-------------+------+------+-----+---------+----------------+
+3 rows in set (0,01 sec)
+```
+Je rajoute un produit dans une catégorie.
+```sql
+mysql> INSERT INTO CategoryProduct (fk_category,fk_product) VALUES (
+    -> 1,
+    -> 1
+    -> );
+Query OK, 1 row affected (0,01 sec)
+```
 
 
 ## La cardinalité
@@ -566,14 +761,27 @@ erDiagram
 
 
 # Transcation SQL
-En SQL par défaut toute requête envoyé est irréversible, il est possible de changer sa avec les commande `START TRANSACTION`, `COMMIT`, `ROLLBACK`.
+En SQL par défaut toute requête envoyé est irréversible, il est possible de changer ça avec les commandes `START TRANSACTION`, `COMMIT`, `ROLLBACK`.
+
+Une transaction permet d'envoyer des requêtes puis de les valider avec `COMMIT` ou de les annuler avec `ROLLBACK`.
+
 ```sql
-mysql> START TRANSACTION; # Toutes les requêtes après START sont temporaires.
+mysql> START TRANSACTION;
 
 mysql> ROLLBACK; # Toutes les requêtes faites depuis START sont annulées.
 
 mysql> COMMIT; # Applique définitivement les requêtes faites depuis le START.
 ```
+
+## Fonction SQL
+En SQL il existe des fonctions inclues dans le langage pour effectuer des actions comme : la moyenne, la concaténation, la somme, l'arrondi à l'entité suppérieur etc...
+Vous trouverez une liste des fonctions disponible pour MySQL ici : https://www.w3schools.com/sql/sql_ref_mysql.asp
+
+Voici les plus communes : 
+- `SUM(val1,val2,val3, ...) `: la somme de plusieurs valeurs.
+- `AVG(val1,val2,val3, ...)` : La moyenne ou *average* de plusieurs valueurs.
+- `COUNT(column_name)` : dans un SELECT renvoi le nombre d'élément plutot que la colonne.
+- `CONCAT(text1,text2,...)` : Concaténe les textes entre eux.
 
 ## Idée TP
 - Exercices à partir d'une BDD à importer

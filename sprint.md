@@ -1,7 +1,7 @@
 # Sprint
 ~~1. SQL bullet list 1H~~
 ~~2. PHP bullet list final 30min including MVC and REST~~
-3. SQL implemntation 1h30
+~~3. SQL implemntation 1h30~~
 4. PHP implementation 1h30
 5. POO bullet list 30min
 6. POO implementation 2h aim Symfony framework

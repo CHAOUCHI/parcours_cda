@@ -139,46 +139,31 @@ Mac : https://docs.docker.com/desktop/install/mac-install/
 #### Lancer mysql avec docker
 Les commande suivante s'execute dans une console de commande, pour Windows ouvrez PowerShell.
 Pour lancer un container docker il faut utiliser la commande : `docker run`
+
 ```
-docker run --name cda-mysql -e MYSQL_ROOT_PASSWORD=root -d mysql
+docker run --name cda-mysql -e MYSQL_ROOT_PASSWORD=root -d -p 3306:3306 mysql
 ```
 - **--name cda-mysql** défini le nom de notre container docker. Un container docker est un programme que docker fait tourner pour nous. Ici notre serveur mysql est un container docker que nous avons décidé de nommé *cda-mysql*.
 - **-e MYSQL_ROOT_PASSWORD=root** défini les variables d'environnement utilisé par docker pour créer notre container mysql. Ici on dit que le mot de passe administrateur(root) de mysql est "root"
 - **-d** Défini le container comme un deamon, c'est à dire un programme qui tourne en tâche de fond. On ne veut pas que notre container s'arret vue qu'il s'agit d'un serveur de base de donnée auquel on accédera souvent.
 - **mysql** défini le nom de l'image docker que l'on souaite utiliser.`mysql` est une image diponible en ligne, docker va donc la télécharger. Imaginez les image comme une photo instantané d'un programme que l'on peut utilisé pour refabriqué le programme à volonté.
-
+- **-p 3306:3306** Permet de connecter le port 3306 de votre machine avec le port 3306 du container docker. Le port 3306 est celui utilisé par le service mysql.
 > Sous linux il vous faudra peut être préciser `sudo` avant la commande pour avoir les droits administrateur.
-
-#### Se connecter à mysql
-Pour se connecter à mysql il faut executer la commande linux de connection à mysql avec la commande `docker exec`.
+#### Se connecter à MySQL
+1. Installer un client mysql
+2. Tapez la commande suivante
+```linux
+> mysql -uroot -proot -h0.0.0.0
+```
+#### Se connecter à MySQL sans client MySQL
+Pour se connecter à mysql sans installer un client mysql sur le pc hote il faut executer la commande linux de connection à mysql avec la commande `docker exec`.
 ```
 docker exec -it cda-mysql mysql -uroot -proot
 ```
 - **-it** relie notre terminal de commande avec celui du container mysql.
 
 - **mysql -uroot -proot** : la commande linux à executer dans le container docker pour se connecter à mysql.
-#### Connexion au server mysql depuis la machine hôte
-```
-docker inspect cda-mysql | grep "IPAddress"
-```
-*Résultat*
-```
-"SecondaryIPAddresses": null,
-"IPAddress": "172.17.0.2",
-    "IPAddress": "172.17.0.2",
-```
-Cette commande affiche l'adresse ip du container docker, la mienne est : 172.17.0.2.
-```
-mysql -uroot -proot -h172.17.0.2
-```
-> **-h** suivi d'une adresse ip défini l'adresse ip du server mysql, par défaut localhost.
 
-En résumé les identifiants de connexion de votre server sont
-- root : nom d'utilisateur
-- root : mot de passe
-- 172.17.0.2 : adresse ip hote
-
-Se sont de ses identifiants dont vous aurez besoin pour vous connecter à vos BDD depuis un langage de programmation comme le PHP par exemple.
 ### Windows
 Télécharger MySQL depuis le site officel de MySQL : 
 https://dev.mysql.com/downloads/installer/.
