@@ -67,7 +67,7 @@ CREATE TABLE table_name (
 CREATE TABLE category(
     id INT PRIMARY KEY AUTO_INCREMENT,
     name TINYTEXT,
-    description TEXT,
+    description TEXT
 );
 ```
 **Résultat :**
@@ -109,7 +109,30 @@ CREATE TABLE product(
 ```
 > Notez que la syntaxe est différente de `PRIMARY KEY`, il faut d'abord définir la colonne puis la définir en tant que clé étrangère.
 
-#### **Ajout d'un élement:**
+## **Ajout d'un élement: INSERT INTO**
+Pour ajouter une ligne dans une table il faut utiliser la commande `INSERT INTO`.
+**Syntaxe :**
+```sql
+INSERT INTO table_name (columnName1,columnName2,...) VALUES(
+    value1,
+    value2,
+    ...
+);
+```
+**Exemple, ajouter une categorie :**
+```sql
+INSERT INTO category (name,description) VALUES(
+    "Sneakers",
+    "Baskets sneakers Femme homme pour toute la famille!",
+);
+```
+Une nouvelle catégorie à été ajoutée à la table de catégorie.
+
+On peut maintenant ajouter un produit :
+
+**Exemple, ajouter un produit :**
+
+Je repère l'id de la catégorie "sneakers" pour y rajouter des Adidias stansmith.
 ```sql
 mysql> SELECT id,name from category;
 +----+----------+
@@ -118,8 +141,11 @@ mysql> SELECT id,name from category;
 |  1 | sneakers | # La catégorie "sneakers" a pour clé primaire 1
 +----+----------+
 1 row in set (0,00 sec)
+```
 
-mysql> INSERT INTO product (name,description,price,categoryId) VALUES(
+**J'ajoute un produit :**
+```sql
+INSERT INTO product (name,description,price,categoryId) VALUES(
     "Adidas stansmith 42",
     "Blabla",
     99.99,
@@ -127,7 +153,8 @@ mysql> INSERT INTO product (name,description,price,categoryId) VALUES(
 );
 Query OK, 1 row affected (0,02 sec)
 ```
-> Si j'avais écrit 5 en tant que clé étrangère alors qu'aucune categorie n'a 5 comme id, SQL m'aurait renvoyé une erreur.
+> **Attention !**  Un produit à besoin d'une catégorie pour être inséré, il faut donc bien créer une catégorie avant de créer un produit !
+>Si j'avais écrit 5 en tant que clé étrangère alors qu'aucune categorie n'a 5 comme id, SQL m'aurait renvoyé une erreur.
 
 ## DESCRIBE, connaitre la structure d'une table
 Pour connaitre les colonnes d'une table, utilisez la commande `DESCRIBE`
@@ -397,7 +424,7 @@ Une fois la structure élementaires des tables défini il faut réflechir au rel
 > La structure élementaire d'une table ce sont la colonne clé primaire et les colonnes inérente à l'entité representé par la table (un produit, une catégorie, une voiture).
 
 Les relations entre les tables SQL sont défini par les liaisons entre les clés primaires et clés étrangères, il existe 3 types de liaisons :
-- **One to Many**, Un élement est référencé dans plusieurs élements d'une autre table. Un categorie est referencé dans plusieurs produits de la table product.
+- **One to Many**, Un élement est référencé dans plusieurs élements d'une autre table. Une categorie est referencé dans plusieurs produits de la table product.
 - **One to One**, un élement est référencé dans un seul et unique element d'une autre table. Un utilisateur est référencé dans un seul et unique element de la table panier ou encore un citoyen n'est referencé dans un seul et unique element de la table carte_vitale.
 - **Many to Many**, ce n'est pas une liaison mais un ensemble de deux liaisons. Quand deux table sont lié via une liaison one to many dans les deux sens alors on à une liaison Many to Many. Une catégorie peut évidement avoir plusieurs produit mais mon produit peut avoir plusieurs catégorie.
 
@@ -689,7 +716,7 @@ Définir la cardinalité de deux tables ce fait en deux étapes :
     - Combien de lien un element de A peut avoir au maximum vers une element de B ?
     - Combien de lien un element de A peut avoir au minimum vers une un element de B ?
     - Quelle liaison cela donne t-il : One to One ou One to Many ?
-2. Dans l'autre sens il faut maintant connaitre la cardinalité de la table B vers la table A :
+2. Dans l'autre sens il faut maintenant connaitre la cardinalité de la table B vers la table A :
     - Combien de lien un element de B peut avoir au maximum vers une element de A ?
     - Combien de lien un element de B peut avoir au minimum vers une un element de A ?
     - Quelle liaison cela donne t-il : One to One ou One to Many ?

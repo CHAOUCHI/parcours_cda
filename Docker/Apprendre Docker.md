@@ -35,6 +35,12 @@ docker exec -it my-ubuntu python3
 ```linux
 docker run --network host image-name
 ```
+
+# Bind port to container
+```
+docker run -p 80:80 image-name
+```
+Binds port 80(host):80(container)
 ## Remove docker image
 ```
 docker image rm image-name

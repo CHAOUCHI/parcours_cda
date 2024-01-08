@@ -54,7 +54,7 @@
     - Sélectionnez le nom du produit et son prix avec un alias "Prix unitaire".
 
 12. **Sous-requête:**
-    - Sélectionnez tous les produits dont le prix est supérieur à la moyenne des prix.
+    - Sélectionnez la moyenne de tous les produits.
 
 13. **Tri des Résultats:**
     - Triez les produits par quantité en stock de manière décroissante.
