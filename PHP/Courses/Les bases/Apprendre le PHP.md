@@ -925,7 +925,7 @@ $name = "Jérome";
 $stmt = $bdd->query("SELECT * FROM Product");
 $products = $stmt->fetchAll();
 ```
-## Envoyer une requête et récupérer un Element
+## Envoyer une requête et récupérer un élement
 La fonction `PDOStatement::fetch()` permet de récpuérer le première element de l'array. A chaque appel de la fonction on récupére l'élement suivant. Très pratique dans une boucle for lorsque l'on ne veux pas lire tout les élements.
 
 ```php
@@ -933,8 +933,8 @@ $name = "Jérome";
 $stmt = $bdd->query("SELECT * FROM Product WHERE name=$name");
 $user = $stmt->fetch();
 ```
-## Les requête préparés - envoyer une requête sécurisée.
 
+<!-- 
 # TODO
 - Cookies ???
 - Se connecter à une BDD SQL
@@ -951,16 +951,9 @@ $user = $stmt->fetch();
         - `<?= ?>`
         - `<?php foreach():?>`
         - `<?php if():?>`
+ -->
 
-# Idées TP
-- TP Hello World
-    - Hello World
-    - echo Hello World
-    - echo $prenom
-    - echo $prenom." a ".$age."ans"
-    - $prenom = $_GET["prenom"]
-    - $age = $_GET["age"]
-    - if echo majeur else echo mineur
+<!-- # Idées TP
 - TP Formulaire
     - Créer une page form.php contenant un Forumulaire HTML
     - Get prenom et age from $_POST et les afficher.
@@ -992,4 +985,4 @@ $user = $stmt->fetch();
 - Blog Article
 - Boutique en ligne
 - User Login Logout
-- API Paiement Stripe
+- API Paiement Stripe -->
