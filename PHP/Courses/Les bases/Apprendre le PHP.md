@@ -39,35 +39,35 @@ L'intérpreteur php est le programme qui va executer nos scripts php.
 - Renommé le fichier php.ini
 - Lancer le serveur web php
 ```powershell
-le/dossier/de/mon/serveur$ php -S localhost:8000
+le/dossier/de/mon/serveur$ php -S localhost:8080
 ```
 ## Linux
 ```linux
 apt install php
-le/dossier/de/mon/serveur$ php -S localhost:8000
+le/dossier/de/mon/serveur$ php -S localhost:8080
 ```
 ## Mac
 ```
 brew install php
-le/dossier/de/mon/serveur$ php -S localhost:8000
+le/dossier/de/mon/serveur$ php -S localhost:8080
 ```
 # Lancez un serveur web compatible avec PHP
-Une fois l'intérpréteur installé il faut lancer un serveur http local grâce à une simple commande disponible avec l'intérpréteur php. A la différence de server http lancer avec python ce va executer les scripts php un client demanande un fichier ".php".
+Une fois l'intérpréteur installé il faut lancer un serveur http local grâce à une simple commande disponible avec l'intérpréteur php. A la différence de serveurs HTTP lancés avec python, ce serveur local va executer les scripts php si un client demande un fichier `".php"`.
 
 **Dans une console :**
-Rendez vous dans le dossier dans lequel vous souhaitez mettre trouve vos futurs sites web PHP et ouvrez une console à cet endroit.
+Rendez vous dans le dossier dans lequel vous souhaitez mettre vos futurs sites web PHP et ouvrez une console à cet endroit.
 
 Puis écrivez ceci pour lancer le serveur en `localhost` sur le port `8080`.
 ```
 php - S localhost:8080
 ```
-> Si vous souhaitez que votre serveur soit accèsible à tout les PC du réseau local de chez vous : remplacez `localhost` par l'adresse ipv4 de votre pc.
+> Si vous souhaitez que votre serveur soit accéssible à tout les PC du réseau local de chez vous : remplacez `localhost` par l'adresse ipv4 de votre pc.
 
 ## Apache2
 Dans l'industrie on ne fournit pas un site PHP grâce à cette commande le plus souvent on utilise un serveur apache.
 
 # Hello World !
-Tout code php doit être contenu dans un fichier .php et entre balises php : `<?php ... ?>`
+Tout code `php` doit être contenu dans un fichier .php et entre les balises php : `<?php ... ?>`
 
 Dans une fichier **index.php**:
 ```php
@@ -84,7 +84,7 @@ echo "Hello World";
     ?>
 </p>
 ```
-Avec la syntaxe alternative `<?= ?>` il est est possible de ne pas écrire le `echo`.
+Avec la syntaxe alternative `<?= ?>` il est possible de ne pas écrire le `echo`.
 
 ```php
 <h1>Le magnifique site de <?= "Jeff" ?> !</h1>
@@ -92,7 +92,7 @@ Avec la syntaxe alternative `<?= ?>` il est est possible de ne pas écrire le `e
     <?= "Bienvenue tout le monde !" ?>
 </p>
 ```
-Les deux codes sont les mêmes.
+Ces deux codes sont les mêmes.
 
 ## Allez plus loin avec une variable
 ```php
@@ -108,7 +108,7 @@ $prenom = "Jeff";
 </p>
 ```
 > **Précision sur `echo`** 
->Pour être plus précis `echo` ecrit enfaite dans le body de la requête HTTP à envoyer au client. Et oui PHP est un langage back-end qui à pour but final d'envoyer une requête HTTP ! Tout texte ecrit en dehors des balises php sera placé dans le body de la réponse HTTP.
+>Pour être plus précis `echo` écrit enfaite dans le body de la réponse HTTP à envoyer au client. Et oui PHP est un langage back-end qui a pour but final d'envoyer une réponse HTTP ! Tout texte écrit en dehors des balises php sera placé dans le body de la réponse HTTP.
 
 # Syntaxe basique du PHP
 En PHP toutes instructions se fini par un point virgule `;`.
@@ -150,7 +150,7 @@ Parmis les opérateurs les plus commun on retrouve :
 |--|Décrémentation|Float ou Integer|
 
 ## Variables
-Une variable est défini par un nom et un type de données parmis les types de données du PHP décri plus haut.
+Une variable est défini par un nom et un type de données parmis les types de données du PHP décrit plus haut.
 Ont utilise le symbole dollar **$** pour déclarer une variable et l'opérateur **=** pour l'affectation.
 
 ```php
@@ -158,7 +158,7 @@ $age = 24;                  // Nombre
 $prenom = "Massinissa";     // String
 $isMajeur = $age >= 18;     // Boolean
 ```
-Pour utiliser une varaible il faut toujours placer le dollar devant son nom.
+Pour utiliser une varible il faut toujours placer le dollar devant son nom.
 
  ```php
  
@@ -168,8 +168,8 @@ Pour utiliser une varaible il faut toujours placer le dollar devant son nom.
 
 
 ## Les Tableaux
-En php l'index d'un tableau s'appele là `key` ou clé en français.
-Il existe deux genres de tableaux : les listes et les `map` ou dictionnaire en français. La `key` d'une liste est un `Integer` alors que la `key` d'un dictonnaire est une `string`.
+En php l'index d'un tableau s'appelle là `key` ou clé en français.
+Il existe deux genres de tableaux : les listes et les `map`(ou dictionnaire) en français. La `key` d'une liste est un `Integer` alors que la `key` d'un dictonnaire est une `string`.
 
 ### Les Array - Liste
 ```php
@@ -201,7 +201,7 @@ array_splice(array $table,int startDeletingAt,int nbElementToDelete);
 ```
 **Paramètres :**
 - `array` le tableau à modifier
-- `int` l'index à partir d'où commence la suppression des élément
+- `int` l'index à partir d'où commence la suppression des éléments
 - `int` le nombre d'élément à supprimer
 
 **Exemple :**
@@ -228,7 +228,7 @@ echo count($fruits);        // 0
 ```
 > Si ont omet le troisième paramètre, ont vide le tableau.
 ### Les Array - Map
-Les Map possède des clé textuel et sont très utilisées pour récupérer les lignes d'une base de donnée SQL par exemple.
+Les Map possède des clés textuelles et sont très utilisées pour récupérer les lignes d'une base de donnée SQL par exemple.
 ```php
 // Array à key numérique
 $eleve = [
@@ -270,7 +270,7 @@ else{
 }
 ```
 ### L'opérateur ternaire ? : 
-L'opéretur ternaire un un raccourcis du if else qui permet de renvoi une valeur si le test est vrai ou bien une autre si le test est fausse.
+L'opéretur ternaire un un raccourcis du if else qui permet de renvoyer une valeur si le test est vrai ou bien une autre si le test est fausse.
 ```php
 echo $age >=18 ? "Majeur" : "Mineur";    // Equivalent au code plus haut.
 ```
@@ -351,7 +351,7 @@ foreach($fruits as $fruit){
 */
 ```
 #### foreach - Utiliser la clé d'un tableau Map
-Dans le cas où mon tableau est un `Map` je veux pouvoir récupérer la clé associée aux valeurs. Pour ceci j'utilise la syntaxe complète du `foreach`.
+Dans le cas où mon tableau est un `Map` je veux pouvoir récupérer la clé associée aux valeurs, j'utilise la syntaxe complète du `foreach`.
 ```php
 $eleve = [
     "name" => "Thomas",
@@ -410,7 +410,7 @@ En PHP si l'ont précise le type d'un paramètre ou d'une valeur de retour et qu
 > Le paramètre d'une fonction peut avoir une valeur par défaut, ce qui rend le paramètre optionnel.
 
 ### Les fonctions lambda
-En PHP il est possible de créer des fonctions sans nom, ces fonctions sont souvent utilisées en tant que fonctions callback. Ont les appeles les fonctions lambda.
+En PHP il est possible de créer des fonctions sans nom, ces fonctions sont souvent utilisées en tant que fonctions callback. Ont les appelles les fonctions lambda.
 
 **Syntaxe :**
 ```php
@@ -477,12 +477,12 @@ $user = new User("Massinissa");
 Il est possible de déclarer des fonctions, des constantes ou des classes dans un ficher php puis d'y accéder dans un autre. Cela permet d'organiser son projet.
 
 Il y a deux moyens d'importer des éléments :
-- **via la fonction `require_once()`** qui copie colle TOUT le contenu d'un fichier php dans le fichier dans lequel il est appelé.
-- **via le gestionnaire de paquet `Composer`**, cette option est l'objet d'un cours à part. Composer est primoridal dans l'utilisation de module tiers à PHP et de framework comme Symfony ou Laravel.
+- **via la fonction `require_once()`** qui copie colle TOUT le contenu d'un fichier php dans le fichier dans lequel il est appellé.
+- **via le gestionnaire de paquet `Composer`**, cette option est l'objet d'un cours à part. `Composer` est primoridal dans l'utilisation de modules tiers et de framework comme `Symfony` ou `Laravel`.
 
 ## Import avec `require_once()`
 J'écris du code dans un fichier php.
-*User.php*
+*other.php*
 ```php
 <?php
 $fruit = "pomme";
@@ -501,7 +501,7 @@ function hello(){
 Je l'importe dans un autre.
 ```php
 <?php
-require_once("User.php");
+require_once("other.php");
 
 $user = new User("Massinissa");
 echo $fruit;
@@ -514,8 +514,8 @@ Lorsque j'importe j'effectue liéttéralement un copié-collé du script PHP à 
 En PHP on peut sauvegarder des données pendant toute la session de l'utilisateur, de cette manière même si l'utilisateur charge de nouvelles pages et donc de nouveaux scripts php les données persistes. 
 
 Une utilisation typique des sessions c'est l'autentification d'un utilisateur.
-On démmare la session et on peuple les variabes $_SESSION avec `session_start()` et ont supprime les variables de la session avec `session_destroy()`.
-> Attention il ne faut appeler `session_start()` qu'une fois par fichier au tout début.
+On démarre la session et on peuple les clées de la variable `$_SESSION` avec `session_start()` et ont supprime les variables de la session avec `session_destroy()`.
+> Attention il ne faut appeller `session_start()` qu'une fois par fichier au tout début.
 **Syntaxe :**
 ```php
 session_start();                // Je lance la session
