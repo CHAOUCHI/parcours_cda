@@ -87,7 +87,15 @@ $request->execute([99.99, 20]);
 > L'avantage des requêtes préparées c'est que l'objet request est réutilisable. La requête se lancera à chaque appel de `PDOStatement::execute` et en plus de ça chaque requête est paramètrables.
 
 # Les transactions SQL
-Les transactions SQL permettent d'annuler les requêtes appliqué à la base de données. Les transactions sont incluse dans l'objet PDO et sont très pratique couplé avec un try catch.
+Les transactions SQL permettent d'annuler les requêtes appliquées à la base de données. Les transactions sont incluses dans l'objet `PDO` et sont très pratiques couplées avec un `try catch`.
+
+Les transactions sont des méthodes de l'objet `PDO` :
+- `PDO::beginTransaction` : https://www.php.net/manual/en/pdo.begintransaction.php
+- `PDO::commit` : https://www.php.net/manual/en/pdo.commit.php
+- `PDO::rollBack` : https://www.php.net/manual/en/pdo.rollback.php
+- `PDO::inTransaction` : https://www.php.net/manual/en/pdo.intransaction.php , cette méthode renvoie vrai si une transaction est en cours.
+
+**Exemple :**
 ```php
 try {  
     // Je démarre ma transaction...
@@ -100,7 +108,7 @@ try {
 } catch (Exception $e) {
     // Un problème ! Vite j'annule avec rollback !
     $dbh->rollBack();
-    echo "Failed: " . $e->getMessage();
+    echo "Erreur: " . $e->getMessage();
 }
 ```
 

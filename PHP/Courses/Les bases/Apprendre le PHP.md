@@ -30,18 +30,26 @@ L'intérpreteur php est le programme qui va executer nos scripts php.
 
 
 ## Windows
-- https://windows.php.net/download#php-8.3
-- ADD TO PATH
-or
-Docker
-
+- https://windows.php.net/downloads/releases/php-8.3.1-Win32-vs16-x64.zip
+- Décompresser l'archive dans un dossier nommé php et placé le dans le dossier Programme de votre disque dur.
+- Ajouter le chemin vers php.exe dans le PATH Windows
+- Décommenté les lignes suivantes dans le fichier php.ini-developpement
+    - extension=mysqli
+    - extension=pdo_mysql
+- Renommé le fichier php.ini
+- Lancer le serveur web php
+```powershell
+le/dossier/de/mon/serveur$ php -S localhost:8000
+```
 ## Linux
 ```linux
 apt install php
+le/dossier/de/mon/serveur$ php -S localhost:8000
 ```
 ## Mac
 ```
 brew install php
+le/dossier/de/mon/serveur$ php -S localhost:8000
 ```
 # Lancez un serveur web compatible avec PHP
 Une fois l'intérpréteur installé il faut lancer un serveur http local grâce à une simple commande disponible avec l'intérpréteur php. A la différence de server http lancer avec python ce va executer les scripts php un client demanande un fichier ".php".
