@@ -22,11 +22,10 @@ Product{
     name TINYTEXT
     description TINYTEXT
     price FLOAT
-    fk_category_id INT
 }
 Cart{
     id INT
-    fk_client_id INT
+    creation_panier DATE
 }
 ```
 # Cahier des charges
