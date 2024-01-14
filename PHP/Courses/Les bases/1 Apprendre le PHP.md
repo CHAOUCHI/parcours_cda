@@ -166,7 +166,6 @@ Pour utiliser une varible il faut toujours placer le dollar devant son nom.
  echo gettype($age);    // => Integer
  ```
 
-
 ## Les Tableaux
 En php l'index d'un tableau s'appelle là `key` ou clé en français.
 Il existe deux genres de tableaux : les listes et les `map`(ou dictionnaire) en français. La `key` d'une liste est un `Integer` alors que la `key` d'un dictonnaire est une `string`.
@@ -192,7 +191,7 @@ echo $fruits[2];        // => poire
 $fruits[2] = "banane";   // Ajoute à la fin du tableau.
 echo $fruits[2];        // => banane
 ```
-#### Supprimer des éléments
+#### Supprimer tout les éléments à partir d'un index
 `array_splice` permet de supprimer des éléments dans un intervale donnée.
 
 **Définition :**
@@ -220,7 +219,7 @@ echo $fruits[1];        // => NULL
 echo $fruits[2];        // => NULL
 ```
 
-Supprimer tout les éléments :
+Supprimer tout les éléments à partir d'un index donné:
 ```php
 $fruits = ["cerise","pomme","poire"];
 array_splice($fruits,1);     // J'omets le nombre d'élément donc je supprime tout
@@ -241,12 +240,12 @@ echo $eleve["name"];       // => Thomas , la key "name" est une string.
 
 ### Ajouter
 ```php
-$fruits["job"] = "web dev";   // Ajoute à la clé job l'élément "web dev"
+$eleve["job"] = "web dev";   // Ajoute à la clé job l'élément "web dev"
 ```
 ### Modifier la valeur d'une clé
 Modifier et ajouter une clé répond à la même syntaxe.
 ```php
-$fruits["name"] = "Mathieu";
+$eleve["name"] = "Mathieu";
 ```
 ### Supprimer une clé
 La fonction `unset()` permet de supprimer une clé d'un `Map`, elle permet également de supprimer n'importe quelle variable.
@@ -529,37 +528,59 @@ Le header "Location: url" permet de rediriger la page vers une autre page.
 
 *index.php*
 ```php
-<form action="/profil.php" method="post">
-    <input type="email" name="email">
+<?php session_start(); ?>
+
+<form action="index.php" method="post">
+    <input type="email" name="email">  <!--L'attribut name défini le nom des variables php-->
     <input type="password" name="password">
     <input type="submit" value="Se Connecter">
 </form>
+
+<?php
+/*
+ Récupérez l'utilisateur depuis là BDD...
+ SELECT * FROM User WHERE email = $_POST["email"];
+ 
+ Dans cet exemple je crée l'utilisateur à la main.
+*/
+
+$user = [
+    "id"=>3,
+    "email"=>$_POST["email"],
+    "password"=>"0000"
+];
+
+if($user["password"] == $_POST["password"]){
+    // Le mot de passe est bon !
+    $_SESSION["user_id"] = $user["id"];
+    header("Location: profil.php");  // Redirige vers la page du formulaire
+}
+?>
 ```
+
 *profil.php*
 ```php
 <?php
 session_start();
-$email = "good@mail.com";
-$password = "0000";
-if($_POST["email"] == $email && $_POST["password"] == $password){
-    $_SESSION["user_id"] = 3;       // Habituellement ont récupére cet id d'une BDD.
-}
 
-if(!$_SESSION["user_id"]){
-    header("Location: index.php");  // redirige vers le formulaire
+if(!isset($_SESSION["user_id"])){
+    header("Location: index.php");  // Redirige vers la page du formulaire
 }
 ?>
 <h1>Bienvenue !</h1>
 <a href="logout.php">Se déconnecter</a>
 ```
+> isset() est une fonction qui renvoi `vrai` si la variable existe.
 *logout.php*
 ```php
 <?php
+session_start();
 session_destroy();
 
-header("Location:index.php");
+header("Location: index.php");
 ?>
 ```
+> Il faut charger la session actuel avec `session_start` avant de pouvoir la détruire.
 
 
 <!-- 

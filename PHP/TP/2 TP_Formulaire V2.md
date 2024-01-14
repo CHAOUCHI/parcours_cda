@@ -2,7 +2,7 @@
 ## Le Besoin
 Créer un système de connexion composé de plusieurs pages :
 - une page d'accueil qui contient un formulaire
-- une page d'info qui affiche les infos rentrées par l'utilisateur
+- une page d'info qui affiche les infos rentrées par l'utilisateur.
 ## Pré-requis
 - `session_start()`
 - `if else`
