@@ -1,0 +1,19 @@
+# Démarrage du moteur de réécriture d'URL
+RewriteEngine On
+
+# Si l'url ne commence pas par "public/"
+# Alors charge moi le script public/index.php
+RewriteRule ^(?!public/)(.*) public/index.php
+
+# De cette manière quand l'utiliseteur ira sur la page
+# /product/1
+# public/index.php se chargera
+# Je récupère l'uri dans $_SERVEUR["REQUEST_URI"] (/mvc-exemple/product/1)
+# et je charge le bon controller en fonction de l'uri
+
+# Par contre si pour les liens comme ceux là
+# /public/css/style.css
+# /public/images/default.png
+# La récriture d'url ne se fera pas et le navigateur poura librement allez chercher des ressources.
+# Cela demande par contre de précisier le chemin absolue /mvc-exemple/public/ dans tout les liens du HTML
+# Heureusement la balise <base href="/mvc-exemple/public/"> nous épargne cela

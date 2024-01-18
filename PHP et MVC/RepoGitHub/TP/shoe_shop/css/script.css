@@ -1,0 +1,12 @@
+.produits{
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr 1fr;
+}
+.produit{
+    border : black 1px solid;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
+    padding : 20px;
+}

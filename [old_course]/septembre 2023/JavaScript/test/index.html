@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <div class="circle">
+        <p>Clic</p>
+    </div>
+    <script src="script.js"></script>
+    <style>
+        body{
+            background-color: rgb(91, 235, 91);
+        }
+        .circle{
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color :white;
+            font-size: 100px;
+            font-family: Arial;
+            border-radius: 10%;
+            box-shadow: inset 10px 10px 10px rgba(255, 255, 255, 0.349);
+
+
+            background-color: rgb(58, 58, 206);
+            width: 500px;
+            height: 200px;
+            margin : 50px;
+            animation : bounce 0.5s infinite alternate-reverse;
+        }
+        .circle:active{
+            scale : 0.95;
+            animation: none;
+        }
+        @keyframes bounce {
+            0%{
+                scale : 0.95;
+            }
+            100%{
+                scale : 1.1;
+            }
+        }
+    </style>
+</body>
+</html>

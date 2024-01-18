@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    
+    <script>
+        //Appel de la fonction pour rechercher le pokemon
+        async function chercherPokemons(){
+            //Lancement de la requete http
+            const response = await fetch("https://pokebuildapi.fr/api/v1/pokemon/limit/10");
+            //La reponse arrive...
+            const pokemons = await response.json();
+            console.log("Voici le tableau de 10 pokemons renvoyé par un fetch de l'api pokemon ! ;)");
+            console.log(pokemons);
+}
+chercherPokemons();
+
+    </script>
+</body>
+</html>

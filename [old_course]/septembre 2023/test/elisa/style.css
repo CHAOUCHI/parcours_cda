@@ -1,0 +1,49 @@
+body{
+    background-color: rgb(53, 148, 65);
+    color:white;
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+    font-size: 2rem;
+    min-height: 10vh;
+}
+h1{
+    text-align: center;
+}
+main{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 70vh;
+}
+#game{
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 200px;
+}
+.character_card{
+    display:flex;
+    gap : 20px;
+    align-items: center;
+}
+button{
+    border-radius: 2px;
+    font-size: 1.5rem;
+    padding: 1rem;
+    border: none;
+    background-color: rgb(230, 233, 72);
+    color:rgb(7, 37, 8);
+    font-weight: bold;
+}
+button:active{
+    scale: 0.90;
+}
+img{
+    height: 200px;
+    transition: scale 0.25s;
+}
+#enemy img{
+    height: 300px;
+    transform: rotateY(180deg);
+}
+.attaquer{
+    scale: 1.25;
+}

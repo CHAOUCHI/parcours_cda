@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <h1>Hello</h1>
+    <script>
+        /**
+         * Voiture
+         * 
+         * marque
+         * modele
+         * année
+         * kilométrage
+         * */
+        class Voiture{
+            constructor(marque,modele,annee,km){
+                this.marque = marque;
+                this.modele = modele;
+                this.annee = annee;
+                this.km = km;
+            }
+        }
+        let renault = new Voiture("Renault","Clio",2002,150000);
+        let bmw = new Voiture("BMW","B1",2019,15000);
+        let ferrari = new Voiture("Ferrari","rouge",2023,100);
+        let camion = new Voiture("Merco","GROS",2002,150000);
+        // console.log(camion);
+    </script>
+</body>
+</html>

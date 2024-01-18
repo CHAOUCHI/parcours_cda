@@ -1,0 +1,58 @@
+/* Style de placement des balises */
+body{
+    background-color: rgb(53, 148, 65);
+    color:white;
+    font-family: Verdana;
+    font-size: 2rem;
+    min-height : 10vh;
+}
+h1{
+    text-align: center;
+}
+main{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height : 70vh;
+
+}
+#game{
+    display:grid;
+    grid-template-columns: 1fr 1fr;
+    gap:200px;
+}
+.character_card{
+    display:flex;
+    gap : 20px;
+    align-items: center;
+}
+
+
+/* Style de design des balises */
+button{
+    border-radius: 2px;
+    font-size: 1.5rem;
+    padding : 1rem;
+    border:none;
+    background-color: rgb(230, 233, 72);
+    color:rgb(7, 37, 8);
+    font-weight: bold;
+}
+button:active{
+    scale: 0.90;
+}
+
+
+/* Style d'animation */
+img{
+    max-height : 200px;
+    transition: scale 0.25s;        /* Fluidifie l'animation d'attaque */
+}
+#ennemy img{
+    transform: rotateY(180deg); /* Le gif n'est pas dans le bon sens, on le retourne à 180deg **/
+}
+
+/* Classe css appliqué en JavaScript à une image lorsque un personnage attaque */
+.attaquer{
+    scale : 1.25;
+}
