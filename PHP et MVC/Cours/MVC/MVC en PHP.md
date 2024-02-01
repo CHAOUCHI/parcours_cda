@@ -62,7 +62,8 @@ class ProductModel{
     function __construct()
     {
         $this->bdd = new PDO("mysql:host=lamp-mysql;dbname=boutique","root","root");
-        $this->addProduct = $this->bdd->prepare("INSERT INTO `Produit` (name,price,image) VALUES(:name,:price,:image);");
+        $this->addProduct = $this->bdd->prepare("INSERT INTO `Produit`
+         (name,price,image) VALUES(:name,:price,:image);");
     }
 
     public function add(string $name, float $price,string $image) : void
@@ -177,12 +178,22 @@ Voici comment va se dérouler la suite du cours.
     - un **Contrôleur par défaut**, une page d'accueil
     - une **Contrôleur error 404**
 ### VI - Ajouter de nouvelles pages
-13. Ajouter une nouvelle méthode au contrôleur
-14. Ajouter un nouveau contrôleur.
+13. Ajouter un nouveau contrôleur.
+14. Ajouter une nouvelle méthode au contrôleur
 
 ## Pré-requis
 - Un serveur LAMP
-
+- Le module rewrite de apache d'activé, pour l'activer tapez : 
+    ```bash
+    docker exec lamp-php a2enmod rewrite
+    ```
+- Les extensions php PDO activées dans votre container docker pour toutes les activés tapez :
+    ```bash
+    docker exec lamp-php docker-php-ext-install pdo
+    docker exec lamp-php docker-php-ext-install pdo_mysql
+    docker exec lamp-php docker-php-ext-install mysqli
+    ```
+> Remplacez lamp-php par le nom de votre container php-apache.
 ## I - Structure du projet
 ### Arboresence du projet
 > La racine de notre projet est : `localhost/first_mvc` dans le dossier `/var/www/html/` du serveur LAMP.
@@ -237,7 +248,7 @@ La méthode `CategoryController::delete()` est appelée lorsque cette route est 
 localhost/first_mvc/category/delete/3
 ```
 
-Il faut donc effectuer une réécriture d'url en modifiant la configuration du serveur web apache. La modification d'appache se fait dans le fichier .htaccess à la racine du projet.
+Il faut donc effectuer une réécriture d'url en modifiant la configuration du serveur web apache. La modification d'apache se fait dans le fichier .htaccess à la racine du projet.
 
 #### Pratique
 Dans le fichier `.htaccess` écrivez ceci : 
@@ -245,12 +256,19 @@ Dans le fichier `.htaccess` écrivez ceci :
 RewriteEngine On
 RewriteRule ^(?!public/)(.*) public/index.php
 ```
+
 Rendez-vous sur localhost/first_mvc et vous devriez voir votre `h1` :
+<span style="box-shadow :0px 0px 10px 10px #efefef">![Alt text](image-2.png)</span>
 
-![Alt text](image-2.png)
-
+>**Internal Error ?** 
+>**Si le serveur vous renvoi une "Internal Error**" cela peut signifier deux choses : une faute de frappe dans le .htaccess ou le module rewrite de apache, qui permet la réecriture d'url, n'est pas activé.
+> Pour activé le module **tapez la commande suivante** dans votre container docker, puis relancez votre container.
+>```bash
+> docker exec lamp-php a2enmod rewrite
+>```
+> lamp-php est le nom de mon container docker qui contient php et apache, il est basé sur l'image `php:8.2-apache`
 - `RewriteEngine On` : active le moteur de réécriture d'url.
-- `RewriteRule` rajoute un rêgle de réécriture en faisant corresepondre une regex à un fichier php. Cette regle renvoi au fichier `public/index.php`.
+- `RewriteRule` rajoute un rêgle de réécriture en faisant corresepondre une regex à un fichier php. Cette rêgle renvoi au fichier `public/index.php`.
 
 La regex `^(?!public/)(.*)` matches toute url qui ne commence pas par `public/`.
 
@@ -258,7 +276,7 @@ La regex `^(?!public/)(.*)` matches toute url qui ne commence pas par `public/`.
 
 `product/show/1` sera renvoyer vers index.php mais `public/css/style.css` renvera comme d'habitude le fichier CSS.
 
-`Regex` est un langage qui permet de chercher des occurences de texte dans un texte, pour ce faire il utilise une suite de caratères spéciaux. 
+`Regex` est un langage qui permet de chercher des occurences de texte dans un texte, pour se faire il utilise une suite de caratères spéciaux. 
 
 > Les regexs ne sont pas le sujet de ce cours.
 > Plus d'info sur les regex ici : https://regexlearn.com/
@@ -377,7 +395,8 @@ class ProductEntity{
     
     public function setName(string $name){
         if(strlen($name) < $this::NAME_MIN_LENGTH){
-            throw new Error("Name is too short minimum length is ".$this::NAME_MIN_LENGTH);
+            throw new Error("Name is too short minimum 
+            length is ".$this::NAME_MIN_LENGTH);
         }
         $this->name = $name;
     }
@@ -457,7 +476,8 @@ class ProductModel{
     public function del(int $id) : void
     {
     }
-    public function edit(int $id,string $name = NULL,float $price = NULL, string $image = NULL) : ProductEntity | NULL
+    public function edit(int $id,string $name = NULL,
+    float $price = NULL, string $image = NULL) : ProductEntity | NULL
     {
         return NULL;
     }
@@ -477,10 +497,11 @@ class ProductModel{
     private PDOStatement $getProducts;
     function __construct()
     {
-        // Connection à la base de donnée
+        // Connexion à la base de donnée
         $this->bdd = new PDO("mysql:host=lamp-mysql;dbname=boutique","root","root");
         // Création d'une requête préparée qui récupère tout les produits
-        $this->getProducts = $this->bdd->prepare("SELECT * FROM `Produit` LIMIT :limit");
+        $this->getProducts = $this->bdd->prepare("SELECT * FROM `Produit` 
+        LIMIT :limit");
     }
     public function getAll(int $limit = 50) : array
     {
@@ -500,7 +521,8 @@ class ProductModel{
         // Connection à la base de donnée
         $this->bdd = new PDO("mysql:host=lamp-mysql;dbname=boutique","root","root");
         // Création d'une requête préparée qui récupère tout les produits
-        $this->getProducts = $this->bdd->prepare("SELECT * FROM `Produit` LIMIT :limit");
+        $this->getProducts = $this->bdd->prepare("SELECT * FROM 
+        `Produit` LIMIT :limit");
     }
 
     /**
@@ -608,7 +630,8 @@ class ProductModel{
      * @return ProductEntity ou NULL : Le produit modifié après modification ou NULL si l'id n'existe pas.
      * @param int $id l'identifiant du produit, ce paramètre ne défini pas la nouvelle valeur de l'id car un id SQL est immuable, mais permet de définir quelle produit modifier.
      * */
-    public function edit(int $id,string $name = NULL,float $price = NULL, string $image = NULL) : ProductEntity | NULL
+    public function edit(int $id,string $name = NULL,
+    float $price = NULL, string $image = NULL) : ProductEntity | NULL
     {
         // TODO
         return NULL;
@@ -636,11 +659,16 @@ class ProductModel{
     {
         $this->bdd = new PDO("mysql:host=lamp-mysql;dbname=boutique","root","root");
 
-        $this->addProduct = $this->bdd->prepare("INSERT INTO `Produit` (name,price,image) VALUES(:name,:price,:image);");
-        $this->delProduct = $this->bdd->prepare("DELETE FROM `Produit` WHERE `Produit`.`id` = :id;");
-        $this->getProduct = $this->bdd->prepare("SELECT * FROM `Produit` WHERE `Produit`.`id` = :id;");
-        $this->editProduct = $this->bdd->prepare("UPDATE `Produit` SET `name` = :name, `price` = :price, `image` = :image WHERE `Produit`.`id` = :id");
-        $this->getProducts = $this->bdd->prepare("SELECT * FROM `Produit` LIMIT :limit");
+        $this->addProduct = $this->bdd->prepare("INSERT INTO `Produit`
+         (name,price,image) VALUES(:name,:price,:image);");
+        $this->delProduct = $this->bdd->prepare("DELETE FROM `Produit`
+         WHERE `Produit`.`id` = :id;");
+        $this->getProduct = $this->bdd->prepare("SELECT * FROM 
+        `Produit` WHERE `Produit`.`id` = :id;");
+        $this->editProduct = $this->bdd->prepare("UPDATE `Produit` 
+        SET `name` = :name, `price` = :price, `image` = :image WHERE `Produit`.`id` = :id");
+        $this->getProducts = $this->bdd->prepare("SELECT * FROM 
+        `Produit` LIMIT :limit");
 
     }
     public function add(string $name, float $price,string $image) : void
@@ -693,7 +721,8 @@ class ProductModel{
 
     // A part l'id les paramètres de la méthode edit sont optionnel.
     // Nous ne voulons pas forcer le développeur à modifier tout les champs
-    public function edit(int $id,string $name = NULL,float $price = NULL, string $image = NULL) : ProductEntity | NULL
+    public function edit(int $id,string $name = NULL,
+    float $price = NULL, string $image = NULL) : ProductEntity | NULL
     {
         $originalProductEntity = $this->get($id);
 
@@ -703,16 +732,25 @@ class ProductModel{
         }
 
         // On uilise un opérateur ternaire ? : ;
-        // Il permet en une ligne de renvoyer le nom original du produit si le paramètre est NULL.
-        // En effet si le paramètre est NULL celà veux dire que l'utilisateur ne souhaite pas le modifier.
+        // Il permet en une ligne de renvoyer le nom original du 
+        // produit si le paramètre est NULL.
+        // En effet si le paramètre est NULL celà veux dire que 
+        // l'utilisateur ne souhaite pas le modifier.
         // Le même resultat est possible avec des if else
-        $this->editProduct->bindValue("name", $name ? $name : $originalProductEntity->getName() );
-        $this->editProduct->bindValue("price",$price ? $price : $originalProductEntity->getPrice());
-        $this->editProduct->bindValue("image",$image ? $image : $originalProductEntity->getImage());
-        $this->editProduct->bindValue("id",$id,PDO::PARAM_INT); // Je précise PDO::PARAM_INT car id est un INT
+        $this->editProduct->bindValue("name",
+         $name ? $name : $originalProductEntity->getName() );
+        $this->editProduct->bindValue("price",
+        $price ? $price : $originalProductEntity->getPrice());
+        $this->editProduct->bindValue("image",
+        $image ? $image : $originalProductEntity->getImage());
+        
+        // Je précise PDO::PARAM_INT car id est un INT
+        $this->editProduct->bindValue("id",$id,PDO::PARAM_INT);
+        
         $this->editProduct->execute();
 
-        // Une fois modifié, je renvoi le produit en utilisant ma propre méthode public ProductModel::get().
+        // Une fois modifié, je renvoi le produit en utilisant ma
+        // propre méthode public ProductModel::get().
         return $this->get($id);
     }
 }
@@ -735,7 +773,8 @@ class ProductEntity{
 
     public function setName(string $name){
         if(strlen($name) < $this::NAME_MIN_LENGTH){
-            throw new Error("Name is too short minimum length is ".$this::NAME_MIN_LENGTH);
+            throw new Error("Name is too short minimum 
+            length is ".$this::NAME_MIN_LENGTH);
         }
         $this->name = $name;
     }
@@ -837,6 +876,8 @@ class App{
     }
 }
 ```
+**Résultat :**
+![Alt text](image-4.png)
 ### Lier le `Model` au `Controller`
 Maintenant que l'on sait que notre `Controller` fonctionne nous allons rajouter de la logique métier et récupérer un produit en fonction de l'id et le rendre disponible à la vue.
 
@@ -866,12 +907,44 @@ class ProductController{
 <h2> <?= $product->getName(); ?> </h2>
 <p> <?= $product->getPrice(); ?> € </p>
 ```
-Vous devriez maintenant voir un produit s'afficher dans votre navigateur
+Vous devriez maintenant voir un produit s'afficher dans votre navigateur.
+
+**Resultat :**
+J'ai dans ma table sql un produit qui à pour identifiant 3.
+![Alt text](image-5.png)
+
+Pour l'afficher je fournit à la méthode show l'id 3 dans son tableau de paramètres.
+*app/core/App.php*
+```php
+<?php
+require_once(__DIR__."/../controllers/ProductController.php");
+
+class App{
+    public static function start(){
+        $controller = new ProductController();
+        $controller->show([3]);
+    }
+}
+```
+Mon produit s'affiche dans le navigateur :).
+![Alt text](image-6.png)
+
 
 ## IV - Routing
-Nous avons un modèle pour nos données et un contrôleur pour nos vues, très bien. Seulement pour l'instant l'URL de la page na aucune insidense sur le controleur charger ni sur la méthode à appeller.
+Nous avons un modèle pour nos données et un contrôleur pour nos vues, très bien. Seulement pour l'instant l'URL de la page n'a aucune incidence sur le controleur instancié ni sur la méthode à appeller.
 
-Cette action s'appelle le `Routing` et nous allons le mettre en place.
+Nous souhaitons qu'à l'écriture de la requête :
+```http
+localhost/product/show/3
+```
+Le code suivant s'execute :
+```php
+    $controller = new ProductController();
+    $controller->show([3]);
+```
+Evidement, la valeur `3` devra être dynamique et changer en fonction de ce qui est écrit dans l'url.
+
+Cette action s'appelle le `Routing`.
 
 1. Dans le dossier `app/core` créer un fichier nommée `Router.php`
 2. Dans ce fichier crée une classe appelée `Router`
@@ -891,12 +964,16 @@ Cette fonction va effectuer un `switch` et renvoyer un `Controller` en fonction 
 *app/core/Router.php*
 ```php
 <?php
+// Je vais créer les routes /product/... j'ai donc besoin
+// de controleur ProductController
 require_once(__DIR__."/../controllers/ProductController.php");
 
 class Router{
     public static function getController(string $controllerName){
         switch ($controllerName) {
+            // Si la route est /product 
             case 'product':
+                // Je renvoi le controleur ProductController
                 return new ProductController();
                 break;
             default:
@@ -921,7 +998,7 @@ class App{
 ```
 
 ### Extraire les données de l'URL
-Pour l'instant nous avons écrit product en dur dans le code pour appeller le contrôleur `ProductController`. Il nous faut récupérer le nom du contrôleur présent dans l'URL ainsi que le reste des informations pour continer le routing.
+Pour l'instant nous avons écrit `"product"` en dur dans le code pour appeller le contrôleur `ProductController`. Il nous faut récupérer le nom du contrôleur présent dans l'URL ainsi que le reste des informations pour continer le routing.
 
 Les informations maquantes sont :
 - Le nom du contrôleur (ex : product)
@@ -936,49 +1013,44 @@ Pour ceci nous auront besoin des regex avec la méthodes php preg_match_all qui 
 
 require_once(__DIR__."/Router.php");
 
-const ROOT_APP_PATH = "first_mvc";
+const ROOT_APP_PATH = "path/to/website";
 
 class App{
     public static function start(){
-        // Récupère l'URI 
-        // ex : "/product/show/3" dans "/first_mvc/product/show/3"
+        /**
+         * Récupère l'uri et supprime le chemin vers le site,
+         *  si le site n'est pas à la racine du serveur apache.
+         */
         $uri = str_replace(ROOT_APP_PATH,"",$_SERVER["REQUEST_URI"]);
 
-        // Récupère les sting entre les slash /
-        // product/show/3
-        preg_match_all('#/([a-zA-Z0-9-_]+)#',$uri,$matches);
-        $groupes = $matches[1];
         /**
-         * $groupes => ["product","show",3]
-         * */
-        var_dump($groupes);
+         * Récupère un tableau des élements de l'uri en séparant
+         * la string via le caractère '/'
+         */
+        $uri_elements = explode("/",$uri);
+        // Pour l'uri /product/show/3
+        // $uri_elements  => ["","product","show","3"]
 
-        // Récupère le nom du contrôleur => "product" 
-        // ou une chaine vide si il n'existe pas
-        $controllerName = isset($groupes[0]) ? $groupes[0] : "";
-        
-        // Récupère le nom de la méthode => "show" 
-        // ou une chaine vide si il n'existe pas
-        $method = isset($groupes[1]) ? $groupes[1] : "";
+        $controllerName = isset($uri_elements[1])?$uri_elements[1]:"";
+        $methodName = isset($uri_elements[2])?$uri_elements[2]:"";
+        $params = array_splice($uri_elements,3);
 
-        // Récupère tout les paramètres dans une array
-        // $params => [3]
-        $params = array_splice($groupes,2);
+        var_dump($controllerName);
+        var_dump($methodName);
+        var_dump($params);
 
-        $controller = Router::getController($controllerName);
-        $controller->show([3]);
     }
 }
 ```
 Si vous tapez l'URL :
 ```http
-http://localhost/first_mvc/product/show/3
+http://localhost/product/show/3
 ```
 Vous devriez reçevoir ce résultat :
-![Alt text](image-3.png)
-On arrive à récupérer les paramètre de l'URL.
+![Alt text](image-7.png)
+On arrive à récupérer les paramètres de l'URL.
 
-Il faut maintenant appeler la bonne méthode en fonction de variable `$method`, par exemple appeler `ProductController::show()` si `$method` est égal à `"show"`.
+Il faut maintenant appeler la bonne méthode en fonction de variable `$methodName`, par exemple appeler `ProductController::show()` si `$methodName` est égal à `"show"`.
 
 Pour faire ceci on à besoin de la fonction php : `call_user_func()`.
 
@@ -995,7 +1067,7 @@ call_user_func([$user,"hello"],["name"=>"Théo"]);
 > Le premier array contient l'objet appelant et le nom de la méthode
 > Le deuxième array contient les paramètres à passer à la fonction via un tableau.
 
-Cette fonction nous permet de modifier la classe `ProductController` pour rajouter une méthode nommée `view`, cette méthode executera la bonne méthode en fonction de la variable $method et fournira les $params à la méthode.
+Cette fonction nous permet de modifier la classe `ProductController` pour rajouter une méthode nommée `view`, cette méthode executera la bonne méthode en fonction de la variable `$methodName` et fournira les `$params` à la méthode.
 
 
 *app/controllers/ProductController.php*
@@ -1006,7 +1078,8 @@ require_once(__DIR__."/../models/ProductModel.php");
 
 class ProductController{
     public function view(string $method,array $params = []){
-        // Je place la fonction call_user_func dans un try catch au cas une méthode inconnu est tapée dans l'URL
+        // Je place la fonction call_user_func dans un try catch 
+        // au cas une méthode inconnu est tapée dans l'URL
         try {
             call_user_func([$this,$method],$params);
         } catch (Error $e) {
@@ -1024,7 +1097,7 @@ class ProductController{
     }
 }
 ```
-Pour finir de rendre dynamique l'éxcution des méthodes du contrôleur nous allons appeler `ProductController::view` dans `App::start` au lieu de `ProductController::show`.
+Pour finir de rendre dynamique l'éxcution des méthodes du contrôleur nous allons appeler `ProductController::view` dans `App::start`.
 
 *app/core/App.php*
 ```php
@@ -1038,28 +1111,30 @@ class App{
     public static function start(){
         $uri = str_replace(ROOT_APP_PATH,"",$_SERVER["REQUEST_URI"]);
 
-        preg_match_all('#/([a-zA-Z0-9-_]+)#',$uri,$matches);
-        $groupes = $matches[1];
+        $uri_elements = explode("/",$uri);
 
-        $controllerName = isset($groupes[0]) ? $groupes[0] : "";
-        
-        $method = isset($groupes[1]) ? $groupes[1] : "";
+        $controllerName = isset($uri_elements[1])?$uri_elements[1]:"";
+        $methodName = isset($uri_elements[2])?$uri_elements[2]:"";
+        $params = array_splice($uri_elements,3);
 
-        $params = array_splice($groupes,2);
-
+        // Je récupère le controller
         $controller = Router::getController($controllerName);
+
         // Appel de la méthode view 
         // La méthode view va executer la méthode en fonction de l'url
-        $controller->view($method,$params);
+        $controller->view($methodName,$params);
     }
 }
 ```
 
-A présent tester votre route `/product/show/id` et remplacez l'id par l'id SQL d'une produit. Vous devriez afficher dynamiquement un produit en fonction de la route. 
+A présent testez votre route `/product/show/id` et remplacez l'id par l'id SQL d'un produit. Vous devriez afficher dynamiquement un produit en fonction de la route.
+![Alt text](image-8.png)
 
-Voilà ! Votre MVC est fonctionnel ! Il ne reste plus qu'à corriger deux soucis pour que tout soit bon :
-- La route `/` ne corresepond à aucune vue
-- Il faut afficher une vue erreur 404 si la route ecrite n'existe pas.
+![Alt text](image-9.png)
+
+Voilà ! **Votre MVC est fonctionnel** ! Il ne reste plus qu'à corriger deux soucis pour que tout soit bon :
+- La route `/` ne corresepond à aucune vue et donc une erreur apparait dans la fonction view si j'écrit juste `localhost`. Il nous faut enfaite une page d'accueil.
+- Il faut afficher une vue erreur 404 si la route écrite n'existe pas.
 
 ## V - Page d'accueil
 1. Créez un nouveau `Controller` `HomeController`
@@ -1133,14 +1208,12 @@ class NotFoundController{
         try {
             call_user_func([$this,$method],$params);
         } catch (Error $e) {
-            call_user_func([$this,"notfound"],$params);
             // method par default
+            call_user_func([$this,"notfound"],$params);
         }
     }
 
-    // Remplacez methodName par le nom d'une method
     public function notfound($params = []){
-        // Remplacez vue-name par le nom de la vue
         require_once(__DIR__."/../views/404.php");
     }
 }
@@ -1188,7 +1261,7 @@ class NameController{
             call_user_func([$this,$method],$params);
         } catch (Error $e) {
             require_once(__DIR__."/../views/404.php");
-            // method par default
+            // ou bien la method par default...
         }
     }
 
@@ -1200,8 +1273,57 @@ class NameController{
 }
 ```
 
-## VII - Ajouter de nouvelles pages
+# VI - Ajouter de nouvelles pages
+Dans le pattern MVC l'ajout d'une nouvelle page signifie l'ajout d'une nouvelle méthode à un controleur. Si le controleur n'existe pas il vous faut le créer.
 
+Partez de l'exemple de MVC vierge disponible sur mon github juste ici : https://github.com/CHAOUCHI/sample-mvc.git
+
+## Ajouter un controleur
+Vous pouvez vous basez sur les "samples" de `model` et `controller` présent dans le github. Egalement les parties de ce cours sur l'ajout du controleur ProductController et de la méthode show pour la route /product/show.
+
+1. Si néccessaire créez un modèle dans app/model
+2. Créez un fichier dans /app/controller, ce fichier contient une nouvelle classe Controller par exemple : PokemonController pour les routes qui commence par /pokemon.
+3. Créez une méthode dans le Controller, par exemple pour la route pokemon/add créez la méthode PokemonController::add
+4.  Ajouter une nouvelle route au Router du fichier /app/Router.php dans le switch, cette route doit return une instance du Controller précédement créez.
+5. Si vous avez besoin d'un nouvelle page à partir du controleur, créez simplement une nouvelle méthode dans votre Controller et tout fonctionne directement. Attention cependant cette nouvelle méthode doit afficher une vue avec require_once()
+
+# A propos des frameworks
+Vous l'avez surement remarquez, mettre en place un MVC est plutot fastidieux et même une fois le MVC mit en place l'ajout de Controller et de méthodes est une actions plutot complexe. On appelle ces actions le code *boilerplate*, c'est à dire du code qui ne répond pas directement au besoin du projet mais qui est neccessaire pour faire fonctionner l'application.
+
+Pour éviter d'avoir à ecrire tout ce code *boilerplate* on a inventé les frameworks. C'est à dire un gros paquet de code *boilerplate* déjà coder dans lequel vous allez juste rajouter le code qui vous interesse comme votre route et vos vues par exemple.
+
+Un framework fournit également souvent un programme en ligne de commande appelé CLI. Ce programme permet via des lignes de commandes dans la console de créer à votre place le code *boilerplate*.
+
+Par exemple avec le Framework PHP Symfony, l'ajout d'un `Controller` ce fin comme ceci :
+```bash
+symfony console make:controller ProductController
+```
+Symfony nous génère alors le code suivant que nous pouvont modifier :
+```php
+namespace App\Controller;
+
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\Routing\Annotation\Route;
+
+class ProductController extends AbstractController
+{
+    #[Route('/product', name: 'app_product')]
+    public function index(): Response
+    {
+        return $this->render('product/index.html.twig', [
+            'controller_name' => 'ProductController',
+        ]);
+    }
+}
+```
+
+Les framework sont utilisez dans pratiquement tout les projets informatiques car il permettent un gain de temps obligatoire, un sécruité supérieur du code et une norme de codage déjà défini par le framework ce qui assure du code clean et lisible par tous.
+
+Les framework PHP les plus connu sont :
+- Symfony, le big boss des framework PHP Symfony est le framework le plus complet mais également le plus *"difficile"* à apprendre.
+- Laravel, plus simple que Symfony mais moins complet.
+- Slim Framework, c'est le plus facile à utiliser il permet de créer des API REST rapidement et sans trop d'effort.
 
 <!-- 
 

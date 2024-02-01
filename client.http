@@ -1,0 +1,1 @@
+GET https://api.open-meteo.com/v1/forecast?latitude=43.297&longitude=5.3811&hourly=temperature_2m&forecast_days=1 HTTP/1.1
