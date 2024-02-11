@@ -1,5 +1,8 @@
+/**
+ * La classe Assets contient simple des getter static qui renvoi les asset sous la forme de balise HTMLImageElement
+ */
 export class Assets{
-    public static getLaser(){
+    public static getLaser() : HTMLImageElement{
         const image = <HTMLImageElement>document.querySelector("img#asset_laser");
         if(image == null){
             throw Error("L'asset n'existe pas.");
@@ -16,7 +19,7 @@ export class Assets{
     }
     
 
-    public static getDefault(){
+    public static getDefault(): HTMLImageElement{
         const image = <HTMLImageElement>document.querySelector("img#asset_player");
         if(image == null){
             throw Error("L'asset n'existe pas.");
@@ -24,7 +27,7 @@ export class Assets{
         return image;
     }
 
-    public static getPlayer(){
+    public static getPlayer(): HTMLImageElement{
         const image = <HTMLImageElement>document.querySelector("img#asset_player");
         if(image == null){
             throw Error("L'asset n'existe pas.");
@@ -41,7 +44,7 @@ export class Assets{
 
     }
 
-    public static getStar(){
+    public static getStar(): HTMLImageElement{
         const image = <HTMLImageElement>document.querySelector("img#asset_star");
         if(image == null){
             throw Error("L'asset n'existe pas.");

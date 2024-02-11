@@ -13,7 +13,6 @@ var __extends = (this && this.__extends) || (function () {
         d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
     };
 })();
-import { Game } from "../Game.js";
 import { Assets } from "../Assets.js";
 import { GameObject } from "./GameObject.js";
 var Alien = /** @class */ (function (_super) {
@@ -21,24 +20,27 @@ var Alien = /** @class */ (function (_super) {
     function Alien() {
         return _super !== null && _super.apply(this, arguments) || this;
     }
+    // Called once
     Alien.prototype.init = function () {
         this.setImage(Assets.getAlien());
-        var randomPosX = Math.random() * (Game.CANVAS_WIDTH - this.getWidth());
-        var randomPosY = -(Math.random() * Game.CANVAS_HEIGHT);
+        var randomPosX = Math.random() * (this.getGame().CANVAS_WIDTH - this.getWidth());
+        var randomPosY = -(Math.random() * this.getGame().CANVAS_HEIGHT);
         this.setPosition(randomPosX, randomPosY);
     };
+    // Called each frame
     Alien.prototype.update = function () {
         this.getPosition().y += this.getVitesse() * Math.random();
     };
+    // Called when a gameobject collide
     Alien.prototype.collide = function (other) {
-        if (other == this.game.getPlayer()) {
+        if (other == this.getGame().getPlayer()) {
             console.log("Alien hits Player");
-            this.game.over("An alien ate the last defender(the player).");
+            this.getGame().over("An alien ate the last defender(the player).");
         }
     };
     Alien.prototype.die = function () {
         this.destroy();
-        this.game.decreaseAlienCount();
+        this.getGame().decreaseAlienCount();
     };
     return Alien;
 }(GameObject));

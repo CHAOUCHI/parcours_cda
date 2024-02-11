@@ -13,7 +13,6 @@ var __extends = (this && this.__extends) || (function () {
         d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
     };
 })();
-import { Game } from "../Game.js";
 import { Input } from "../Input.js";
 import { Assets } from "../Assets.js";
 import { GameObject } from "./GameObject.js";
@@ -23,13 +22,13 @@ var Player = /** @class */ (function (_super) {
     function Player() {
         var _this = _super !== null && _super.apply(this, arguments) || this;
         _this.lastTimeShoot = 0;
-        _this.shootTimeInterval = 200; // Minimum time between 2 laser shoot in ms.
+        _this.shootTimeInterval = 200; // Minimum time between 2 laser shoots in ms.
         return _this;
     }
     Player.prototype.init = function () {
         this.setImage(Assets.getPlayer());
         this.setVitesse(this.getVitesse() * 4);
-        this.setPosition(Game.CANVAS_WIDTH / 2 - this.getWidth() / 2, Game.CANVAS_HEIGHT - this.getHeight() - 10);
+        this.setPosition(this.getGame().CANVAS_WIDTH / 2 - this.getWidth() / 2, this.getGame().CANVAS_HEIGHT - this.getHeight() - 10);
     };
     Player.prototype.update = function () {
         this.movesListener();
@@ -42,9 +41,9 @@ var Player = /** @class */ (function (_super) {
         if (Input.getIsShooting()
             &&
                 ((Date.now() - this.lastTimeShoot) >= this.shootTimeInterval)) {
-            var laser = new Laser(this.game);
+            var laser = new Laser(this.getGame());
             laser.setPosition(this.getPosition().x + this.getWidth() / 2, this.getPosition().y);
-            this.game.instanciate(laser);
+            this.getGame().instanciate(laser);
             this.lastTimeShoot = Date.now();
         }
     };

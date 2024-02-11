@@ -3,21 +3,21 @@ import { Game } from "../Game.js";
 import { GameObject } from "./GameObject.js";
 
 export class Star extends GameObject{
-    public init(){
+    protected init() : void{
         this.setImage(Assets.getStar());
         this.setPosition(
-            Math.random() * Game.CANVAS_WIDTH,
-            Math.random() * Game.CANVAS_HEIGHT
+            Math.random() * this.getGame().CANVAS_WIDTH,
+            Math.random() * this.getGame().CANVAS_HEIGHT
         );
         this.setVitesse(Math.random()*0.3);
     }
 
-    public update(): void {
+    protected update(): void {
         this.getPosition().y+=this.getVitesse();
 
-        if(this.getPosition().y > Game.CANVAS_HEIGHT){
+        if(this.getPosition().y > this.getGame().CANVAS_HEIGHT){
             this.setPosition(
-                Math.random() * Game.CANVAS_WIDTH,
+                Math.random() * this.getGame().CANVAS_WIDTH,
                 -10
             );
         }

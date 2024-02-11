@@ -1,30 +1,32 @@
-import { Game } from "../Game.js";
 import { Assets } from "../Assets.js";
 import { GameObject } from "./GameObject.js";
 
 export class Alien extends GameObject{
-    public init(){
+    // Called once
+    protected init() : void{
         this.setImage(Assets.getAlien());
-        const randomPosX = Math.random() * (Game.CANVAS_WIDTH - this.getWidth());
-        const randomPosY = -(Math.random() * Game.CANVAS_HEIGHT);
+        const randomPosX = Math.random() * (this.getGame().CANVAS_WIDTH - this.getWidth());
+        const randomPosY = -(Math.random() * this.getGame().CANVAS_HEIGHT);
         this.setPosition(
             randomPosX,
             randomPosY
         );
     }
-    public update(){
+    // Called each frame
+    protected update() : void{
         this.getPosition().y+=this.getVitesse()*Math.random();
     }
 
-    public collide(other : GameObject){
-        if(other == this.game.getPlayer()){
+    // Called when a gameobject collide
+    protected collide(other : GameObject) : void{
+        if(other == this.getGame().getPlayer()){
             console.log("Alien hits Player");
-            this.game.over("An alien ate the last defender(the player).");
+            this.getGame().over("An alien ate the last defender(the player).");
         }
     }
 
-    public die(){
+    public die() : void{
         this.destroy();
-        this.game.decreaseAlienCount();
+        this.getGame().decreaseAlienCount();
     }
 }

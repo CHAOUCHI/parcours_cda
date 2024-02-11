@@ -14,7 +14,6 @@ var __extends = (this && this.__extends) || (function () {
     };
 })();
 import { Assets } from "../Assets.js";
-import { Game } from "../Game.js";
 import { GameObject } from "./GameObject.js";
 var Star = /** @class */ (function (_super) {
     __extends(Star, _super);
@@ -23,13 +22,13 @@ var Star = /** @class */ (function (_super) {
     }
     Star.prototype.init = function () {
         this.setImage(Assets.getStar());
-        this.setPosition(Math.random() * Game.CANVAS_WIDTH, Math.random() * Game.CANVAS_HEIGHT);
+        this.setPosition(Math.random() * this.getGame().CANVAS_WIDTH, Math.random() * this.getGame().CANVAS_HEIGHT);
         this.setVitesse(Math.random() * 0.3);
     };
     Star.prototype.update = function () {
         this.getPosition().y += this.getVitesse();
-        if (this.getPosition().y > Game.CANVAS_HEIGHT) {
-            this.setPosition(Math.random() * Game.CANVAS_WIDTH, -10);
+        if (this.getPosition().y > this.getGame().CANVAS_HEIGHT) {
+            this.setPosition(Math.random() * this.getGame().CANVAS_WIDTH, -10);
         }
     };
     return Star;

@@ -5,6 +5,10 @@ export var Track;
 var Audio = /** @class */ (function () {
     function Audio() {
     }
+    /**
+     * Play a track
+     * @param track an element of the Track enumeration
+     */
     Audio.play = function (track) {
         switch (track) {
             case Track.LASER:

@@ -4,11 +4,11 @@ import { GameObject } from "./GameObject.js";
 import { Audio, Track } from "../Audio.js";
 
 export class Laser extends GameObject{
-    public init(){
+    protected init(): void {
         this.setImage(Assets.getLaser());
         Audio.play(Track.LASER);
     }
-    public update(){
+    protected update() : void{
         // The laser moves
         this.getPosition().y-=this.getVitesse();
         //The laser is destroyed
@@ -16,7 +16,7 @@ export class Laser extends GameObject{
             this.destroy();
         }
     }
-    public collide(other: GameObject): void {
+    protected collide(other: GameObject): void {
         if(other.constructor.name == "Alien"){
             const alien = <Alien>other;
             alien.die();

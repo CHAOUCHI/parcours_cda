@@ -1,3 +1,6 @@
+/**
+ * La classe Assets contient simple des getter static qui renvoi les asset sous la forme de balise HTMLImageElement
+ */
 var Assets = /** @class */ (function () {
     function Assets() {
     }
