@@ -576,10 +576,10 @@ Affichez la liste des élèves, pour chaque élève, affichez son prénom et sa 
 ```jsx
 function App(){
     let eleves = [
-        { name : "Massinissa", course : "4eme" },
-        { name : "Arnaud", course : "3eme" },
-        { name : "Cléo", course : "3eme" },
-        { name : "Louis", course : "6eme" },
+        { name : "Massinissa", grade : "4eme" },
+        { name : "Arnaud", grade : "3eme" },
+        { name : "Cléo", grade : "3eme" },
+        { name : "Louis", grade : "6eme" },
     ];
     return (
         <div>
@@ -620,16 +620,16 @@ function App(){
 ```tsx
 function App(){
     let eleves = [
-        { name : "Massinissa", course : "4eme" },
-        { name : "Arnaud", course : "3eme" },
-        { name : "Cléo", course : "3eme" },
-        { name : "Louis", course : "6eme" },
+        { name : "Massinissa", grade : "4eme" },
+        { name : "Arnaud", grade : "3eme" },
+        { name : "Cléo", grade : "3eme" },
+        { name : "Louis", grade : "6eme" },
     ];
     const elevesElements = eleves.map((eleve)=>{
         return (
             <div>
                 <h2>{eleve.name}</h2>
-                <p>{eleve.course}</p>
+                <p>{eleve.grade}</p>
             </div>
         );
     });
@@ -642,21 +642,378 @@ function App(){
 ```
 
 ## Les composants
-La conception d'une application React comme toujours par le découpage de la maquette en composants.
+La conception d'une application React commence toujours par le découpage de la maquette en composants.
+
+Une application est composée de plusieurs blocs imbriqués les uns dans les autres. Le développement d'une application avec React consiste à la création de tout ces blocs pour pouvoir, au final, assembler toute l'application.
+
+Ces briques d'éléments graphique s'appelle des composant et pour le moment vous n'avez créer qu'un seul composant : le composant racine `<App/>`.
+
+Les composants étant imbriqué il sont organisés en arborescence. Le composant App est le composant racine, il est obligatoire.
+
+Prenons par exemple la maquette d'un pokedex. Selon vous, combien contient elle de composants **différents** ?
+![alt text](Pokedex.png)
+
+J'en compte 4 différents.
+
+Le composant `<Pokemon>` qui est utilisé dans la liste de pokemons et pour indiquer l'évolution du pokemon.
+![Pokemon composant](Pokedex(1).png)
+
+Le composant `<PokemonList>` qui liste tout les pokemons existant dans un menu défilable.
+![PokemonList composant](Pokedex(2).png)
+
+Le composant `<SearchBar>` qui permet de rechercher un pokemon.
+![SearchBar composant](Pokedex(3).png)
+
+Le composant `<PokemonDetail>` qui affiche les informations d'un pokemon (nom, id, image, types et évolution) lorsque que l'utilisateur clique sur un `<Pokemon>` ou recherche un pokemon avec la `<SearchBar>`.
+![PokemonDetail composant](Pokedex(4).png)
+
+Une fois les différents composant identifiés ont remarque une arboresence qui se dessine.
+```mermaid
+flowchart
+App["< App >"]
+Pokemon["< Pokemon >"]
+Pokemon2["< Pokemon >"]
+PokemonList["< PokemonList >"]
+SearchBar["< SearchBar >"]
+PokemonDetail["< PokemonDetail >"]
+
+App--oPokemonList
+App--oSearchBar
+App--oPokemonDetail
+PokemonList--oPokemon
+PokemonDetail--oPokemon2
+```
+![alt text](Pokedex(5).png)
+
+## Créer un composant
+La création d'un composant doit se faire dans un fichier à part qui porte le nom du composant.
+
+Placez le composant racine `<App>` dans un autre fichier nommé App.jsx.
+```jsx
+function App(){
+    return (
+        <h1>Hello App</h1>
+    );
+}
+```
+Exportez le avec le mot-clé `export`.
+```jsx
+export function App(){
+    return (
+        <h1>Hello App</h1>
+    )
+}
+```
+Importez la fonction App dans le fichier main.jsx.
+```jsx
+import React from "react";
+import ReactDOM from "react-dom/client";
+
+import {App} from "./App";      // Import du composant App
+
+const root = ReactDOM.createRoot(document.querySelector("#root"));
+root.render(<App/>);            // Appel du composant App
+```
+Au minimum un composant est une fonction qui renvoi du JSX.
+```jsx
+function NomDuComposant(){
+    /**
+     * Code éventuel
+     * */
+    return (
+        // JSX
+    );
+}
+```
+```jsx
+function Eleve()
+{
+    const prenom = "Massinissa";
+    const nom = "CHAOUCHI";
+    const age = 24;
+    return (
+        <div>
+            <h2>{nom}</h2>
+            <p>{prenom}</p>
+            <p>{age} ans</p>
+        </div>
+    );
+}
+```
+
+### Affichage conditionnel
+Avec un opérateur ternaire il est possible d'afficher du JSX sous condition. C'est une opération très commune pour, par exemple, afficher le stock d'un produit ou un bouton *"se connecter"* si l'utilisateur n'est pas connecté.
+
+*/src/eleve.jsx*
+```jsx
+export function Eleve()
+{
+    const prenom = "Massinissa";
+    const nom = "CHAOUCHI";
+    const age = 24;
+    return (
+        <div>
+            <h2>{nom}</h2>
+            <p>{prenom}</p>
+            <p>{age} ans</p>
+            <p>{ age>=18 ? "Majeur" : "Mineur" }</p>
+        </div>
+    );
+}
+```
+
+## Props 
+Les props sont les attributs paramètrables des composants JSX que vous créez.
+
+L'interet des composants est la modularitée, un composant à pour objectif d'etre reutilisé dans des contextes différent et se doit donc d'être paramètrable.
+
+Les props d'un composant sont défini en paramètre de sa fonction et ont défini leurs valeurs à l'appel du composant à la manière du HTML.
+
+```jsx
+export function Eleve({prenom, nom, age})
+{
+    return (
+        <div>
+            <h2>{nom}</h2>
+            <p>{prenom}</p>
+            <p>{age} ans</p>
+            <p>{ age>=18 ? "Majeur" : "Mineur" }</p>
+        </div>
+    );
+}
+```
+
+```jsx
+import {Eleve} from "./Eleve";
+export function App(){
+    return (
+        <Eleve prenom="Massinissa" nom="CHAOUCHI" age={24}/>
+        <Eleve prenom="Louis" nom="BERGER" age={25}/>
+    );
+}
+```
+Le JSX utilise une syntaxe proche de celle des attributs HTML mais en réalité le JSX passe simplement un objet en paramètre de la fonction.
+
+Ces deux lignes produisent le même résultat.
+```jsx
+<Eleve prenom="Massinissa" nom="CHAOUCHI" age={24}/>
+Eleve({
+    prenom : "Massinissa",
+    nom : "CHAOUCHI",
+    age : 24
+});
+```
+
+> Etant donné que la fonction prend un objet en paramètre il est faut utiliser le `destructuring assingement` pour accéder au props dans la fonction.
+>```jsx
+>export function Eleve({prenom, nom, age})
+>```
+
+# Event
+Pour réagir à un évennement React vous fournit tout un ensemble de props auquel on affecte une fonction callback.
+
+```jsx
+export function Clicker(){
+    function handleClick(){
+        alert("Click !");
+    }
+    return <button onClick={handleClick}>Click me !</button>
+}
+```
+> Je dois placer ma fonction entre accolades pour que JSX l'interprète comme du JavaScript.
+
+Le nom des props est analogue au nom des événmments HTML, pré-fixé d'un `on`, le tout en *camelCase*.
+
+Voir tout les événements possible : https://www.w3schools.com/jsref/dom_obj_event.asp
+
+## State
+Les states sont les données dynamique que le composant affiche. Quand vous changez la valeur d'un state, React va rafraichir l'affichage du composant.
+
+La création d'un state se fait grâce à la fonction `useState()` du module `react`. Il faut donc l'importer dans le fichier du composant.
+
+```jsx
+import { useState } from "react";
+```
+
+Un state est composé de deux élements :
+- une constante pour lire le state
+- une fonction pour modifier le state
+
+La plupart du temps les states seront modifiés lors d'un événement.
+
+Par exemple ici j'incrémente un compteur quand je clique sur un bouton.
+```jsx
+import { useState } from "react";
+export function Counter(){
+    /**
+     * Je crée un nouveau state.
+     * J'accéde au state via la variable compteur.
+     * Je modifie le state via la fonction setCompteur
+     * */
+    const [compteur, setCompteur] = useState(0);
+
+    function handleClick(){
+        setCompteur(compteur+1);
+    }
+
+    return (
+        <button onClick={handleClick}>{compteur}</button>
+    );
+}
+```
+
+## Initialiser un state
+La valeur de départ du state est passée en paramètre de la fonction `useState`.
+
+```jsx
+// Le compteur est initialisé à la valeur 0.
+const [compteur, setCompteur] = useState(0);
+```
+Cette valeur de départ peut être de n'importe quel type JavaScript.
+```jsx
+const [compteur, setCompteur] = useState(0);    // number
+const [product, setProduct] = useState(new Product(...));    // object
+const [comments, setComments] = useState([]);    // array
+```
+
+## Modifier un state
+La modification d'un *state* se fait via la fonction setter. `useState` vous passe la référence de cette fonction et vous choisiez son nom lors du *destructuring assignement*.
+```jsx
+// La reference de la fonction setter est placée dans la constante setCompteur.
+const [compteur, setCompteur] = useState(0);
+```
+Le cas le plus commun de la modification d'un state est en réaction à un événement : clic, recherche, entrées clavier.
+
+Par exemple ici je raconte une "blague à papa" quand je clic sur un bouton.
+```jsx
+import { useState } from "react";
+export function DadJoke(){
+    // J'initialise la blague
+    const [joke,setJoke] = useState("Attend je réflechis...");
+
+    function tellJoke(){
+        const headers = new Headers();
+        headers.append("Accept","text/plain");
+
+        fetch("https://icanhazdadjoke.com",{ headers })
+        .then(res => res.text())
+        .then(joke => setJoke(joke)); // Je modifie la blague
+    }
+
+    return (
+        <div>
+            <p>{joke}</p>
+            <button onClick={tellJoke}>Dire la blague</button>
+        </div>
+    );
+}
+```
+
+Il est interdit de modifier directement la constante `compteur` car c'est la méthode `setCompteur` qui va déclancher le rafrachissement de la page.
+C'est d'ailleurs pour ça que l'on précise que `compteur` est une constante et non une variable via le mot clé `const`.
+
+Attention également `setState` viens remplacer complèment l'ancienne valeur de state et ne fait rien du tout si la nouvelle valeur est égal à l'ancienne. Le problème c'est que la valeur d'un array ou d'un objet, même après modification, ne change jamais; un objet est une reference et même en modifiant le contenu la référence reste la même et donc pour React rien n'à changé.
+
+La solution est de toujours fournir une copie de l'objet via l'opérateur `...` qui permet de cloner.
+*/src/App.jsx*
+```jsx
+export function App(){
+    return (
+        <div>
+            <h1>Hello App</h1>
+            <UserProfil name="Manu" lastName="CHAO"/>
+        </div>
+    );
+}
+
+```
+*/src/UserProfil.jsx*
+```jsx
+import { useState } from "react";
+export function UserProfil({name,lastName}){
+    // J'initialise la blague
+    const [user,setUser] = useState({name, lastName});
+    
+    function onChangeName(event){
+        const newName = event.target.value;
+        setUser({...user, name : newName});
+    }
+    function onChangeLastName(event){
+        const newLastName = event.target.value;
+        setUser({...user, lastName : newLastName});
+    }
+
+    return (
+        <div>
+            <h2>{user.name}</h2>
+            <h2>{user.lastName}</h2>
+            <input onChange={onChangeName} value={user.name}/>
+            <input onChange={onChangeLastName} value={user.lastName}/>
+        </div>
+    );
+}
+```
+
+### Boucle infini avec un setState
+`setState` déclance un nouveau rendu du composant.
+Si vous utilisez un `setState` sans aucune condition (if, event) une boucle infini va se produire car `setState` va déclancher un nouveau rendu se qui va appeler `setState` se qui va déclancher un nouveau rendu, etc.
+
+Par exemple si vous voulez effectuer un fetch dès le debut de vie de votre composant sans attendre le clic sur le bouton. L'erreur serait d'appeler tellJoke directement dans la fonction DadJoke.
+
+```jsx
+import { useState } from "react";
+export function DadJoke(){
+    const [joke,setJoke] = useState("Attend je réflechis...");
+
+    function tellJoke(){
+        const headers = new Headers();
+        headers.append("Accept","text/plain");
+
+        fetch("https://icanhazdadjoke.com",{ headers })
+        .then(res => res.text())
+        .then(joke => setJoke(joke));
+    }
+
+    // ATTENTION !
+    // J'appelle tellJoke pour espérer afficher une blague à l'initialisation du composant.
+    tellJoke();
+    return (
+        <div>
+            <p>{joke}</p>
+            <button onClick={tellJoke}>Dire la blague</button>
+        </div>
+    );
+}
+```
+Un state doit toujours être modifier de façon conditionnel, le plus souvent, lors d'un événement utilisateur. Le rendu ne doit jamais appeler setState par défaut.
+# useEffect, initialiser un composant
+`useEffect` est une fonction très puissante qui permet d'éxecuter du code uniquement lorsque certain states changent. **Egalement `useEffect` s'excute toujours une fois avant le premier rendu.**
+
+Si vous n'avez vraiment pas le choix et que l'ajout d'une prop est inenvisagable, la fonction `useEffect` est une solution, cependant notez bien que les développeurs de React conseil de ne l'utiliser quand dernier recours et que React à été pensez pour initialiser les composants grâce aux props.
+
+`useEffect` prend deux paramètres :
+- la fonction callback à éxécuter,
+- un tableau des *states* qui déclanche la fonction callback lors de leurs changement.
 
 
-- Les composants
-  - decoupage d'une maquette en arboresence de composants
-  - Props - paramètrer un composant
-  - state - des variables dans mon composant
-    - Attention au boucle infini
-  - Events - Réagir au evenement
-    - onClick
-    - ...
-  - affichage conditionel avec JSX
-- Les composants pure
-  - Aucune modification de variable externe
-  - Attention au boucle infini
+Dans notre cas nous ne souhaitons pas voir useEffect se declancher en fonction d'un state mais uniquement lors du premier rendu, il faut donc passer en deuxième paramètre un tableau vide.
+
+```jsx
+useEffect(()=>{
+    tellJoke();
+,[]);
+```
+> Attention à ne pas oublier le tableau en second paramètre, sinon useEffect s'execute sans condition et donc à l'infini.
+
+
+
+## Projet Pokemon
+Dans ce projet vous allez apprendre à :
+- créer des composants
+- fournir des paramètres au composants en tant que `props`
+- imbriqué des composants ensemble
+- réagir au événement du navigateur
+- gérer les données variable grâce au principe de `state`.
 
 
 ## Projet Pokedex
@@ -665,3 +1022,15 @@ La conception d'une application React comme toujours par le découpage de la maq
   - Les composants parents et enfant et le composant racine App
   - PokemonList
   - ...
+
+
+
+# Plan de formation
+- Presentation
+- On code un compteur pour apprendre les bases (component, state ,props event)
+- On code un pokedex ensemble
+- Il code au choix :
+    - la version evolué du Pokedex
+    - Todo list
+    - autres à voir
+    - Pimp my pizza
