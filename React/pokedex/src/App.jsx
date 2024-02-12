@@ -14,9 +14,16 @@ export function App({pokemons}) {
   function searchPokemon(event){
     const name = event.target.value;
     fetch(`https://pokebuildapi.fr/api/v1/pokemon/${name}`)
-    .then(res=>res.json())
+    .then(res=>{
+      if(res.ok){
+        return res.json();
+      }
+      else{
+        return null;
+      }
+    })
     .then(pokemon=>{
-      if(pokemon){
+      if(pokemon != null){
         setCurrentPokemon(pokemon);
       }
     });
