@@ -1,5 +1,13 @@
 import { Pokemon } from "./Pokemon";
 import "./PokemonList.css";
+
+/**
+ * 
+ * @param {Object} props
+ * @param {Array} props.pokemons Un tableau de pokémons à afficher
+ * @param {Function} props.onClickPokemon Une callback qui fournit le pokemon cliqué
+ * @returns JSX
+ */
 export function PokemonList({pokemons,onClickPokemon}){
     
     return (

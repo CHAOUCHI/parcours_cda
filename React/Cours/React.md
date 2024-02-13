@@ -463,7 +463,7 @@ function App(){
 
 La constante `elevesElements` est un array de composant React, le JSX ne fait que parcourir le tableau et afficher chaque composants dans l'ordre.
 
-*Mapper* est array JavaScript en un nouveau array de composants est une actions très commune en React. En situation réel ce tableau d'élèves pourrait très bien venir d'une base de données ou d'une API par exemple. 
+*Mapper* est array JavaScript en un nouveau array de composants est une action très commune en React. En situation réel ce tableau d'élèves pourrait très bien venir d'une base de données ou d'une API par exemple. 
 
 On peut d'ailleurs supprimer la constante `elevesElements` et placer le `map()` dans le JSX directement.
 
@@ -646,7 +646,7 @@ La conception d'une application React commence toujours par le découpage de la 
 
 Une application est composée de plusieurs blocs imbriqués les uns dans les autres. Le développement d'une application avec React consiste à la création de tout ces blocs pour pouvoir, au final, assembler toute l'application.
 
-Ces briques d'éléments graphique s'appelle des composant et pour le moment vous n'avez créer qu'un seul composant : le composant racine `<App/>`.
+Ces briques d'éléments graphique s'appelle des composants et pour le moment vous n'avez crée qu'un seul composant : le composant racine `<App/>`.
 
 Les composants étant imbriqué il sont organisés en arborescence. Le composant App est le composant racine, il est obligatoire.
 
@@ -877,7 +877,7 @@ const [comments, setComments] = useState([]);    // array
 ```
 
 ## Modifier un state
-La modification d'un *state* se fait via la fonction setter. `useState` vous passe la référence de cette fonction et vous choisiez son nom lors du *destructuring assignement*.
+La modification d'un *state* se fait via la fonction setter. `useState` vous passe la référence de cette fonction et vous choisissez son nom lors du *destructuring assignement*.
 ```jsx
 // La reference de la fonction setter est placée dans la constante setCompteur.
 const [compteur, setCompteur] = useState(0);
@@ -912,9 +912,10 @@ export function DadJoke(){
 Il est interdit de modifier directement la constante `compteur` car c'est la méthode `setCompteur` qui va déclancher le rafrachissement de la page.
 C'est d'ailleurs pour ça que l'on précise que `compteur` est une constante et non une variable via le mot clé `const`.
 
-Attention également `setState` viens remplacer complèment l'ancienne valeur de state et ne fait rien du tout si la nouvelle valeur est égal à l'ancienne. Le problème c'est que la valeur d'un array ou d'un objet, même après modification, ne change jamais; un objet est une reference et même en modifiant le contenu la référence reste la même et donc pour React rien n'à changé.
+Attention également `setState` vient remplacer complèment l'ancienne valeur de state et ne fait rien du tout si la nouvelle valeur est égal à l'ancienne. Le problème c'est que la reference d'un array ou d'un objet, même après modification, ne change jamais; un objet est une reference et même en modifiant le contenu, la référence reste la même et donc pour React rien n'à changé.
 
-La solution est de toujours fournir une copie de l'objet via l'opérateur `...` qui permet de cloner.
+La solution est de toujours fournir une copie de l'objet via l'opérateur `...` qui permet de cloner un objet dans un autre.
+
 */src/App.jsx*
 ```jsx
 export function App(){
@@ -985,7 +986,7 @@ export function DadJoke(){
     );
 }
 ```
-Un state doit toujours être modifier de façon conditionnel, le plus souvent, lors d'un événement utilisateur. Le rendu ne doit jamais appeler setState par défaut.
+Un state doit toujours être modifié de façon conditionnel, le plus souvent, lors d'un événement utilisateur. Le rendu ne doit jamais appeler setState par défaut.
 # useEffect, initialiser un composant
 `useEffect` est une fonction très puissante qui permet d'éxecuter du code uniquement lorsque certain states changent. **Egalement `useEffect` s'excute toujours une fois avant le premier rendu.**
 
@@ -1003,20 +1004,19 @@ useEffect(()=>{
     tellJoke();
 ,[]);
 ```
+
 > Attention à ne pas oublier le tableau en second paramètre, sinon useEffect s'execute sans condition et donc à l'infini.
 
-
-
-## Projet Pokemon
+<!-- ## Projet Pokemon
 Dans ce projet vous allez apprendre à :
 - créer des composants
 - fournir des paramètres au composants en tant que `props`
 - imbriqué des composants ensemble
 - réagir au événement du navigateur
-- gérer les données variable grâce au principe de `state`.
+- gérer les données variable grâce au principe de `state`. -->
 
 
-## Projet Pokedex
+<!-- ## Projet Pokedex
 - Arborescence de composants
   - Maquette, diviser un écran en plusieurs composants
   - Les composants parents et enfant et le composant racine App
@@ -1033,4 +1033,4 @@ Dans ce projet vous allez apprendre à :
     - la version evolué du Pokedex
     - Todo list
     - autres à voir
-    - Pimp my pizza
+    - Pimp my pizza -->
