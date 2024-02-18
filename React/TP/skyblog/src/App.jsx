@@ -2,6 +2,8 @@ import { useState } from "react";
 import { ColorPicker } from "./ColorPicker";
 import { Slider } from "./Slider";
 import { Content } from "./Content";
+import "./App.css";
+import { PickNumber } from "./PickNumber";
 
 export function App(){
     
@@ -28,18 +30,29 @@ export function App(){
         });
     }
 
+    function updatePadding(newPadding){
+        setStyleContent({
+            ...styleContent,
+            padding : `${newPadding}px`
+        })
+    }
+    
     return (
-        <div>
+        <div className="app">
             <div>
-                <h2>Couleur de fond</h2>
-                <ColorPicker onColorChange={updateBgColor}/>
+                <div>
+                    <h2>Couleur de fond</h2>
+                    <ColorPicker onColorChange={updateBgColor}/>
+                </div>
+                <PickNumber onValueChange={updatePadding}/>
+                <div>
+                    <h2>Couleur du texte</h2>
+                    <ColorPicker onColorChange={updateTextColor}/>
+                </div>
+                <Slider name="Taille du texte" onValueChange={updateTextSize}/>
             </div>
-            <div>
-                <h2>Couleur du texte</h2>
-                <ColorPicker onColorChange={updateTextColor}/>
-            </div>
-            <Slider name="Taille du texte" onValueChange={updateTextSize}/>
             <Content style={styleContent}/>
+            
         </div>
     )
 }

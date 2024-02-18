@@ -15,16 +15,18 @@ export function ColorPicker({onColorChange}){
         setGreen(event.target.value);
     }
 
-    // Quand un des states listé change
+    // Quand un des states red,green ou blue change...
     useEffect(()=>{
+        // J'envoie un objet RGB à App via la fonction onColorChange
         onColorChange({
             red : red,
             green : green,
             blue : blue
         });
     },[red,green,blue]);
+
     return (
-        <div>
+        <div >
             <label>Red
                 <input type="range" onInput={updateRed} max="255" defaultValue={red}/>
             </label>

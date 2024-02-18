@@ -8,12 +8,9 @@ export function Content({style}){
     }
     return (
         <div>
-            <textarea onChange={changeContent} cols="30" rows="10" defaultValue={content}></textarea>
-            <pre style={style}>
-                {content}
-            </pre>
-            {/* <div dangerouslySetInnerHTML={{__html:content}}>
-            </div> */}
+            <textarea onChange={changeContent} cols="150" rows="10" defaultValue={content}></textarea>
+            <div style={style} dangerouslySetInnerHTML={{__html:content}}>
+            </div>
         </div>
     )
 }
