@@ -3,8 +3,8 @@ import { ListNotes } from './components/ListNotes.jsx'
 import { AddNote } from './components/AddNote.jsx'
 import './App.css'
 
-function App() {
-
+function App()
+{
     //Code qui s'exécute au chargement de la page
     const existingNotes = JSON.parse(localStorage.getItem("formValues"));
 
@@ -24,7 +24,7 @@ function App() {
         // const existingNotes = JSON.parse(localStorage.getItem("formValues"));
         // console.log(existingNotes);
         // setListNotes(existingNotes);
-    }; 
+    };
 
     return (
         <div className='app'>

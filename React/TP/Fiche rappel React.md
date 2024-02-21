@@ -128,3 +128,43 @@ export function User({nom}){
     )
 }
 ```
+
+### Enfant vers Parent
+
+Pour qu'un enfant puisse partager une donnée au parent il faut que le parent, lui fournisse une fonction que le client appellera en placent la donnée en paramètre.
+
+```jsx
+import { User } from "./User.jsx";
+
+export function App() {
+
+    function onTyping(text){
+        // La donnée du composant User est accessible dans cette fonction
+        console.log(text);  
+    }
+
+    return (
+        <div>
+            <User onTyping={onTyping}/>
+        </div>
+    )
+}
+```
+
+```jsx
+export function User({onTyping}){
+
+    function handleChange(event){
+        // J'appelle onTyping et lui fournit la valeur du input
+        onTyping(event.target.value);   
+    }
+
+    return (
+        <div>
+            <input type="text" onChange={handleChange}/>
+        </div>
+    )
+}
+```
+
+Cette manip peut être pertubante car en soit l'enfant n'envoie pas de donnée au parent à proprement parlé. C'est enfaite le parent qui lui donne la capacité d'executer une fonction dont le comportement est implémenté dans App.
