@@ -17,14 +17,10 @@ export function App(){
         }   
     },1000)
 
-    let secondes = date.getSeconds();
-    if(date.getSeconds() <10){
-        secondes = "0"+date.getSeconds();
-    }
-
+    
     return (
         <div>
-            <p>{secondes}</p>
+            <p>{date.getHours()} : {date.getMinutes()} {date.getSeconds()}</p>
             <button onClick={start}>START</button>
         </div>
     )

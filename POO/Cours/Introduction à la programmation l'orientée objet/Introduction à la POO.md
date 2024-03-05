@@ -410,7 +410,7 @@ const goblin = new Monster(1);  // Le goblin n'à qu'un pv.
 goblin.getZoneAgro();      // Error : Undefined
 ```
 
-### Regle protected
+### Règle protected
 La rêgle `protected` permet de définir des attributs ou méthodes privées, donc inaccessible de l'exterieur de l'objet, mais tout de même accessible au enfant.
 
 En effet, vous ne vous en êtes peut être pas rendu compte mais la règle `private` bloque l'accès à tout objet exterieur à lui même y compris aux enfants de la classe.

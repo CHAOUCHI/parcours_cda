@@ -507,6 +507,101 @@ Notre `setInterval` commence à se remplir, on appel cette boucle : la boucle d'
 
 Vous connaissez à present les bases de l'api canvas. Il est temps de constuire notre jeu en utilisant le paradigme orientée objet.
 
+# Classe et Encaplusation
+
+Jusqu'ici toute notre application etait contenu dans le meme fichier et tout le code etait mélangé au même endroit. La boucle d'évenement, la position du joueur, de l'alien l'affichage des images, toutes ces actions devraient être classifier dans plusieurs fichiers representant chacun une brique de notre programme.
+
+En POO on represente chaqu'une de ses briques dans des objets. Chaque objet est crée à partir d'un paton appelé `classe`.
+
+L'entierter de notre application doit etre encapsuler dans des classes différentes :
+- Les aliens
+- Le joueur
+- Le jeu et sa boucle de jeu
+- Les lasers
+
+Nous allons créer chaque partie de notre jeu classe après classe, à commencez par la classe Game évidement, elle sera le première objet instancié et sera donc le point de départ de notre application.
+
+## La classe Game
+
+Dans le dossier /src/Classes créez un fichier nommé Game.ts est déclarez y une classe nommée Game et exportez la.
+
+/src/Game
+```ts
+export class Game{
+
+}
+```
+
+Puis dans script.ts, j'importe la classe et j'instancie un objet Game.
+
+/src/script.ts
+```ts
+import { Game } from "./Classes/Game.js";
+
+const game = new Game();    // Instanciate a Game
+```
+
+Voilà vous venez de crée le point de départ de votre application.
+
+L'opérateur `new` permet de construire le jeu nous allons donc placez le code d'initalisation du jeu dans le `constructor` de l'objet.
+
+/src/Game
+```ts
+export class Game{
+    private context: CanvasRenderingContext2D;
+
+    constructor(){
+        const canvas = document.querySelector("canvas");
+        canvas.height = this.CANVAS_HEIGHT;
+        canvas.width = this.CANVAS_WIDTH;
+        this.context = canvas.getContext("2d");
+    }
+}
+```
+
+A l'avenir je vais avoir besoin du context un peu partout dans ma classe, j'en fait donc un attribut privée.
+
+J'ajoute la méthode start qui déclanchera le debut du jeu.
+
+
+/src/Game
+```ts
+export class Game{
+    private context: CanvasRenderingContext2D;
+
+    constructor(){
+        const canvas = document.querySelector("canvas");
+        canvas.height = this.CANVAS_HEIGHT;
+        canvas.width = this.CANVAS_WIDTH;
+        this.context = canvas.getContext("2d");
+    }
+
+    public start(){
+
+    }
+}
+```
+
+## TP Earth Defender Première essai 
+Mettre en place  : 
+- le déplacement d'un vaisseau joueur
+- L'apparition de façon aléatoire de 15 Aliens.
+- la descente des aliens vers le bas du canvas.
+- Le tir d'un laser par le joueur.
+
+### Pré-requis
+- HTML Canavas et les fonctions :
+    - context.fillRect
+    - context.clearRect
+    - context.drawImage
+- document.querySelector
+- setInterval
+- addEventListener et les events :
+    - onkeydown
+    - onkeyup
+
+### 
+
 # Plan de cours temporaire
 - Pré-requis
     - TypeScript

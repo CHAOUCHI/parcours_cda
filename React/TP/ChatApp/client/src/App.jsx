@@ -1,45 +1,44 @@
 import { useState } from "react";
 
 export function App({socket}){
-  const [isConnected,setIsConnected] = useState(false);
-  const [messages,setMessages] = useState([]);
+    const [author,setAuthor] = useState(null);
 
-  function handleSubmit(event){
-    event.preventDefault();
-    const content = event.target.querySelector("#message").value;
-    const msg = {
-      content : content,
-      date : Date.now(),
-      author : "Massinissa"
+    function sendMessage(event){
+        event.preventDefault();
+
+        const content = event.target.querySelector("#message").value;
+        const msg = {
+            content : content,
+            date : Date.now(),
+            author : "Massinissa"
+        }
+
+        socket.emit("send_msg",msg);  // Envoi du message au serveur
     }
-    socket.emit("send_msg",msg);
-  }
 
-  function handleConnexion(){
-    setIsConnected(true);
-    socket.on("new_msg",(newMessage)=>{
-      console.log(messages);
-      setMessages([
-        ...messages,
-        newMessage
-      ]);
-    });
-  }
+    function handleConnexion(event){
+        event.preventDefault();
 
-  const messageElements = messages.map((message,i)=>{
-    return <p key={i}>{message.content}</p>;
-  })
-  return (
+        const author = event.target.querySelector("#author").value;
+        setAuthor(author);
+    }
+
+    return (
     <div>
-      <h1>Client Chat</h1>
-      <button onClick={handleConnexion}>Se connecter</button>
-      <form onSubmit={handleSubmit} hidden={isConnected == false}>
+        <h1>Client Chat</h1>
+        <form onSubmit={handleConnexion} hidden={author != null}>
+        <input type="text" id="author" />
+        <button >Se connecter</button>
+        </form>
+
+        <form onSubmit={sendMessage} hidden={author == null}>
         <input type="text" id="message" />
         <button>Envoyer</button>
-      </form>
-      <div>
+        </form>
+        
+        <div>
         {messageElements}
-      </div>
+        </div>
     </div>
-  )
+    )
 }
