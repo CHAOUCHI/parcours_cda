@@ -225,7 +225,7 @@ nouvelleBalise.innerText = "Ceci est une balise crée dynamiquement en JavaScrip
 La méthode `appendChild` permet d'ajouter une balise crée avec `createElement` dans une autre balise, et ainsi le rendre visible sur la page html.
 
 ```js
-document.appendChild(nouvelleBalise);
+document.body.appendChild(nouvelleBalise);
 ```
 *Résultat*
 ```html

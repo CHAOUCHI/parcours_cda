@@ -22,8 +22,387 @@ Ce cours se déroulera en deux parties.
 2. Projet : Création d'un projet Pokedex de zéro du front-end au back-end. Le back-end sera fait d'un serveur `express` et de `sequelize` pour l'accès simplifié à la BDD.
 
 # Installer sequelize
+Dans un dossier spécifique à votre projet back-end faites : 
 ```bash
-npm init # Répondez au questions avant de faire la commande suivante
-npm install express cors sequelize
+npm init # Répondez au questions avant de faire la commande suivante...
+npm install express cors sequelize mysql2
 ```
+> Il est obligatoire d'installer mysql2 pour le fonctionnement de sequelize.
+
+# Créer une BDD dans PhpMyAdmin
+Pour se connecter sequelize a besoin d'une BDD sql et d'un utilisateur ayant tout les droits sur la BDD.
+
+Vous pouvez mettre en place rapidement un serveur mysql et phpMyAdmin avec docker.
+
+```bash
+docker network create lamp-net
+
+docker run -d --name lamp-mysql --network=lamp-net -e MYSQL_ROOT_PASSWORD=root 
+-p 3306:3306 mysql
+
+docker run -d --name lamp-pma --network=lamp-net -e PMA_HOST=lamp-mysql 
+-p 8080:80 phpmyadmin
+
+docker start lamp-mysql
+docker start lamp-pma
+```
+
+Rendez-vous ensuite sur localhost:8080 pour accéder à phpMyAdmin.
+
+Les identifiants sont :
+- id : root
+- mdp : root
+
+1. Une fois connectée à phpMyAdmin crée une BDD nommée shop 
+![alt text](image.png)
+2. et un utilisateur ayant tout les droits sur cette BDD.
+![alt text](image-2.png)
+![alt text](image-1.png)
+*On met en mot de passe shop et en identifiant shop aussi*
+![alt text](image-3.png)
+*On accorde tout les droits à cet utilisateur*
+![alt text](image-4.png)
+
+En résumé les identifiants pour vous connectez à la BDD sont :
+- **bddName** : shop
+- **username** : shop
+- **mdp** : shop
+- **host** : localhost
+
+# Organisez votre code en plusieurs fichiers
+
+Pour garder un code compréhensible et maintenable on va diviser notre programme en deux fichiers.
+- un fichier **database.js** qui initialise la connexion à la base de donnée, instancie les modeles (les tables) et les exportes au autres fichiers.
+- un fichier **app.js**, qui contient nos routes express et utilise les modeles crées avec sequelize.
+
+# Se connecter à la BDD avec Sequelize
+
+Dans un fichier nommée `database.js`
+*/back-end/database.js*
+```js
+const { Sequelize,DataTypes } = require("sequelize");
+
+const login = {
+    database : "shop",
+    username : "shop",
+    password : "shop"
+};
+// Connexion à la BDD
+const sequelize = new Sequelize(login.database, login.username, login.password, {
+    host: 'localhost',
+    dialect: 'mysql'
+});
+```
+
+```js
+// Vérifier la connexion
+sequelize.authenticate()
+.then(()=>console.log("Connexion à la base de donnée shop"))
+.catch(error=>console.log(error));
+```
+
+> Assurez vous d'avoir bien installé le paquet `mysql2` pour vous connecter à une BDD MySQL.
+> Si il s'avert que vous utilisez plutôt une BDD MariaDB, MongoBD, SQLite ou autre, référerez vous à la documentation de `sequelize` pour avoir savoir quel paquet installer.
+> https://sequelize.org/docs/v6/getting-started/#installing
+
+# Créer une table, un modèle.
+Avec sequelize les tables sql sont représentées sous la forme d'objet appelées `Models`.
+
+Un `Model` contient toutes les fonctions néccessaires pour accèder à la table qu'il décrit et aux éventuelles tables auxquelles il est lié via des liaisons OneToOne, ManyToMany ou ManyToOne.
+
+La création d'un modèle se fait en deux étapes :
+1. La définition du modèle.
+2. La synchronisation avec la base de donnée.
+
+## Définir un table (un modèle)
+Soit une table `Product` contenant trois champs : nom, stock et prix.
+
+```mermaid
+erDiagram
+Product{
+    STRING nom
+    INTEGER stock
+    FLOAT prix
+}
+```
+
+J'utilise la fonction `sequelize.define()` pour décrire la table.
+
+*database.js*
+```js
+
+const {Sequelize,DataTypes} = require("sequelize");
+
+// const sequelize = new Sequelize(...)
+/* ...après la connexion... */
+
+// Création de la table Product
+const Product = sequelize.define("Product",{
+    name : DataTypes.STRING,
+    price : DataTypes.FLOAT,
+    stock : DataTypes.INTEGER
+});
+```
+> La fonction define renvoie un objet de la classe `Model`, je stock cet objet dans une variable homonyme au nom du modèle (Product).
+
+
+Une fois le modèle défini j'applique les changements à la BDD avec la fonction `sequelize.sync`.
+```js
+const {Sequelize,DataTypes} = require("sequelize");
+
+// const sequelize = new Sequelize(...)
+/* ...après la connexion... */
+
+// Création de la table Product
+const Product = sequelize.define("Product",{
+    name : DataTypes.STRING,
+    price : DataTypes.FLOAT,
+    stock : DataTypes.INTEGER
+});
+
+// Application des changements à MySQL
+sequelize.sync({force : true})
+.then(() => console.log("Les modèles et les tables sont synchronisés."));
+```
+***Vous devriez voir une table apparaitre dans PHPMyAdmin.***
+
+> La fonction `sequelize.sync` provoque l'envoi de la requête `CREATE TABLE` à la BDD MySQL, sans cette fonction aucun changement ne serait appliquer à notre BDD. Il est donc obligatoire de l'appelez.
+
+>La fonction `sequelize.sync` est une fonction asyncrone renvoyant une Promise. Pour savoir si une fonction de sequelize effectue une requête sur la BDD il suffit de voir si cette méthode renvoie une Promise.
+
+> Le paramètre `{force : true}` permet d'écraser les données de la table quand le serveur redémarre ce qui est pratique en développement.
+
+## Exporter le modèle
+
+J'exporte `sequelize` et le modèle `Product` pour pouvoir m'en servir dans d'autres fichiers.
+```js
+const {Sequelize,DataTypes} = require("sequelize");
+
+// const sequelize = new Sequelize(...)
+/* ...après la connexion... */
+
+// Création de la table Product
+const Product = sequelize.define("Product",{
+    name : DataTypes.STRING,
+    price : DataTypes.FLOAT,
+    stock : DataTypes.INTEGER
+});
+
+// Application des changements à MySQL
+sequelize.sync({force : true})
+.then(() => console.log("Les modèles et les tables sont synchronisés."));
+
+// J'exporte le modèle Product
+module.exports.Product = Product;    
+// J'exporte aussi sequelize au cas où pour plus tard.
+module.exports.sequelize = sequelize;   
+```
+
+# Les bases du requêtage d'un Model
+Le `Model` est un point d'entrée vers la table qu'il représente. Un modèle contient de nombreuses fonctions publiques permettant d'effectuer des requêtes.
+
+1. Créez un fichier `app.js`.
+2. Importez l'objet `Product` dans le fichier app.js.
+
+*app.js*
+```js
+const {Product} = require("./database.js");
+```
+
+## Ajouter un élement à la table
+
+Ajoutez un produit avec la fonction `Product.create()` en passant en paramètre un objet possèdant les champs du modèle en attributs.
+
+*app.js*
+```js
+const {Product} = require("./database.js");
+
+Product.create({
+    name : "Nike air",
+    price : 100,
+    stock : 24
+});
+```
+
+***Et voilà un produit à été ajouté à la BDD !***
+
+Si vous regardez dans PHPMyAdmin vous verrez qu'un nouveau produit à été ajouté à la table `Product`.
+
+Je peux facilement encapsuler tout ça dans une route express.
+```js
+const express = require("express");
+const app = express();
+const {Product} = require("./database.js");
+
+app.use(express.json());
+
+app.post("/product",async (req,res)=>{
+    const newProduct = req.body;
+
+    const product = await Product.create({
+        name : newProduct.name,
+        price : newProduct.price,
+        stock : newProduct.stock
+    });
+    res.status(200).json(product);
+});
+```
+Et voilà rien de bien compliqué.
+
+### La syntaxe async await
+La fonction `Model.create` provoque une requête SQL `INSERT INTO` sur la BDD, elle renvoie donc une Promise.
+
+Lors de l'utilisation d'une Promise dans une route express il faut attendre la résolution de la Promise avant d'envoyer la réponse HTTP.
+
+Pour attendre la résolution on utilise le mot clé `await`, il faut obligatoirement définir la fonction callback comme asynchrone pour pouvoir utiliser `await`.
+
+Voilà pourquoi l'appel de la fonction `Product.create` est préfixé d'un `await` et la déclaration de la fonction callback est préfixé d'un `async`.
+```js
+// Je défini la fonction callback comme asychrone.
+app.post("/product",async (req,res)=>{  
+    const newProduct = req.body;
+
+    // J'attend la résoluation de la Promise avant de récupérer le produit crée.
+    const product = await Product.create({
+        name : newProduct.name,
+        price : newProduct.price,
+        stock : newProduct.stock
+    });
+    // Je renvoi le produit ainsi crée dans la réponse HTTP.
+    res.status(200).json(product);
+});
+```
+
+
+## Récupérer tout les produits - findAll()
+
+```js
+const products = await Product.findAll();
+```
+
+La fonction findAll() renvoie tout les elements d'une table sous la forme d'un tableau.
+
+## Récupérer un produit via son id
+Pour chaque modèle, sequelize attribut automatiquement une clé primaire (Primary key).
+
+Je peut donc récupérer un élément en fonction de sa PK via la fonction `Model.findByPk()`.
+```js
+const product = await Product.findByPk(3);
+```
+
+## Récupérer un produit via son name
+```js
+const nameToSearch = "Nike air max";
+const product = await Product.findAll({
+    where : {
+        name : nameToSearch // name = "Nike air max"
+    }
+})
+```
+
+## Les conditions
+Pour construire des conditions, `sequelize` utilise un système d'objet représentant les opérateurs `OR`, `AND`, `LIKE`, etc.
+
+```js
+// J'importe l'objet Op depuis sequelize.
+const { Op } = require("sequelize");
+
+Product.findAll({
+    // L'objet where peut avoir comme attributs
+    where: {
+        // le nom d'une colonne
+        name : "Puma taille 42",
+        // Un opérateur conditionnel
+        [Op.or]: [  // name="Air max" OR price=13
+            { name: "Air max" },     
+            { price: 13 }
+        ]
+    }
+});
+```
+
+Par défaut le nom d'une colonne vérifie l'égalité.
+```js
+const { Op } = require("sequelize");
+
+Product.findAll({
+    // L'objet where peut avoir comme attributs
+    where: {
+        // le nom d'une colonne
+        name : "Puma taille 42",    // name = "Puma taille 42"
+    }
+});
+```
+Mais je peux utiliser passer un objet en tant que valeur pour une colonne et placer d'autre opérateurs logiques à l'interieur comme :
+```js
+Product.findAll({
+    // L'objet where peut avoir comme attributs
+    where: {
+        // je place un objet dans le nom de la colonne
+        price : {
+            [Op.gt] : 10    // price > 10 (greater)
+        }
+    }
+});
+```
+Je peux placer autant d'opérateurs que je le souhaite en tant qu'attribut de la colonne et ainsi vérifier si plusieurs conditions sont vraies.
+
+```js
+Product.findAll({
+    // L'objet where peut avoir comme attributs
+    where: {
+        // Je place un objet dans le nom de la colonne
+        price : {
+            [Op.gt] : 10,    // price > 10 (greater)
+            [Op.ne] : 10,    // price != 10 (not equal)
+            [Op.gte] : 10,    // price >= 10 (greater equal)
+            [Op.lt] : 10,    // price < 10 (greater equal)
+            [Op.lte] : 10,    // price <= 10 (greater equal)
+        }
+    }
+});
+```
+<a href="https://sequelize.org/docs/v6/core-concepts/model-querying-basics/#operators">Regardez absolument la liste de tout les opérateurs possible avec sequelize !</a>
+
+## Supprimer un produit
+```js
+await Product.destroy({
+  where: {
+    firstName: "Puma taille 42"
+  }
+});
+```
+<a href="https://sequelize.org/docs/v6/core-concepts/model-querying-basics/#simple-delete-queries">Doc delete</a>
+
+## Modifier un produit
+```js
+const newValues = {
+    name : "Converse"
+}
+await Product.update(newValues, {
+  where: {
+    id: 2
+  }
+});
+```
+<a href="https://sequelize.org/docs/v6/core-concepts/model-querying-basics/#simple-update-queries">Doc update</a>
+
+# Getting started sequelize
+Dans la doc de sequelize consultez : 
+- https://sequelize.org/docs/v6/getting-started/
+- https://sequelize.org/docs/v6/core-concepts/model-basics/
+- https://sequelize.org/docs/v6/core-concepts/model-instances/
+- https://sequelize.org/docs/v6/core-concepts/model-querying-basics/
+- https://sequelize.org/docs/v6/core-concepts/model-querying-finders/
+- https://sequelize.org/docs/v6/core-concepts/getters-setters-virtuals/
+
+# Projet Pokedex
+Vous allez concevoir de A à Z une application responsive, du back-end au front-end.
+## Objectifs
+- Créer le diagramme de cas d'utilisation d'un pokedex, appelez moi pour le valider.
+- Mettre en place un back-end nodejs / express / sequelize
+- Mettre en place un front-end JS pour ce pokedex.
+
+
+
 
