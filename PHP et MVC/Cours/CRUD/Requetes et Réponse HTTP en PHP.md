@@ -19,21 +19,21 @@
 > Map est un Array qui à un texte pour clé.
 
 # Lire les infos de la Requête HTTP
-Le PHP est un langage back-end. Il est contenu dans un script executé par un serveur web lorsqu'il reçoit une requête HTTP. En PHP il est possible de recupérer les données de la requête.
+Le PHP est un langage back-end. Le code php est contenu dans un script executé par un serveur web lorsque celui-ci reçoit une requête HTTP. En PHP il est possible de recupérer les données de la requête.
 ## La requête HTTP
-Une requête HTTP est faite toujours en trois partie :
+Une requête HTTP est faite toujours en trois parties :
 - la request line, défini la METHOD HTTP et l'url
 - les headers, défini des infos complementaire comme le type de ressource demandée par exemple.
 - Le body, il peut être vide et il contient des données envoyés par le client comme les informations d'une formulaire, un fichier ou du JSON.
 
 ## Les requêtes `GET`
-Les requêtes `GET` permettent de récupérer des données d'un serveur, ce sont elle qui sont utilisées par les navigateurs web.
+Les requêtes `GET` permettent de récupérer des données d'un serveur, se sont elles qui sont utilisées par les navigateurs web.
 Elle ont la particularitée de pouvoir contenir des variables.
 ```http
 GET localhost:8000/product.php?id=2 HTTP/1.1
 ```
 
-On s'en sert tout particulièrement dans une balise `<a>` pour afficher un produit spécifique d'une boutique en ligne par exemple.
+On s'en sert tout particulièrement dans une balise `<a>` pour renvoyer vers une page qui afficher un produit spécifique d'une boutique en ligne par exemple.
 ```html
 <a href="localhost:8000/product.php?id=2">Air Max 2022</a>
 ```
@@ -52,7 +52,7 @@ Les requêtes `POST` permettent d'envoyer des données au serveur, elles sont ut
 </form> 
 
 ```
-Le contenu des balises `input` en placée dans le body de la requête POST avec comme identifiant leurs attributs `name` respectifs. Lors du clique sur le bouton `submit` la page navigue vers la page `add-user.php`.
+Lors de l'envoi de données via un formulaire HTML, le contenu des balises `input` en placée dans le body de la requête POST avec comme identifiant leurs attributs `name` respectifs. Lors du clique sur le bouton `submit` la page navigue vers la page `add-user.php`.
 ```http
 POST localhost:8000/add-user.php HTTP/1.1
 Content-Type : multipart/form-data
@@ -98,7 +98,7 @@ $method = $_SERVER["REQUEST_METHOD"];
 ```
 
 ## L'URI
-L'uri c'est la ressource demandée donc tout ce qui à après le nom de domaine et le port.
+L'uri c'est la ressource demandée donc tout ce qui a après le nom de domaine et le port.
 Dans la requête :
 ```http
 GET localhost:8000/product.php?id=2 HTTP/1.1
@@ -266,13 +266,16 @@ http_response_code(200);    // Set status code to 200
 $results = $bdd->query("SELECT * FROM Product WHERE id=$_GET['id']");
 if($results == false){
     http_response_code(500);    // Erreur serveur
-}
-$products = $results->fetchAll();
-if(count($products) == 0){
-    http_response_code(404);    // Ressource not found
+}else{
+
+    $products = $results->fetchAll();
+    if(count($products) == 0){
+        http_response_code(404);    // Ressource not found
+    }else{
+        http_response_code(200);    // Tout c'est bien passé.
+    }
 }
 
-http_response_code(200);    // Tout c'est bien passé.
 
 ```
 Voir la liste des status code HTTP : https://www.rfc-editor.org/rfc/rfc9110#name-overview-of-status-codes
@@ -341,3 +344,4 @@ $products = $results->fetchAll();       // $products est un array
 
 echo json_encode($products);       // json_encode transforme l'array en une string.
 ```
+> Attention à n'ecrire qu'un seul et unique echo dans votre script. Sinon le format JSON ne sera pas respecté.

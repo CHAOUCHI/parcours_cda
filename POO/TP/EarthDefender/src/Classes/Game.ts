@@ -5,6 +5,16 @@ import { Player } from "./GameObjects/Player.js";
 import { Star } from "./GameObjects/Star.js";
 import { Earth } from "./GameObjects/Earth.js";
 
+function Library(GameObjects : Array<Function> = []){
+    return (constructor : Function)=>{
+        console.log(constructor);
+        
+    }
+}
+
+@Library([
+    Player
+])
 export class Game{
     /**
      * --ATTRIBUTS ----------------------------------
@@ -39,12 +49,14 @@ export class Game{
         canvas.width = this.CANVAS_WIDTH;
         this.context = canvas.getContext("2d");
     }
-    
+
+    public static GameObject(constructor : Function){
+        console.log("GameObject decorator")
+    }
     /**
      * Initialise le jeu
      */
     public start() : void{
-        
         // Ajoute les étoiles de fond
         for (let i = 0; i < Math.random()*(100-20)+20; i++) {
             this.instanciate(new Star(this));
@@ -68,7 +80,7 @@ export class Game{
         Input.listenPlayerInput();
 
         // Démarre la boucle de jeu
-        this.gameLoop();
+      //  this.gameLoop();
     }
 
     /**

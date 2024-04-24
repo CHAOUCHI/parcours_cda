@@ -16,7 +16,7 @@ const promesse = new Promise((resolve)=>{
 
 promesse.then(randomInteger=>{   // J'accède au résultat de la promesse
     console.log("Random number = ",data);
-});
+}); 
 ```
 ## Gestion d'erreur
 Les promesses simplifie la gestion des erreurs via la fonction catch.

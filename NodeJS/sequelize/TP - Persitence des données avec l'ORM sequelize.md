@@ -210,8 +210,52 @@ module.exports.Product = Product;
 // J'exporte aussi sequelize au cas où pour plus tard.
 module.exports.sequelize = sequelize;   
 ```
-
 # Les bases du requêtage d'un Model
+
+## Ajouter un élement à la table
+
+Ajoutez un produit avec la fonction `Product.create()`.Passez lui en paramètre un objet possèdant les champs du modèle en attributs.
+
+*database.js*
+```js
+const {Sequelize,DataTypes} = require("sequelize");
+
+// const sequelize = new Sequelize(...)
+/* ...après la connexion... */
+
+// Création de la table Product
+const Product = sequelize.define("Product",{
+    name : DataTypes.STRING,
+    price : DataTypes.FLOAT,
+    stock : DataTypes.INTEGER
+});
+
+// Application des changements à MySQL
+sequelize.sync({force : true})
+.then(() =>{ 
+    console.log("Les modèles et les tables sont synchronisés.")
+    // Une fois la table bien crée...
+    // J'ajoute un produit
+    Product.create({
+        name : "Nike air",
+        price : 100,
+        stock : 24
+    });
+});
+
+// J'exporte le modèle Product
+module.exports.Product = Product;    
+// J'exporte aussi sequelize au cas où pour plus tard.
+module.exports.sequelize = sequelize; 
+
+```
+
+***Et voilà un produit à été ajouté à la BDD !***
+
+Si vous regardez dans PHPMyAdmin vous verrez qu'un nouveau produit à été ajouté à la table `Product`.
+
+
+## Importer le modèle dans app.js
 Le `Model` est le point d'entrée vers la table qu'il représente. Un modèle contient de nombreuses méthodes publiques permettant d'effectuer des requêtes vers la table.
 
 1. Créez un fichier `app.js`.
@@ -222,26 +266,8 @@ Le `Model` est le point d'entrée vers la table qu'il représente. Un modèle co
 const {Product} = require("./database.js");
 ```
 
-## Ajouter un élement à la table
+Je peux facilement encapsuler la fonction create() dans route express.
 
-Ajoutez un produit avec la fonction `Product.create()`.Passez lui en paramètre un objet possèdant les champs du modèle en attributs.
-
-*app.js*
-```js
-const {Product} = require("./database.js");
-
-Product.create({
-    name : "Nike air",
-    price : 100,
-    stock : 24
-});
-```
-
-***Et voilà un produit à été ajouté à la BDD !***
-
-Si vous regardez dans PHPMyAdmin vous verrez qu'un nouveau produit à été ajouté à la table `Product`.
-
-Je peux facilement encapsuler tout ça dans une route express.
 ```js
 const express = require("express");
 const app = express();
@@ -288,7 +314,7 @@ app.post("/product",async (req,res)=>{
 
 # Exercices
 1. Ajoutez un produit dans la BDD avec la fonction `Product.create()`.
-2. Ajoutez les produits du tableau suivant dans la BDD :
+2. Ajoutez les produits du tableau suivant dans la BDD.
 ```js
 const products = [
     { name : "Adidas taille 42", price : 100, stock:12 },

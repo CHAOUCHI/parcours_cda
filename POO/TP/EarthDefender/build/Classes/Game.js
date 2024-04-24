@@ -1,8 +1,20 @@
+var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
 import { Alien } from "./GameObjects/Alien.js";
 import { Input } from "./Input.js";
 import { Player } from "./GameObjects/Player.js";
 import { Star } from "./GameObjects/Star.js";
 import { Earth } from "./GameObjects/Earth.js";
+function Library(GameObjects) {
+    if (GameObjects === void 0) { GameObjects = []; }
+    return function (constructor) {
+        console.log(constructor);
+    };
+}
 var Game = /** @class */ (function () {
     /**
      *-- METHODS ----------------------------------------------
@@ -27,6 +39,9 @@ var Game = /** @class */ (function () {
         canvas.width = this.CANVAS_WIDTH;
         this.context = canvas.getContext("2d");
     }
+    Game.GameObject = function (constructor) {
+        console.log("GameObject decorator");
+    };
     /**
      * Initialise le jeu
      */
@@ -49,7 +64,7 @@ var Game = /** @class */ (function () {
         // Ecoute les input de l'utilisateur
         Input.listenPlayerInput();
         // Démarre la boucle de jeu
-        this.gameLoop();
+        //  this.gameLoop();
     };
     /**
      * Ajoute un gameobject dans le tableau de gameobject.
@@ -173,6 +188,11 @@ var Game = /** @class */ (function () {
         else
             throw Error("No html tag for earth PV exist.");
     };
+    Game = __decorate([
+        Library([
+            Player
+        ])
+    ], Game);
     return Game;
 }());
 export { Game };
