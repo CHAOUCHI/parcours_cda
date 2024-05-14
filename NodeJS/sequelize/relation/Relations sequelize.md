@@ -324,7 +324,7 @@ const Cart = sequelize.define("Cart",{
 });
 // Cart get a foreign key of User
 Cart.belongsTo(User,{
-    foreignkey : {
+    foreignKey : {
         unique : true
     }
 });
