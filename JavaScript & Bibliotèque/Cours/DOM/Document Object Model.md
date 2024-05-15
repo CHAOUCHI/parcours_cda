@@ -261,6 +261,16 @@ conteneur.appendChild(nouvelleBalise);
     </div>
 </body>
 ```
+### Créer dyanamiquement une balise enfant SANS HTML dans le JavaScript
+La balise template permet de cloner une balise HTML existante.
+
+```html
+d
+```
+
+```js
+
+```
 
 ## Les attributs HTML
 #### Lire la valeur d'un attribut HTML
