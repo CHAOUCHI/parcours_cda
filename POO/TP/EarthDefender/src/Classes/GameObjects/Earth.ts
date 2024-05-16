@@ -16,7 +16,7 @@ export class Earth extends GameObject{
     }
 
     protected collide(other: GameObject): void {
-        if(other.constructor.name == "Alien"){
+        if(other instanceof Alien){
             this.hit();
             if(this.pv <= 0){
                 this.getGame().over("Earth have been DESTROYED !");

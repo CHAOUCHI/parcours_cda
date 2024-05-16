@@ -14,6 +14,7 @@ var __extends = (this && this.__extends) || (function () {
     };
 })();
 import { Assets } from "../Assets.js";
+import { Alien } from "./Alien.js";
 import { GameObject } from "./GameObject.js";
 import { Audio, Track } from "../Audio.js";
 var Laser = /** @class */ (function (_super) {
@@ -34,7 +35,7 @@ var Laser = /** @class */ (function (_super) {
         }
     };
     Laser.prototype.collide = function (other) {
-        if (other.constructor.name == "Alien") {
+        if (other instanceof Alien) {
             var alien = other;
             alien.die();
             // Destory laser

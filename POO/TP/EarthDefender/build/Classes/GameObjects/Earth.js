@@ -15,6 +15,7 @@ var __extends = (this && this.__extends) || (function () {
 })();
 import { Assets } from "../Assets.js";
 import { GameObject } from "./GameObject.js";
+import { Alien } from "./Alien.js";
 var Earth = /** @class */ (function (_super) {
     __extends(Earth, _super);
     function Earth() {
@@ -29,7 +30,7 @@ var Earth = /** @class */ (function (_super) {
         this.setPosition(0, this.getGame().CANVAS_HEIGHT - this.getHeight());
     };
     Earth.prototype.collide = function (other) {
-        if (other.constructor.name == "Alien") {
+        if (other instanceof Alien) {
             this.hit();
             if (this.pv <= 0) {
                 this.getGame().over("Earth have been DESTROYED !");

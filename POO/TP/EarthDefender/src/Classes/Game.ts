@@ -5,16 +5,6 @@ import { Player } from "./GameObjects/Player.js";
 import { Star } from "./GameObjects/Star.js";
 import { Earth } from "./GameObjects/Earth.js";
 
-function Library(GameObjects : Array<Function> = []){
-    return (constructor : Function)=>{
-        console.log(constructor);
-        
-    }
-}
-
-@Library([
-    Player
-])
 export class Game{
     /**
      * --ATTRIBUTS ----------------------------------
@@ -80,7 +70,7 @@ export class Game{
         Input.listenPlayerInput();
 
         // Démarre la boucle de jeu
-      //  this.gameLoop();
+        this.gameLoop();
     }
 
     /**

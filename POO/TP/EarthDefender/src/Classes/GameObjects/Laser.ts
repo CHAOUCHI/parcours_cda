@@ -17,7 +17,7 @@ export class Laser extends GameObject{
         }
     }
     protected collide(other: GameObject): void {
-        if(other.constructor.name == "Alien"){
+        if(other instanceof Alien){
             const alien = <Alien>other;
             alien.die();
             // Destory laser
