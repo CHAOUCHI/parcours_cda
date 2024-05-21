@@ -44,6 +44,14 @@ export class Assets{
 
     }
 
+    public static getPomme() : HTMLImageElement{
+        const image = <HTMLImageElement>document.querySelector("img#asset_pomme");
+        if(image == null){
+            throw Error("L'asset n'existe pas.");
+        }
+        return image;
+    }
+
     public static getStar(): HTMLImageElement{
         const image = <HTMLImageElement>document.querySelector("img#asset_star");
         if(image == null){

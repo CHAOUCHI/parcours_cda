@@ -32,6 +32,7 @@ erDiagram
     Product{
         name TEXT
         price FLOAT
+        description TEXT
     }
     Review["Review(join)"]{
         rating INT
@@ -64,7 +65,10 @@ erDiagram
     Category{
         title TEXT
     }
-    
+    ProductCart{
+        quantity INT
+    }
+
     Product }|--|| Category : has
 
     Product ||--|{ Review : got
@@ -115,7 +119,8 @@ const Product = require("./database/Product.js");
 
 */database/Product.js*
 ```js
-const Category = require("./Category.js");
+const sequelize = require("../database");
+const Category = require("../database/Category.js");
 const Product = sequelize.define("Product",{...});
 
 Product.hasMany(Category);
@@ -129,8 +134,10 @@ module.exports = Product;
 Créez un programme NodeJS (un service) qui permet d'effectuer les actions CRUD sur ce diagramme.
 - Faite le avec express.
 - Tout le projet doit être dans un dossier nommé `api_crud`
-- Le fichier `database.js` contient la connexion à la BDD et exporte la variable `sequelize`.
+- Le dossier `database` contient la connexion à la BDD et exporte la variable `sequelize` via le fichier `index.js`
 - Les Models sont crées dans des fichiers specifiques éponymes. 
+
+> Comme pour du HTML par défaut `require()` cherche un fichier nommé `index.js`.
 
 > C'est important de mettre tout le projet dans un même dossier pour pouvoir faire un docker compose facilement plus tard.
 

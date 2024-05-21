@@ -4,7 +4,7 @@ import { Input } from "./Input.js";
 import { Player } from "./GameObjects/Player.js";
 import { Star } from "./GameObjects/Star.js";
 import { Earth } from "./GameObjects/Earth.js";
-
+import {Pomme} from "./GameObjects/Pomme.js";
 export class Game{
     /**
      * --ATTRIBUTS ----------------------------------
@@ -55,7 +55,6 @@ export class Game{
         // Ajoute la terre
         this.earth = new Earth(this);
         this.instanciate(this.earth);
-        this.gameObjects.push(this.earth);
 
         // Ajoute les aliens
         for (let i = 0; i < this.nbMaxAlien; i++) {
@@ -65,6 +64,8 @@ export class Game{
         // Ajoute le joueur
         this.player = new Player(this);
         this.instanciate(this.player);
+
+        this.instanciate(new Pomme(this));
        
         // Ecoute les input de l'utilisateur
         Input.listenPlayerInput();

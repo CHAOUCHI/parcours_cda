@@ -3,6 +3,7 @@ import { Input } from "./Input.js";
 import { Player } from "./GameObjects/Player.js";
 import { Star } from "./GameObjects/Star.js";
 import { Earth } from "./GameObjects/Earth.js";
+import { Pomme } from "./GameObjects/Pomme.js";
 var Game = /** @class */ (function () {
     /**
      *-- METHODS ----------------------------------------------
@@ -41,7 +42,6 @@ var Game = /** @class */ (function () {
         // Ajoute la terre
         this.earth = new Earth(this);
         this.instanciate(this.earth);
-        this.gameObjects.push(this.earth);
         // Ajoute les aliens
         for (var i = 0; i < this.nbMaxAlien; i++) {
             this.instanciate(new Alien(this));
@@ -49,6 +49,7 @@ var Game = /** @class */ (function () {
         // Ajoute le joueur
         this.player = new Player(this);
         this.instanciate(this.player);
+        this.instanciate(new Pomme(this));
         // Ecoute les input de l'utilisateur
         Input.listenPlayerInput();
         // Démarre la boucle de jeu

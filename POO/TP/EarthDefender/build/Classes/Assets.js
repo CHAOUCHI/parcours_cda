@@ -39,6 +39,13 @@ var Assets = /** @class */ (function () {
         }
         return image;
     };
+    Assets.getPomme = function () {
+        var image = document.querySelector("img#asset_pomme");
+        if (image == null) {
+            throw Error("L'asset n'existe pas.");
+        }
+        return image;
+    };
     Assets.getStar = function () {
         var image = document.querySelector("img#asset_star");
         if (image == null) {
