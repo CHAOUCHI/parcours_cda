@@ -1117,4 +1117,183 @@ export class PokemonDetailComponent{
 >```bash
 >name : "Massinissa"
 >password : "$2y$10$wyIB5okQN2lxpFfGBZacFeSxir6WpfgwJ0KHN/tH4cdNVt5I022Y2"
->````
+>```
+
+# Les formulaires
+Il existe de façon de créer des formulaire avec Angular :
+
+- Template Driven, des formulaire simple codez dans le HTML.
+- Reactive form, des forumulaire complexe et solide codez dans le TypeScript.
+
+
+
+
+## Template driven formulaire
+Le Template driven, consiste à définir son formulaire principalement dans le HTML sans se prendre la tête avec du TypeScript. Cette solution est très rapide et simple à mettre en place et convient au petit formulaire qui ne sont pas destiné à beaucoup évoluer. Un exemple de template driven form serait une barre de recherche par exemple.
+
+### ngModel gérer un champs du formulaire
+Vous pouvez relier un input et une variable via le two-way data binding.
+
+Je déclare une variable
+```ts
+import { Component } from '@angular/core';
+import { FormsModule} from '@angular/forms';
+
+@Component({
+  selector: 'app-root',
+  standalone: true,
+  imports: [FormsModule],
+  templateUrl: './app.component.html',
+  styleUrl: './app.component.css'
+})
+export class AppComponent {
+  name = ""
+}
+```
+Je la relis à l'input grâce à la directive `ngModel` importée depuis `FormsModule`.
+```html
+<input [(ngModel)]="name">
+{{name}}
+```
+Avec cette méthode `name` est toujours égale au champs input et le champs input est toujours égal au `name`. Il sont relié dans les deux sens, c'est le *two way data binding*.
+
+Les *template driven forms* permettent tout de même de créer des formulaires complexes et de les valider, mais d'une manière moins propre que les réactive form. 
+
+Si vous souhaitez utiliser le *template driven form* pour un peu plus que `[(ngModel)]` veuillez consulter ce guide d'angular qui détail tout son fonctionnement : https://angular.dev/guide/forms/template-driven-forms
+
+***La soumission d'un formulaire se fait via l'événement `ngSubmit`.
+Le fonctionnement est le même que pour les réactives forms décrit plus bas.***
+
+## Reactive formulaire
+*Reactive forms*, consiste à définir le formulaire principalement dans le TypeScript via des objets très peu dépendant du HTML. Cette solution est modulaire, stable et réutilisable mais aussi plus complexe à mettre en place. Les Reactive forms sont utiles pour les formulaires complexes en plusieurs parties. Un exemple de reactive form serait un formulaire d'inscription avec des mutliples champs à valider.
+
+### FormControl
+Un FormControl représente une balise `input`.
+
+On le déclare dans le TS
+
+```ts
+import { Component } from '@angular/core';
+import { FormControl, ReactiveFormsModule } from '@angular/forms';
+
+@Component({
+  selector: 'app-root',
+  standalone: true,
+  imports: [ReactiveFormsModule],
+  templateUrl: './app.component.html',
+  styleUrl: './app.component.css'
+})
+export class AppComponent {
+
+  nameControl = new FormControl("");
+}
+```
+Et s'utilise dans le HTML via la directive `formControl` du module `ReactiveFormsModule`. ON accède à la valeur du champs via l'attribut publique `FormControl.prototype.value`.
+```html
+<input type="text" [formControl]="nameControl">
+<p>{{nameControl.value}}</p> 
+```
+
+### FormGroup
+Pour construire un formulaire complet il faut utiliser un FormGroup.
+
+#### Construction du formulaire
+```ts
+import { Component } from '@angular/core';
+import { FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
+
+@Component({
+  selector: 'app-root',
+  standalone: true,
+  imports: [ReactiveFormsModule],
+  templateUrl: './app.component.html',
+  styleUrl: './app.component.css'
+})
+export class AppComponent {
+
+  userGroup = new FormGroup({
+    name : new FormControl<string>(""),
+    password : new FormControl<string>(""),
+    age : new FormControl<number>(18)
+  });
+}
+```
+
+```html
+<form [formGroup]="userGroup">
+  <input formControlName="name">
+  <input formControlName="password">
+  <input formControlName="age">
+</form>
+```
+
+#### Régir à l'event Submit
+Pour réagir à la soumission du formulaire il nous faut un bouton type submit et réagir à l'evenement ngSubmit avec une fonction.
+```html
+<form [formGroup]="userGroup" (ngSubmit)="onSubmit()">
+  <input formControlName="name">
+  <input formControlName="password">
+  <input formControlName="age">
+
+  <button type="submit">Se connecter</button>
+</form>
+```
+Je peux récupérer les valeurs du formulaire dans l'attribut value du FormGroup.
+```ts
+onSubmit(){
+    console.log(this.userGroup.value);
+}
+```
+![alt text](image-9.png)
+![alt text](image-10.png)
+
+### Valider un formulaire avec Validators
+La classe Validators possède de nombreux attrtibuts statique qui permettentde valider les FormControls d'un formulaire comme ceci :
+```ts
+userGroup = new FormGroup({
+    name : new FormControl<string>("",[
+      Validators.required
+    ]),
+    password : new FormControl<string>("",[
+      Validators.required,
+      Validators.pattern("[a-zA-Z0-9]*"),
+      Validators.minLength(5)
+    ]),
+    age : new FormControl<number>(18)
+  });
+```
+L'attibut FormGroup.valid est un boolean qui défini si un formulaire rempli ses Validators ou non (true ou false). Je peux m'en servir avec l'attribut HTML disabled pour déactiver le bouton submit si le formulaire n'est pas valide.
+```html
+<form [formGroup]="userGroup" (ngSubmit)="onSubmit()">
+  <input formControlName="name">
+  <input formControlName="password">
+  <input formControlName="age">
+
+  <button type="submit" [disabled]="!userGroup.valid">Se connecter</button>
+</form>
+```
+> Voir la liste de tout les Validators : https://angular.dev/api/forms/Validators
+
+> Il existent également les FormArray pour ajouter dynamiquement des FormControl à un FromGroup très utile par exemple pour le déveleppement d'un logiciel de facturation ou l'on peut rajouter des lignes dans la facture au fur et mesure.
+
+> Voir la doc sur les FormArray : https://angular.dev/guide/forms/reactive-forms#creating-dynamic-forms
+
+# Mettre à jour Angular
+Angular subit une mise à jour majeur tout les 6 mois. Il est donc important de mettre à jour le projet régulièrement pour éviter les breaking changes au bon de plusieurs années.
+
+## Mettre à jour le CLI global
+```bash
+npm uninstall -g @angular/cli
+npm install -g @angular/cli
+```
+
+## Mettre à jour un projet
+Pour une démarche précise d'un projet important suivez les conseil d'outil d'upgrade d'angular : https://angular.dev/update-guide
+
+Sinon les commandes suivante mettez à jour le framework et le cli.
+
+**Dans un projet angular**
+Pour la version 18 :
+```bash
+ng update @angular/cli@18 @angular/core@18
+```
