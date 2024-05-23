@@ -739,7 +739,7 @@ export class PokemonCardComponent {
 ```
 Malgré la présence de required, Typescript nous embète etnous demande d'initaliser la variable pokemon d'une valeur.
 ![alt text](image-8.png)
-4. Pour que TypeScript nous laisse tranquille nous allons utilisez le *definite assignement assertion operator* : `!`
+4. Pour que TypeScript nous laisse tranquille nous allons utilisez le *definite assignement assertion operator* : `!:`
  ```ts
 import { Component, Input } from '@angular/core';
 import { Pokemon } from '../interfaces/Pokemon';
@@ -794,7 +794,6 @@ export class ApiService {
 import { Injectable } from '@angular/core';
 import { Pokemon } from './interfaces/Pokemon';
 import { HttpClient } from '@angular/common/http';
-import { firstValueFrom } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -812,7 +811,7 @@ export class ApiService {
 ### Se servir d'un service avec l'injection de dépendance
 Pour se servir d'un service il faut demander à Angular de vous le fournir en tant qu'attribut private. 
 
-Pour se faire vous allez déclarer ce service en tant que paramètre obligatoire de votre constructeur. Au moment ou Angular voudra instancier votre composant il va remarquer les paramètre du constructeur, instancier le service et vous le passer en paramètre du constructeur.
+Pour se faire vous allez déclarer ce service en tant que paramètre obligatoire de votre constructeur. Au moment où Angular voudra instancier votre composant il va remarquer les paramètre du constructeur, instancier le service et vous le passer en paramètre du constructeur.
 
 On appelle cette méchanique ***l'injection de dépendance***.
 
@@ -882,19 +881,240 @@ export class PokemonListComponent implements OnInit{ // J'implemente l'interface
 ```
 > N'oubliez pas les imports.
 
-<!-- # Routing
-Vous avez maintenant tout les bases pour concevoir une belle application Angular, à un détail près...
-Les pages !
+# Routing
+Vous avez maintenant tout les bases pour conçevoir une belle application Angular, à un détail près. Les pages !
 Notre application ne possède pas encore de navigation d'écran en écran, de routing en sommes.
 
-Nous allons donc mettre ça en place. -->
+ ## Le routing, qu'est ce que c'est ?
+Le routing c'est le fait de relier un url à l'affichage d'un composant.
 
-<!-- ## Le routing, qu'est ce que c'est ?
-Le routing c'est le fait de relié un url à l'affichage d'un composant
+Par exemple :
+- `/pokedex`, redirige vers le composant `pokemon-list`
+- `/pokemon-details`, redirige vers un composant qui affiche les detail d'un pokemon
+- `/home` et `/` redirige vers la page d'accueil
+
+Pour mettre en place une route il faut :
+1. Mettre en place un `router-outlet`. Une balise qui contient le composant chargé en fonction de l'url.
+2. Relier un composant à une route dans `app.routes.ts`
+3. Ajouter des liens de navigation avec l'attribut `routerLink` (fini href)
+
+## RouterOutlet
+1. Ajoutez une balise `router-outlet` dans le html de AppComponent, le contenu de cette balise changera en fonction de l'url de la page et contiendra le composant associé à l'url. Il évite ainsi le rechargement du site.
+
+*app.component.html*
+```html
+<h1>My App</h1>
+<main>
+    <router-outlet></router-outlet>
+</main>
 ```
-`ng g c pokemon-detail
-import pokemon-card
-read GET id
-fetch pokemon by id
-pass it to pokemon-card
-`` -->
+
+2. Importez le composant `RouterOutlet` dans le tableau d'`imports` de la classe `AppComponent`.
+```ts
+import { Component } from '@angular/core';
+import { RouterOutlet } from '@angular/router';
+
+@Component({
+  selector: 'app-root',
+  standalone: true,
+  imports: [RouterOutlet], // J'importe le Composant RouterOutlet
+  templateUrl: './app.component.html',
+  styleUrl: './app.component.css'
+})
+export class AppComponent{
+  constructor(){}
+}
+```
+
+## Lier un composant à une route dans *app.routes.ts*
+*app.routes.ts* contient un tableau de Route.
+Une `Route` est un interface composé d'un path (chemin, url) et d'un component (un composant).
+
+Dans *app.routes.ts* ajoutez une route comme ceci :
+
+*app.routes.ts*
+```ts
+import { Routes } from '@angular/router';
+import { PokemonListComponent } from './pokemon-list/pokemon-list.component';
+
+export const routes: Routes = [
+    {path : "pokedex",component:PokemonListComponent},
+];
+```
+J'ai maintenant une route `/pokedex` qui placera `app-pokemon-list` dans le `<router-outlet>`.
+
+## Les liens de navigations RouterLink
+J'utilise l'attribut `routerLink` pour rediriger vers la page pokedex au clic sur un lien de navigation.
+
+*app.component.html*
+```html
+<h1>My App</h1>
+<main>
+    <nav>
+        <li><a routerLink="/pokedex">Liste des pokemons</a></li>
+    </nav>
+    <router-outlet></router-outlet>
+</main>
+```
+> N'oubliez pas le / devant l'url dans routerLink.
+
+Et voilà j'ai mis en place le routing.
+
+## Page d'accueil et page 404
+
+### Page Not Found 404
+Pour défini une page 404 je crée une composant 404 et je le relis à une route *wildcard* `**` qui correspond à n'importe qu'elle route.
+```bash
+ng g c not-found
+```
+
+*app.routes.ts*
+```ts
+import { Routes } from '@angular/router';
+import { PokemonListComponent } from './pokemon-list/pokemon-list.component';
+import { NotFoundComponent } from './not-found/not-found.component';
+
+export const routes: Routes = [
+    {path : "pokedex",component:PokemonListComponent},
+    {path :"**",component:NotFoundComponent} 
+    // Je place la route ** en dernière car l'ordre des routes est important
+];
+```
+Si un utilisateur tape une url inconnu la liste des routes sera parsée jusqu'à la *wildcard* qui affichera le composant `NotFoundComponent`.
+> Veillez à faire une page statique sympatique pour le composant `NotFound` pour indiquer à l'utilisateur qu'il s'est perdu. :) 
+
+## Page d'accueil
+La page d'accueil n'a pas de route, j'écrit donc une route vide pour la définir.
+```ts
+import { Routes } from '@angular/router';
+import { PokemonListComponent } from './pokemon-list/pokemon-list.component';
+import { HomeComponent } from './home/home.component';
+
+export const routes: Routes = [
+    {path : "pokedex",component:PokemonListComponent},
+    {path : "",component:HomeComponent}, // Page d'accueil
+];
+```
+
+## Passer des paramètres dans l'URL -  *query params*.
+
+Par exemple passer l'id d'un pokemon à une page pokemon-details pour afficher un pokemon spécifique.
+```bash
+ng g c pokemon-details
+```
+
+Dans un route vous pouvez précisez un paramètre d'url en le préfixant d'un `:`.
+
+*app.routes.ts*
+```ts
+import { Routes } from '@angular/router';
+import { PokemonListComponent } from './pokemon-list/pokemon-list.component';
+import { HomeComponent } from './home/home.component';
+import { PokemonDetailComponent } from './pokemon-detail/pokemon-detail.component';
+
+export const routes: Routes = [
+    {path : "pokedex",component:PokemonListComponent},
+    // exemple /pokemon-details/25 pour salamèche
+    {path : "pokemon-details/:id",component : PokemonDetailComponent}
+    {path : "",component:HomeComponent},
+];
+```
+
+
+Il suffit ensuite de préciser cette id directement dans l'url du routerLink
+
+*pokemon-list.component.html*
+```ts
+<div id="pokemons">
+    @for (pokemon of pokemons; track pokemon.id) {
+        <app-pokemon-card  routerLink="/pokemon-details/{{pokemon.id}}" [pokemon]="pokemon"></app-pokemon-card>
+    }
+</div>
+```
+> Ici je place l'id de chaque pokemon dans l'url du routerLink pour rediriger vers la page pokemon-detail associé. J'utilise pour ce faire le *text interpolation* `{{}}`
+
+## Recupérer le query param
+Depuis Angular 16 pour récupérer un query param il suffit d'avoir un attribut publique du même nom dans le composant.
+
+```ts
+import { Component, Input, OnInit } from '@angular/core';
+import { PokemonCardComponent } from '../pokemon-card/pokemon-card.component';
+import { Pokemon } from '../Interface/Pokemon';
+import { ApiService } from '../api.service';
+
+@Component({
+  selector: 'app-pokemon-detail',
+  standalone: true,
+  imports: [PokemonCardComponent],
+  templateUrl: './pokemon-detail.component.html',
+  styleUrl: './pokemon-detail.component.css'
+})
+export class PokemonDetailComponent implements OnInit{
+  pokemon : Pokemon | null = null;
+
+  @Input() id : number = 0; // ceci est mon query param /pokemon-details/:id
+
+  constructor(private api : ApiService){}
+
+  ngOnInit() : void{
+    console.log(this.id); // J'affiche l'id de l'url
+  }
+}
+```
+Je peux ensuite récupère la donnée à partir de son id avec un service dans la fonction ngOnInit
+```ts
+ngOnInit() : void{
+    this.api.getPokemon(this.id).then(pokemon=>this.pokemon=pokemon)
+    .catch(error=>console.log(error));
+}
+```
+
+## Pour allez plus loin, le query param en tant que setter
+Pour un code plus clean je peux me passer de `ngOnInit` et utiliser la syntaxe TypeScript des setter. Elle permet de définir une méthode publique qui est vue de l'exterieur comme un attribut et ainsi allez directement chercher mon pokemon a ce moment là.
+```ts
+import { Component, Input, OnInit } from '@angular/core';
+import { PokemonCardComponent } from '../pokemon-card/pokemon-card.component';
+import { Pokemon } from '../Interface/Pokemon';
+import { ApiService } from '../api.service';
+
+@Component({
+  selector: 'app-pokemon-detail',
+  standalone: true,
+  imports: [PokemonCardComponent],
+  templateUrl: './pokemon-detail.component.html',
+  styleUrl: './pokemon-detail.component.css'
+})
+export class PokemonDetailComponent{
+  pokemon : Pokemon | null = null;
+  @Input() set id(pokemonId : number){
+    this.api.getPokemonById(pokemonId).then(pokemon=>this.pokemon = pokemon)
+    .catch(error=>console.log(error));
+  }
+
+  constructor(private api : ApiService){}
+
+}
+```
+> Voir les setter typescript https://www.typescriptlang.org/docs/handbook/2/classes.html#getters--setters
+> Exemple :
+>```ts
+>class User{
+>    public name : string
+>    public set password(value:string){
+>        this._password =  hash(value);
+>    }
+>    public get password(){
+>        return this._password
+>    }
+>    private _password : string;
+>}
+>const user = new User();
+>user.name = "Massinissa";
+>user.password = "1234556789";
+>console.log(user.name);
+>console.log(user.password);
+>```
+>```bash
+>name : "Massinissa"
+>password : "$2y$10$wyIB5okQN2lxpFfGBZacFeSxir6WpfgwJ0KHN/tH4cdNVt5I022Y2"
+>````
