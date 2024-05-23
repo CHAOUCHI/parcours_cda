@@ -3,7 +3,7 @@
 ## 1 - Pokedex
 ### Description
 Un simple pokedex qui consomme l'api pokebuild pour récupérer les pokemons.
-L'utilisateurs peux naviger vers une autre page de détail des pokemon au click et aussi recherche un pokemon spécifique pour mettre à jour en temps réel la liste des pokemons de la page d'accueil.
+L'utilisateurs peux naviger vers une autre page de détail des pokemons au click sur un pokemon et aussi recherche un pokemon spécifique pour mettre à jour en temps réel la liste des pokemons de la page d'accueil.
 
 ## Use Case UML
 
@@ -24,7 +24,7 @@ flowchart
 
 ## 2 - Boutique api crud
 ## Description
-Une petite boutique en ligne qui consomme une api rest conçue par vaut soins.
+Une petite boutique en ligne qui consomme une api rest conçue par vos soins.
 
 ## Use case UML
 
@@ -48,7 +48,7 @@ flowchart
 - La doc de express : https://expressjs.com/fr/starter/hello-world.html
 - La doc de sequelize : https://sequelize.org/docs/v6/getting-started/
 
-> Vous n'êtes pas obligez de faire tout les exercices du cours sur Express
+> Vous n'êtes pas obligés de faire tout les exercices du cours sur Express
 
 ## 3 - Boutique upload de fichiers
 ### Description
