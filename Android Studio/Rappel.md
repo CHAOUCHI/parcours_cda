@@ -150,6 +150,102 @@ L'application va enfin démarrer.
 
 ## Effectuer une requete HTTP sur un back-end
 ### Effectuer une requete http
+Il y a plusieurs manière d'effectuer une requete Http en Java.
+Celle que je vous propose consiste à :
+1. Créer une objet HttpURLConnection a partir d'un objet URL
+2. Recupérer la réponse sous la d'un flux de donnée binaire (InputStream)
+3. Transformer ce stream en objet Java grâce au package Jackson.
+
+Nous allons placer nos requêtes dans une classe séparée, ce n'est pas obligatoire mais ça permet de voir clair dans notre code et éviter la duplication de code.
+
+## Créer la class Api
+Pour créer une nouveau class Java il suffit de faire un clic droit sur le package de notre activity et créer une nouvelle classe.
+![alt text](image-13.png)
+
+> Attention, si vous ne créez pas la classe dans le même package que l'Activity, elle lui sera inaccesible. En effet deux classes Java sont accessible l'une de l'autre lorsqu'elle se trouve dans le même package.
+
+La classe Api devrait ressemblez à ça :
+```java
+package com.example.myapplication;
+
+public class Api {
+}
+```
+
+Chaque route de l'api corre
+
+## Créer une requete HTTP avec HttpURLConnection
+```java
+URL url = new URL("https://pokebuildapi.fr/api/v1/pokemon/pikachu");
+HttpURLConnection connection = (HttpURLConnection) url.openConnection();
+```
+- La classe URL prend en paramètre une string, notre url.
+- l'url peut ensuite ouvrir une connexion et renvoyer un objet HttpURLConnection. Le compilateur Java à besoin que l'on transtype la valeur de retour de url.openConnection() en un objet de la classe HttpURLConnection.
+
+Une requete est donc créer, **mais la requete n'est pas encore envoyée** sur le réseau.
+
+## Envoyer la requete et récupérer la réponse.
+```java
+InputStream responseStream = connection.getInputStream();
+```
+La méthode getInputStream() renvoi un flux de donnée binaire, aussi appelé *Stream*.
+Ces données sont en binaire et accessible via la méthode `responseStream.read()`.
+
+Il est possible de lire les données binaire et de les convertir en string octet après octet mais cette opération est plutot fastidieuse.
+Nous allons plutôt utiliser un bibliotèque Java pour faire ça à notre place.
+
+## Récupérer le body sous la forme d'un objet Java
+L'api renvoi une string JSON qui est pour le moment sous la forme de flux binaire dans la variable ``responseStream`. Il nous faut un moyen de lire le `responseStream` en tant que JSON et de le transformer en Objet Java.
+
+Pour ceci nous allons avoir besoin d'une classe qui acceuillera l'objet renvoyé par l'api.
+### La classe Pokemon pour le body
+Cette API renvoi un Pokemon, créons donc une classe nommée Pokemon.
+```java
+public class Pokemon {
+    public String name;
+    public int id;
+}
+```
+> Attention vérifiez bien que les attributs public de cette classe soient correctement orthographiés par rapport au résultat JSON de l'API.
+
+> Attention cette classe doit être dans le même package java que la classe ApiFacade et MainActivity.
+
+### Instancier un Pokemon a partir de responseStream
+```java
+// Créer un mapper Jackson pour mapper un flux et une classe
+ObjectMapper mapper = new ObjectMapper();
+// Ignorer les champs inconnu de l'objet JSON, seul id et name nous intéressent.
+mapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
+
+// Transforme le stream en instance de la classe Pokemon
+Pokemon pokemon = mapper.readValue(responseStream, Pokemon.class);
+```
+
+> Pour accomplir ce miracle jackson va effectuer se que l'on appelle en Java une reflexion. C'est à dire qu'il va lire les attributs de la classe et les remplir si il correspondent à un attribut de l'objet de l'objet JSON.
+
+Voilà ! On à maintenant un beau pokemon !
+On peut donc le return dans notre méthode.
+
+```java
+public static Pokemon getPokemon(String name){
+        try {
+            // Making a Http Request
+            URL url = new URL("https://pokebuildapi.fr/api/v1/pokemon/"+name);
+            HttpURLConnection connection = (HttpURLConnection) url.openConnection();
+            InputStream responseStream = connection.getInputStream();
+
+            // Transform binary body to Pokemon class with Jackson
+            ObjectMapper mapper = new ObjectMapper();
+            mapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
+
+            Pokemon pokemon = mapper.readValue(responseStream, Pokemon.class);
+
+            return pokemon;
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
+```
 
 ### Le multi-threading
 
