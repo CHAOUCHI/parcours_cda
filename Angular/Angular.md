@@ -894,6 +894,7 @@ Par exemple :
 - `/home` et `/` redirige vers la page d'accueil
 
 Pour mettre en place une route il faut :
+
 1. Mettre en place un `router-outlet`. Une balise qui contient le composant chargé en fonction de l'url.
 2. Relier un composant à une route dans `app.routes.ts`
 3. Ajouter des liens de navigation avec l'attribut `routerLink` (fini href)
@@ -1033,8 +1034,25 @@ Il suffit ensuite de préciser cette id directement dans l'url du routerLink
 ```
 > Ici je place l'id de chaque pokemon dans l'url du routerLink pour rediriger vers la page pokemon-detail associé. J'utilise pour ce faire le *text interpolation* `{{}}`
 
+
+## Activer l'input binding
+Il faut activer le lien entre @Input() et les query params avec la fonction :  `withComponentInputBinding()` dans `app.config.ts`
+
+*app.config.ts*
+```ts
+import { ApplicationConfig, provideZoneChangeDetection } from '@angular/core';
+import { provideRouter, withComponentInputBinding } from '@angular/router';
+
+import { routes } from './app.routes';
+
+export const appConfig: ApplicationConfig = {
+  providers: [
+    provideRouter(routes,withComponentInputBinding())]
+};
+```
+
 ## Recupérer le query param
-Depuis Angular 16 pour récupérer un query param il suffit d'avoir un attribut publique du même nom dans le composant.
+Depuis Angular 16 pour récupérer un query param il suffit d'avoir un @Input() publique du même nom dans le composant.
 
 ```ts
 import { Component, Input, OnInit } from '@angular/core';
