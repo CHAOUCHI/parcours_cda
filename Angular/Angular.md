@@ -312,7 +312,7 @@ export class AppComponent {
   <button [disabled]="pokemon.pv > 10" >Capturer !</button>
 </div>
 ```
-> Si le pokemon à plus de 10pv je désactive le bouton capturer, il est encore trop fort...
+> Si le pokemon à plus de 10pv je désactive le bouton capturer; il est encore trop fort...
 ## Event binding `( )`
 Nous pouvez attacher à un évenement du DOM l'appel d'une fonction grâce à l'opérateur `()`.
 
@@ -344,7 +344,7 @@ export class AppComponent {
     }
 }
 ```
-2. Appeller la fonction quand le click se produit
+2. Appeller la fonction quand le clic se produit
 ```html
 <!-- J'attaque au clic ! -->
 <button (click)="onAttaque()">Attaque Charge !</button>
@@ -357,9 +357,9 @@ export class AppComponent {
   <button [disabled]="pokemon.pv > 10" >Capturer !</button>
 </div>
 ```
-Essayez de cliquer sur le bouton vous allez voir qu'un console.log se produit.
+Essayez de cliquer sur le bouton, vous allez voir qu'un `console.log` se produit.
 
-Le plus souvent je réagis à un event pour modifier une donnée. Ici je peut par exemple décrementer les pv du pokemon et angular va automatiquement mettre à jour l'affichage !
+Le plus souvent je réagis à un event pour modifier une donnée. Ici je peux par exemple décrémenter les PVs du `pokemon` et Angular va automatiquement mettre à jour l'affichage !
 
 ```ts
 onAttaque(){
@@ -378,11 +378,12 @@ onAttaque(){
   <button [disabled]="pokemon.pv > 10" >Capturer !</button>
 </div>
 ```
-Voyez par vous même ! Lors du clique, la variable `pokemon.pv` est diminué et son affichage dans la page est donc réévalué par Angular ! C'est à se demander pourquoi le HTML ne fonctionne pas comment ça d'office :P
+Voyez par vous-même ! Lors du clic, la variable `pokemon.pv` est diminuée et son affichage dans la page est donc réévalué par Angular !
+
 ![alt text](image-5.png)
 
 ### Récupérer l'événement
-Je peux réagir à une evenement mais je peux aussi récupérer cette event lorsqu'il se produit. Par exemple pour l'event `input`.
+Je peux réagir à une événement mais je peux aussi récupérer cette event lorsqu'il se produit. Par exemple pour l'event `input`.
 
 ```html
 <!-- Je fournis l'événement à la fonction avec $event -->
@@ -398,8 +399,8 @@ onTypeName(event : Event){
 > Nous verrons plus tard qu'il existe une méthode plus simple pour récupérer la valeur d'un input en la placant dans un état.
 
 ## Structure de controle
-Les structures de controle if, else, for de Angular sont décrites dans la doc : https://angular.dev/essentials/conditionals-and-loops
-
+Les structures de controle *if*, *else*, *for* de Angular sont décrites dans la doc : https://angular.dev/essentials/conditionals-and-loops
+*
 ### @if @else
 Depuis la version 17 d'angular il est possible d'utiliser des structure de controles à la syntaxe très proche du JavaScript. Vous pouvez les placez directement dans le HTML pour conditionner l'affichage de certaine balise.
 
