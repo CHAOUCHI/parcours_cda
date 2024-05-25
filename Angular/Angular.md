@@ -40,10 +40,10 @@ Habituellement la mise à jour de l'affichage se fait via le jeu de méthodes du
 On peut donc oublier l'api DOM et se concentrer sur la logique métier.
 
 ### Les fonctionnalités clés d'angular
-- La liaison d'une données et de son affichage (data binding)
-- La liaison d'un evenement et d'un fonction
-- Le découpage de l'application en composant réutilisable et customisable. De véritable balise HTML maison en somme.
-- La création de classe Service qui gère la logique non-UI. Angular les instancies et les rend disponible à l'ensemble de notre application via l'injection de dépendance.
+- La liaison d'une donnée et de son affichage (data binding)
+- La liaison d'un événement et d'une fonction
+- Le découpage de l'application en composants réutilisables et customisables. De véritables balises HTML maison en somme.
+- La création de classe *Service* qui gère la logique non-UI. Angular les instancies et les rend disponible à l'ensemble de notre application via l'injection de dépendance.
 
 En résumé Angular permet de créer une interface front-end réactif, stable et puissant.
 
