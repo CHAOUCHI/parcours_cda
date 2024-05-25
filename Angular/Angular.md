@@ -173,9 +173,10 @@ export class AppComponent {
 ### Afficher un état.
 Un composant angular est une classe qui représente une balise html via ses fichiers html,css et ts.
 
-La méchanique principale d'Angular c'est la création d'une variable dans la classe et son affichage directement dans le html dans écrit le moindre code js complexe.
+La mécanique principale d'Angular réside dans la création d'un attribut publique dans la classe et de son affichage directement dans le HTML. Le tout
 
 Je déclare une variable en tant qu'attribut publique de ma classe.
+
 *app.component.ts*
 ```ts
 import { Component } from '@angular/core';
@@ -216,7 +217,7 @@ Cette opération s'appelle le ***text interpolation*** et il est décrit lui et 
 > Retrouvez les bases d'Angular décrites dans la partie *Essentials* de la doc : https://angular.dev/essentials
 
 ## Text interpolation `{{ }}`
-L'interpolation d'une donnée et d'une affichage dans du html se fait via la méchanique du *text interpolation* et l'opérateur `{{}}`.
+L'interpolation d'une donnée et d'une affichage dans du html se fait via la mécanique du *text interpolation* grâce à l'opérateur `{{}}`.
 
 1. Je défini un attribut publique dans ma classe Component
 ```ts
@@ -237,14 +238,14 @@ export class AppComponent {
     }
 }
 ```
-2. Je l'affichage dans le html
+2. Je l'affiche dans le html
 ```html
 <div>
     <h2>{{pokemon.name}}</h2>
     <p>{{pokemon.id}}</p>
 </div>
 ```
-Tout se qui se trouve entre accolades est du TypeScript je peux donc écrire des choses comme :
+Tout se qui se trouve entre accolades est du TypeScript. Je peux donc écrire des choses comme :
 ```html
 <div>
     <h2>{{pokemon.name.toLowerCase()}}</h2>
@@ -252,7 +253,7 @@ Tout se qui se trouve entre accolades est du TypeScript je peux donc écrire des
 </div>
 ```
 ## Property binding `[ ]`
-De la même manière je peux affectuer une variable TS à n'importe qu'elle attribut HTML.
+De la même manière je peux affecter une variable TS à n'importe quel attribut HTML.
 ```ts
 import { Component } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
@@ -272,7 +273,7 @@ export class AppComponent {
     }
 }
 ```
-Pour se faire j'utilise l'opérateur `[]` autour du nom de l'attribut HTML pour lui affectuer du code TypeScript
+Pour se faire j'utilise l'opérateur `[]` autour du nom de l'attribut HTML pour lui affecter du code TypeScript
 ```html
 <div>
     <h2>{{pokemon.name}}</h2>
