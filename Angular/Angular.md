@@ -398,13 +398,13 @@ onTypeName(event : Event){
 ```
 > Nous verrons plus tard qu'il existe une méthode plus simple pour récupérer la valeur d'un input en la placant dans un état.
 
-## Structure de controle
-Les structures de controle *if*, *else*, *for* de Angular sont décrites dans la doc : https://angular.dev/essentials/conditionals-and-loops
-*
-### @if @else
-Depuis la version 17 d'angular il est possible d'utiliser des structure de controles à la syntaxe très proche du JavaScript. Vous pouvez les placez directement dans le HTML pour conditionner l'affichage de certaine balise.
+## Structures de contrôle
+Les structures de controle *if*, *else* et *for* de Angular sont décrites dans la doc : https://angular.dev/essentials/conditionals-and-loops
 
-Soit ce composant TS 
+### @if @else
+Depuis la version 17 d'angular il est possible d'utiliser des structures de controles à la syntaxe très proche du JavaScript. Vous pouvez les placer directement dans le HTML pour conditionner l'affichage de certaine balise.
+
+Soit ce composant TS :
 ```ts
 import { Component } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
@@ -444,9 +444,9 @@ Mon pokemon peut être sauvage ou non. Si le pokemon est sauvage je peux le capt
 ```
 
 #### @else
-Evidement le *else* existe avec Angular toujours précédé d'un arobase.
+Evidemment le *else* existe avec Angular toujours précédé d'un arobase.
 
-Si mon pokemon n'est pas sauvage je peut signaler le nom de son dresseur plutot qu'un bouton capturer!
+Si mon pokemon n'est pas sauvage je peut signaler le nom de son dresseur plutôt qu'un bouton capturer!
 ```html
 <div>
   <h2>{{pokemon.name}}</h2>
