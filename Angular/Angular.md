@@ -31,9 +31,9 @@ De nombreux frameworks permettent de créer des SPA, parmit les plus connus on r
 - Next.js développé par Vercel, une surcouche de la bibliotèque d'UI React (Facebook).
 
 ## Angular, pourquoi ?
-Angular permet de résoudre une problématique classique du développement front-end de SPA : la mise à journée de l'affichage en fonction des données (variables) JavaScript.
-### La fin de window.document ...
-Habituellement la mise à jour de l'affichage se fait via le jeu de méthodes du DOM : createElement, addEventListener, querySelector, etc.
+Angular permet de résoudre une problématique classique du développement front-end de SPA : la mise à jour de l'affichage en fonction des données (variables) JavaScript.
+### La fin de `window.document` ...
+Habituellement la mise à jour de l'affichage se fait via le jeu de méthodes du DOM : `createElement`, `addEventListener`, `querySelector`, etc.
 
 *Avec Angular plus besoin de tout ça : je déclare une variable et je l'affiche. Si la variable change l'affichage se mettera à jour **automatiquement**.*
 
@@ -67,7 +67,8 @@ Installez le cli avec npm.
 ```bash
 npm install -g @angular/cli
 ```
-> ***ATTENTION WINDOWS !*** Veuillez éxécuter la commande suivante avec `npm install`
+> ### ***ATTENTION WINDOWS !***
+> Veuillez éxécuter la commande suivante avec `npm install`
 > ```powershell
 > Set-ExecutionPolicy -Scope CurrentUser -ExecutionPolicy RemoteSigned
 > ```
