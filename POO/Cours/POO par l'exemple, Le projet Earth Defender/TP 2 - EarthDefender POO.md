@@ -33,7 +33,7 @@ Nous utiliseront TypeScript plutôt que JavaScript pour sa syntaxe Orientée Obj
 
 TypeScript est un surcouche de JavaScript développé par Microsoft, il renforce JavaScript en lui rajoutant les types, c'est un langage moins permissif que JavaScript et il est obligatoire de le connaitre pour utiliser, à l'avenir, le framework Angular. Tout code TypeScript sera de toute façon au final tranformé en code JavaScript après la compilation.
 
-> A l'origine TypeScript a été crée par Microsoft pour faciliter le développement des versions Web de la suite Office. Le premier programme développé en TypeScript est VSCode. Le développement de VSCode à permit à Microsoft de tester TypeScript en condition réel. Pour plus d'info je recommande ce documentaire sur les conditions de développement de TypeScript : https://www.youtube.com/watch?v=U6s2pdxebSo&t=2189s.
+> A l'origine TypeScript a été crée par Microsoft pour faciliter le développement des versions Web de la suite Office. Le premier programme développé en TypeScript est VSCode. Le développement de VSCode a permis à Microsoft de tester TypeScript en condition réel. Pour plus d'info je recommande ce documentaire sur les conditions de développement de TypeScript : https://www.youtube.com/watch?v=U6s2pdxebSo&t=2189s.
 
 ## Cahier des charges
 |Tache|Description|Contraintes|
@@ -58,6 +58,9 @@ Installation de TypeScript Compiler
 npm install -g typescript
 ```
 ### Arborsecence
+
+Le sequelette du projet est disponible ici : https://github.com/CHAOUCHI/earth_defender
+
 ![alt text](image-1.png)
 - `build` contient le code JS compilé
 - `src` contient notre code TypeScript (TS)
@@ -120,6 +123,8 @@ Si vous avez le message dans la console tout roule !
 ### Chapitre 1 - Afficher le jeu
 Créez un dossier nommé `Classes` dans `src`, il contiendra toutes nos classes.
 
+Le point d'entrée de l'application est la classe Game.
+
 */src/Classes/Game.ts*
 ```ts
 export class Game{
@@ -158,7 +163,7 @@ const game = new Game();
 
 La méthode `Game.start()` lancera le jeu c'est donc dans cette méthode que nous allons, pour l'instant, colorier le fond du jeu.
 
-J'ajoute la méthode start().
+J'ajoute la méthode `Game.start()`.
 
 *src/Classes/Game.ts*
 ```ts
@@ -202,17 +207,19 @@ game.start();
 *Résultat :  un canvas noir*
 ![alt text](image-8.png)
 
-### Chapitre 2 - Créer un afficher un GameObject
-Nous allons maintenant afficher notre premier gameObject à l'écran.
+### Chapitre 2 - Créer et afficher un GameObject
+Nous allons maintenant afficher notre premier GameObject à l'écran.
 
-Nous allons avoir besoin d'image pour nos gameObjects.
+Nous allons avoir besoin d'image pour nos GameObjects.
 Vous pouvez donc copier les assets graphiques qui se trouve dans le lien figma dans un dossier `/public/assets/images`.
 Voici une image par défaut pour les GameObject
 
 *DefaultGameObject.png*
 ![alt text](DefaultGameObject.png)
 
-Importez la dans le fichier index.html
+> Si vous utilisez le sequelette de l'appli vous avez d'office tout les assets inclus.
+
+Importez l'image dans le fichier index.html
 
 *index.html*
 ```html
@@ -241,7 +248,7 @@ Importez la dans le fichier index.html
 #### Attendre le chargement des images
 
 Le jeu doit se lancer une fois toutes les images chargées.
-Il faut donc attendre le chargement de la page avec la fonction onload avant de démarrer le jeu.
+Il faut donc attendre le chargement de la page avec la fonction `window.onload` avant de démarrer le jeu.
 
 */src/script.ts*
 ```ts
@@ -255,13 +262,14 @@ window.onload = ()=>{
 
 #### Créer un GameObject
 
-Dans un dossier /src/Classes/GameObjects crée un fichier nommée GameObject.ts
+En POO tout doit être une classe. Chaque classe à sa propre résponsiabilité. Game s'occupe de l'affichage correcte du Jeu et de ses éléments. La classe GameObject quant a elle s'occupe d'un GameObject : sa position, son image, sa vie.
+
+Dans un dossier */src/Classes/GameObjects* créez un fichier nommé *GameObject.ts*
 
 *src/Classes/GameObjects/GameObject.ts*
 ```ts
 export class GameObject{
 
-    
     constructor(){
     }
 }
@@ -269,7 +277,7 @@ export class GameObject{
 
 #### La position d'un GameObject
 La position d'un GameObject est défini par deux number x et y.
-Créons donc un interface Position qui possède deux attributs x et y;
+Créez donc un interface Position qui possède deux attributs x et y;
 
 */src/Classes/Position.ts*
 ```ts
@@ -279,7 +287,7 @@ export interface Position{
 }
 ```
 
-Ajoutons ensuite une position a notre GameObject.
+Ajoutez ensuite une position à notre GameObject.
 
 */src/Classes/GameObjects/GameObject.ts*
 ```ts
@@ -298,11 +306,13 @@ export class GameObject{
 }
 ```
 
-#### L'image d'un gameObject
+En POO la chose la plus important est l'encapsulation. Les attributs d'une classe sont privés et pourront éventuellement être modifiés via des méthodes publiques *getter* et *setter*.
 
-> Assurez vous qu'un balise image avec pour id *asset_default* existe dans le index.html
+#### L'image d'un GameObject
 
-Notre jeu contiendra de nombreux assets graphique. En POO chaque classe a sa propre résponsabilité; il faut donc crée une classe `Assets` qui gère les assets graphiques.
+> Assurez vous qu'une balise image avec pour id *asset_default* existe dans le index.html
+
+Notre jeu contiendra de nombreux assets graphique. En POO chaque classe a sa propre responsabilité; il faut donc créer une classe `Assets` qui gère les assets graphiques.
 
 */src/Classes/Assets.ts*
 ```ts
@@ -316,9 +326,12 @@ export class Assets{
     }
 }
 ```
-> Notez que nous provoquons une erreur si l'image n'est pas trouvée. La bonne pratique veux que l'on privilégie `throw` en cas d'erreur plutôt qu'une valeur de retour comme `null`.
+> Notez que nous provoquons une erreur si l'image n'est pas trouvée. La bonne pratique veux que l'on privilégie `throw` en cas d'erreur plutôt qu'une valeur de retour comme `null` ou `false`.
 
-Une fois la fonction getter ajoutée je peux m'en servir dans le constructeur de GameObject.
+> Assets n'est qu'une facade pour récupérer des données à l'inverse de GameObject qui représente un élément du jeu. Je ne vais donc jamais directement instancier la classe Assets, ses méthodes sont donc *static*.
+> Une méthode static est accéssible directement en tant qu'attribut de la classe. Pas besoin donc de l'instancier avec `new`.
+
+Une fois la fonction *getter* ajoutée je peux m'en servir dans le constructeur de `GameObject`.
 
 ```ts
 import { Assets } from "../Assets.js";
@@ -334,16 +347,14 @@ export class GameObject{
             x : 0,
             y : 0
         };
-        // Assets ne possède que des méthodes static
-        // Car je n'ai besoin que d'une seul instance de Assets
         this.image = Assets.getDefaultImage();
     }
 }
 ```
 #### Affichage du GameObject
-Pour afficher le gameObject je veux ajouter une méthode draw à la classe Game qui utilise la méthode `context.drawImage()`.
+Pour afficher le `GameObject` je veux ajouter une méthode `draw` à la classe `Game` qui utilise la méthode `context.drawImage()`.
 
-J'ai besoin d'une image et de la position du GameObject pour déssiner une image. Seulement ces données sont privées. Je vais donc créer des getter dans la classe GameObject.
+J'ai besoin d'une image et de la position du GameObject pour dessiner un GameObject dans le canvas. Seulement ces données sont privées. Je vais donc créer des *getter* dans la classe GameObject.
 
 ```ts
 import { Assets } from "../Assets.js";
@@ -372,7 +383,7 @@ export class GameObject{
 }
 ```
 
-J'ajoute ensuite ma méthode draw pour dessiner un GameObject.
+J'ajoute ensuite la méthode `Game.draw` pour dessiner un GameObject.
 
 Elle prend  en paramètre un GameObject et le dessine avec la méthode `context.drawImage()` :
 
@@ -417,7 +428,7 @@ export class Game{
 }
 ```
 
-Il ne me reste plus qu'à utiliser cette méthode dans la méthode start().
+Il ne me reste plus qu'à utiliser cette méthode dans la méthode `Game.start()`.
 
 ```ts
 public start() : void{
@@ -437,7 +448,7 @@ public start() : void{
 ![alt text](image-9.png)
 
 ## Partie 2 - La boucle d'événement
-la boucle d'événement est une fonction qui est appellée en boucle avec un certain interval de temps.
+La boucle d'événement est une fonction qui est appelée en boucle à un certain interval de temps.
 
 Elle contiendra toute les actions qui doivent perdurer tout au long du jeu comme les déplacements, les inputs et les collisions.
 
@@ -455,7 +466,7 @@ private loop(){
     // 1frame/10ms ---> 100frames/1000ms ---> 100frames/1s
 }
 ```
-Puis appelée la dans `Game.start()` :
+Puis appelez la dans `Game.start()` :
 ```ts
 import { GameObject } from "./GameObjects/GameObject.js";
 
@@ -512,12 +523,12 @@ export class Game{
 ```
 
 ### Chapitre 4 - Afficher le joueur
-Le joueur est un gameObject. Seulement à l'avenir nous aurons de nombreux autres game object différent comme des Aliens, des Laser, etc.
+Le joueur est un `GameObject`. Seulement à l'avenir nous aurons de nombreux autres `GameObject` comme des Aliens, des Laser, etc.
 
-Il nous faut donc créer un classe Player qui est une spécialisation de la classe GameObject. Elle possèdera toutes ses capacité sans définir celle des autres GameObject future.
+Il nous faut donc créer un classe `Player` qui est une spécialisation de la classe `GameObject`. Elle possèdera toutes les capacitées spécifique au `Player` sans pour autant définir celles des autres `GameObjects`.
 
 #### L'asset image du Player
-Ajouter l'asset dans le index.html et ajoutez un getter dans la classe Assets.
+Ajoutez l'asset dans le `index.html` et ajoutez un *getter* dans la classe `Assets`.
 ```html
 <!DOCTYPE html>
 <html lang="fr">
@@ -564,9 +575,9 @@ export class Assets{
 ```
 
 #### Fournir le jeu au GameObject
-Les gameobject auront souvent besoin d'info venant du jeu comme la taille du canvas par exemple.
+Les `GameObject` auront parfois besoin d'info venant du jeu comme la taille du canvas par exemple.
 
-Il faut donc modifier le constructeur de GameObject pour qu'il prennent en paramètre le Game.
+Il faut donc modifier le constructeur de `GameObject` pour qu'il prennent en paramètre l'instance de `Game`.
 
 */src/Classes/GamesObjets/GameObject.ts*
 ```ts
@@ -582,7 +593,7 @@ constructor(game : Game){
 }
 ```
 
-Et je lui rajoute un getter public pour que les GameObject puissent accéder au Game.
+Et je lui rajoute un *getter* public pour que les `GameObjects` puissent accéder au `Game`.
 
 ```ts
 public getGame() : Game{
@@ -590,9 +601,9 @@ public getGame() : Game{
 }
 ```
 
-Je rajoute également les setter de position et d'image pour que la classe fille Player définir sa propre image et sa propre position.
+Je rajoute également les *setters* de position et d'image pour que la classe fille `Player` définisse sa propre image et sa propre position.
 
-> En effet un attribut privé et privé même de ses enfants.
+> En effet un attribut privé est privé même de ses enfants.
 
 Classe complète :
 ```ts
@@ -641,13 +652,13 @@ export class Player extends GameObject{
 }
 ```
 
-Nous voulons que le Player puissent gérer indépendement son initialisation (image, position).
+Nous voulons que le `Player` puissent gérer indépendement son initialisation (image, position).
 
-Pour ceci la classe GameObject va lui fournir une méthode auquel lui seul aura accès. Une méthode protected.
+Pour ceci la classe `GameObject` va lui fournir une méthode auquel lui seul aura accès. Une méthode `protected`.
 
-> Les méthodes protected sont des méthodes accéssible uniquement de la classe et des ses enfants.
+> Les méthodes `protected` sont des méthodes accéssibles uniquement de la classe mère et de ses enfants.
 
-Dans la classe `GameObject``:
+Dans la classe `GameObject` ajoutez une méthode `protected start()` :
 
 */src/Classes/GameObjects/GameObject.ts*
 ```ts
@@ -666,9 +677,11 @@ constructor(game : Game){
     this.start();
 }
 ```
-Je laisse la méthode start vide car se sera à une classe fille comme Player, Alien ou Laser de la remplir avec n'importe quelle actions qu'elles voudra effectuer.
+Je laisse la méthode `start` vide car se sera à une classe fille comme `Player`, `Alien` ou `Laser` de la remplir avec n'importe quelle actions qu'elles voudra effectuer.
 
 Dans le cas de Player, il veut définir sa propre image et sa position en bas au centre de l'écran.
+
+Je remplis (j'implémente) donc la méthode `start` dans la Player.
 
 ```ts
 import { Assets } from "../Assets.js";
@@ -686,29 +699,30 @@ export class Player extends GameObject{
 ```
 
 #### Dessiner le joueur 
-De la même façon que j'ai déssiner un gameObject par défaut tout à l'heure je créer un Player dans la méthode `Game.start()`.
+De la même façon que j'ai dessiné un `GameObject` par défaut tout à l'heure je créer un `Player` dans la méthode `Game.start()`.
 
-Le player est un attribut privée de la classe Game.
+Le `player` est un attribut privée de la classe `Game`.
 
 ```ts
 private player : Player;
 public start() : void{
-        // Clear context
         this.context.clearRect(0,0,this.CANVAS_WIDTH,this.CANVAS_HEIGHT);
         this.context.fillStyle = "#141414";
         this.context.fillRect(0,0,this.CANVAS_WIDTH,this.CANVAS_HEIGHT);
 
+        // J'instancie le GameObject
         this.player = new Player(this);
+        // Je le dessine
         this.draw(player);
-        // Start game loop
+
         this.loop();
     }
 ```
 
 ### Chapitre 5 - Déplacer le joueur
 Pour déplacer le joueur je dois :
-- Modifier la position du joueur à chaque frame et donc dans la boucle d'évenement
-- Redessiner le joueur à chaque frame de la boucle d'évenement
+- Modifier la position du joueur à chaque *frame* et donc dans la boucle d'événement
+- Redessiner le joueur à chaque *frame* de la boucle d'évenement
 
 #### Effectuer une action à chaque frame
 Nous voulons donner au Player la liberté de mettre à jour sa position à chaque frame du jeu.
@@ -720,7 +734,8 @@ Pour ceci nous allons, comme pour `GameObject.start()`, créer une méthode `pro
 protected update(){}
 ```
 
-Il faut appeler cette méthode dans le setInterval de la méthode `Game.loop()`. Cette méthode étant protected il nous faut ajouter un méthode publique *getter* qui l'appel.
+Il faut appeler cette méthode dans le `setInterval` de la méthode `Game.loop()`. 
+La méthode `GameObject.update()` étant `protected` il nous faut ajouter un méthode publique pour y accéder depuis `Game`.
 ```ts
 protected update(){}
 public callUpdate(){
@@ -735,20 +750,19 @@ Nous pouvons ensuite appeler la méthode `callUpdate` à chaque frame.
         setInterval(()=>{
             console.log("Frame!");
             
-            
             this.player.callUpdate();
 
         },10); // 1frame/10ms ---> 100frames/1000ms ---> 100frames/1s
     }
 ```
 
-La méthode update permet maintenant à n'importe quel `GameObject` d'effectuer une action à chaque frame.
+La méthode `GameObject.update` permet maintenant à n'importe quel `GameObject` d'effectuer des actions à chaque frame.
 
 C'est une partie centrale de notre jeu.
 
 #### Déplacer le joueur
 
-Déplaçons le joueur de 10px par frame dans la méthode update().
+Déplaçons le joueur de *10px* par *frame* grâce à la méthode `GameObject.update()`.
 
 ```ts
 import { Assets } from "../Assets.js";
@@ -774,7 +788,9 @@ export class Player extends GameObject{
 }
 ```
 
-Une fois ajouter la position du joueur est mise à jour *mais le joueur n'est pas redéssiné* à chaque frame.
+La position du joueur est maintenant mise à jour à chaque *frame*.
+
+*Mais le joueur n'est pas redéssiné à chaque frame*.
 
 Il faut donc le faire :
 
@@ -797,12 +813,11 @@ private loop(){
     },10); // 1frame/10ms ---> 100frames/1000ms ---> 100frames/1s
 }
 ```
-
 Le joueur devrait à présent se déplacer tout seul vers la droite de l'écran.
 
 ### Chapitre 6 - Lire les inputs du clavier
 #### Lire les inputs du clavier
-Au même titre que la classe Assets s'occupe des images la classe Input va s'occuper des entrées du clavier.
+Au même titre que la classe `Assets` s'occupe des images la classe `Input` s'occupe des entrées du clavier.
 
 ```ts
 export class Input{
@@ -849,7 +864,9 @@ export class Input{
 type Direction = 0 | 1 | -1;
 ```
 
-Il faut maintenant enclancher la lecture des *inputs* dans la méthode Game.start()
+Il faut maintenant écouter les *inputs*.
+
+J'appel la méthode `Input.listen()` dans la méthode `Game.start()`
 ```ts
  // Public methods
     public start() : void{
@@ -870,9 +887,16 @@ Il faut maintenant enclancher la lecture des *inputs* dans la méthode Game.star
 
 #### Utiliser l'axisX pour déplacer le Player
 
-La méthode Input.getAxisX() permet de savoir si le joueur va à gauche ou à droite via une `Direction` (0, 1 ou -1).
+La méthode `Input.getAxisX()` permet de savoir si le joueur va à gauche ou à droite via une `Direction` (0, 1 ou -1).
+
+- 0 signifie immobile
+- -1, la gauche
+- 1, la droite
 
 Je peux multiplier cette direction par la vitesse de déplacement du joueur pour le faire bouger à droite ou à gauche.
+> Un canvas HTML possède deux axes X et Y avec pour origine 0,0 en haut à gauche.
+
+Déplacez le joueur en fonction des *inputs* du clavier grâce à la méthode `Input.getAxis()`.
 
 */src/Classes/GameObjects/Player.ts*
 ```ts
@@ -898,19 +922,20 @@ export class Player extends GameObject{
     }
 }
 ```
-Le joueur devrait maintenant être capable de bouger de gauche à droite avec les inputs du clavier.
+Le joueur devrait maintenant être capable de bouger de gauche à droite en fonction des *inputs* du clavier.
 
-## Partie 3 - Une infinité de GameObjects
-Nous avons presque fini de mettre en place le socle de notre jeu.
+## Partie 3 - Une infinité de GameObjects !
+Nous avons presque fini de mettre en place les bases de notre jeu.
 
 ### Chapitre 7 - Ajouter les aliens
 Nous avons une joueur qui se déplace, il nous manque maintenant une horde d'Alien qui fonce sur lui.
 
 Pour faire apparaitre ces aliens il va falloir :
-- Coder un alien via la classe Alien qui hérite de GameObject et en faire apparaitre un qui fonce vers le bas du canvas.
-- Définir le nombre d'alien via une variable privée de la classe Game.
-- Créer un tableau de GameObject et ajouter le joueur et les aliens dedans
-- Parcourir le tableau de GameObject à chaque frame pour mettre à joueur et redessiner tout les GameObject (player et aliens compris).
+- Coder un alien via la classe `Alien`. Elle hérite de `GameObject`.
+- Faire apparaitre un `Alien` qui fonce vers le bas du canvas.
+- Définir le nombre d'alien via un attribut privée de la classe `Game`.
+- Créer un tableau de `GameObject` et ajouter le joueur et les aliens dedans
+- Parcourir le tableau de `GameObject` à chaque frame : mettre à jour et redessiner tout les `GameObject` (player et aliens compris).
 
 #### Coder un Alien
 Pour commencez il faut coder un Alien qui descend vers le bas du canvas à chaque frame.
@@ -942,16 +967,16 @@ export class Alien extends GameObject{
 ```
 
 #### Faire apparaitre un alien dans le jeu
-Pour faire appariatre un GameObject dans le jeu il faut
-- L'instancier dans start en créant un nouvelle attribut privé
-- Le dessiner dans loop avec Game.draw()
-- Le mettre à jour dans loop avec GameObject.callUpdate
+Pour faire appariatre un `GameObject` dans le jeu il faut
+- L'instancier dans `Game.start()` en créant un nouvelle attribut privé.
+- Le dessiner dans `Game.loop()` avec `Game.draw()` pour qu'il reste affiché à l'écran.
+- Le mettre à jour dans `Game.loop()` avec `GameObject.callUpdate()` pour le faire se déplacer.
 
 Ajoutez un attirbut privé dans la classe Game pour l'alien.
 ```ts
 private alien : Alien;
 ```
-Instanciez l'Alien dans Game.start()
+Instanciez et dessinez l'Alien dans `Game.start()`
 ```ts
     // Public methods
     public start() : void{
@@ -974,7 +999,7 @@ Instanciez l'Alien dans Game.start()
     }
 ```
 
-Mettez à jour l'alien en appelant sa méthode callUpdate dans Game.loop() et redessiné le avec sa méthode draw().
+Mettez à jour l'alien en appelant sa méthode `callUpdate()` dans `Game.loop()` et redessinez le avec la méthode `Game.draw()`.
 
 ```ts
     private loop(){
@@ -995,12 +1020,84 @@ Mettez à jour l'alien en appelant sa méthode callUpdate dans Game.loop() et re
     }
 ```
 
+La classe `Game` finale :
+```ts
+import { Alien } from "./GameObjects/Alien.js";
+import { GameObject } from "./GameObjects/GameObject.js";
+import { Player } from "./GameObjects/Player.js";
+import { Input } from "./Input.js";
+
+export class Game{
+    // Public attributs
+    public readonly CANVAS_WIDTH : number = 900;
+    public readonly CANVAS_HEIGHT : number = 600;
+    
+    // Private attributs
+    private context : CanvasRenderingContext2D;
+    private player : Player;
+    private alien : Alien;
+    
+    constructor(){
+        // Init Game canvas
+        const canvas : HTMLCanvasElement = document.querySelector("canvas");
+        canvas.height = this.CANVAS_HEIGHT;
+        canvas.width = this.CANVAS_WIDTH;
+        this.context = canvas.getContext("2d");
+    }
+
+    public start() : void{
+        // Clear context
+        this.context.clearRect(0,0,this.CANVAS_WIDTH,this.CANVAS_HEIGHT);
+        this.context.fillStyle = "#141414";
+        this.context.fillRect(0,0,this.CANVAS_WIDTH,this.CANVAS_HEIGHT);
+
+        this.player = new Player(this);
+        this.draw(this.player);
+
+        this.alien = new Alien(this);
+        this.draw(this.alien);
+
+        // Listen to input
+        Input.listen();
+        // Start game loop
+        this.loop();
+    }
+    
+    private draw(gameObject : GameObject){
+        this.context.drawImage(
+            gameObject.getImage(),
+            gameObject.getPosition().x,
+            gameObject.getPosition().y,
+            gameObject.getImage().width,
+            gameObject.getImage().height
+        );
+    }
+
+    private loop(){
+        setInterval(()=>{
+            console.log("Frame!");
+            // Clear context
+            this.context.clearRect(0,0,this.CANVAS_WIDTH,this.CANVAS_HEIGHT);
+            this.context.fillStyle = "#141414";
+            this.context.fillRect(0,0,this.CANVAS_WIDTH,this.CANVAS_HEIGHT);
+
+            this.player.callUpdate();
+            this.draw(this.player);
+            
+            this.alien.callUpdate();
+            this.draw(this.alien);
+
+        },10); 
+    }
+}
+```
+
 #### Faire apparaitre plusieurs Aliens
-Nous commençon à être à l'aise avec la création de GameObject.
+Nous commençons à être à l'aise avec la création de `GameObject`.
 
 Il est temps d'en faire apparaitre plusieurs.
 
-Au lieu de créer un attributs privé pour chaque GameObject nous allons créer un tableau de gameObject dans la classe Game.
+Au lieu de créer un attribut privé pour chaque `GameObject` nous allons créer un tableau de `GameObject` dans la classe `Game`.
 
 ```ts
 export class Game{
@@ -1012,24 +1109,27 @@ export class Game{
     public readonly CANVAS_HEIGHT : number = 600;
 
     private player : Player;
+    // Ajoutez un tableau vide de GameObject
     private gameObjects : GameObject[] = [];
 
     // ...
 }
 ```
 
-Pour rajouter un gameObject dans le tableau des gameObjects du jeu il suffit de faire un push(). Nous allons créer une fonction pour ça.
+Pour rajouter un `GameObject` dans le tableau des `GameObjects` il suffit de faire un `gameObjects.push()`.
 
-La méthode Game.instanciate()
+Nous allons créer une méthode pour ça. La méthode `Game.instanciate()`
 
-Dans la classe Game :
+Dans la classe `Game` ajoutez :
 ```ts
 public instanciate(gameObject : GameObject) : void{
     this.gameObjects.push(gameObject);
 }
 ```
 
-Ce tableau est lu dans boucle d'événement pour redéssiner et mettre à jour les gameObject.
+Pour redessiner tout les `GameObjects` à chaque frame il faut parcourir le tableau dans la boucle d'événement.
+
+Il faut également appeler la méthode `GameObject.callUpdate()` pour mettre à jour les `GameObjects`.
 
 ```ts
 private loop(){
@@ -1049,7 +1149,7 @@ private loop(){
     }
 ```
 
-Tout les gameObject doivent être contenu dans le tableau de gamebject pour être detecter par la boucle d'évenement, il nous faut donc mettre à jour le code de la fonction Game.start() pour rajouter notre player dans ce tableau.
+Tout les `GameObject` doivent être contenu dans le tableau de `GameObjects` pour être détectés par la boucle d'événement, il nous faut donc mettre à jour le code de la fonction `Game.start()` pour rajouter notre player dans ce tableau.
 
 ```ts
     // Public methods
@@ -1075,7 +1175,7 @@ Je défini le nombre d'aliens en tant qu'attribut privé de Game.
 ```ts
 private nbAliens : number = 10;
 ```
-Enfin nous pouvons instancier plusieurs Aliens via une boucle for.
+Enfin nous pouvons instancier plusieurs `Aliens` via une boucle *for*.
 ```ts
 public start() : void{
     // Clear context
@@ -1099,11 +1199,90 @@ public start() : void{
 *Résultat une vague aléatoire d'aliens*
 ![alt text](image-10.png)
 
-### Chapitre 8 - Ajouter les étoiles
-De la même manière que nous avons ajouter des aliens précedement, il faut maintenant ajoutez des étoiles dans le fond pour la déco.
 
-1 - Faites apparaitre des étoiles statiques en fond
-2 - Faites descendre les étoiles vers le bas et repositioner les aléatoirement en haut du canvas quand elle dépasses de l'écran. Ainsi nous auront l'impression qu'elles défiles sous le joueur.
+*Classe `Game` finale :*
+```ts
+import { Alien } from "./GameObjects/Alien.js";
+import { GameObject } from "./GameObjects/GameObject.js";
+import { Player } from "./GameObjects/Player.js";
+import { Input } from "./Input.js";
+
+export class Game{
+    // Public attributs
+    public readonly CANVAS_WIDTH : number = 900;
+    public readonly CANVAS_HEIGHT : number = 600;
+    
+    // Private attributs
+    private context : CanvasRenderingContext2D;
+    private nbAliens : number = 10;
+    private player : Player;
+    private gameObjects : GameObject[] = [];
+    
+    constructor(){
+        // Init Game canvas
+        const canvas : HTMLCanvasElement = document.querySelector("canvas");
+        canvas.height = this.CANVAS_HEIGHT;
+        canvas.width = this.CANVAS_WIDTH;
+        this.context = canvas.getContext("2d");
+    }
+
+    public start() : void{
+        // Clear context
+        this.context.clearRect(0,0,this.CANVAS_WIDTH,this.CANVAS_HEIGHT);
+        this.context.fillStyle = "#141414";
+        this.context.fillRect(0,0,this.CANVAS_WIDTH,this.CANVAS_HEIGHT);
+    
+        this.player = new Player(this);
+        this.instanciate(this.player)
+    
+        for (let i = 0; i < this.nbAliens; i++) {
+            this.instanciate(new Alien(this));
+        }
+    
+        // Listen to input
+        Input.listen();
+        // Start game loop
+        this.loop();
+    }
+    public instanciate(gameObject : GameObject) : void{
+        this.gameObjects.push(gameObject);
+    }   
+    
+    private draw(gameObject : GameObject){
+        this.context.drawImage(
+            gameObject.getImage(),
+            gameObject.getPosition().x,
+            gameObject.getPosition().y,
+            gameObject.getImage().width,
+            gameObject.getImage().height
+        );
+    }
+
+    private loop(){
+        setInterval(()=>{
+            console.log("Frame!");
+            // Clear context
+            this.context.clearRect(0,0,this.CANVAS_WIDTH,this.CANVAS_HEIGHT);
+            this.context.fillStyle = "#141414";
+            this.context.fillRect(0,0,this.CANVAS_WIDTH,this.CANVAS_HEIGHT);
+            
+            this.gameObjects.forEach(go=>{
+                go.callUpdate();
+                this.draw(go);
+            });
+            
+        },10); 
+    }
+}
+```
+
+### Chapitre 8 - Ajouter les étoiles
+Il faut maintenant ajoutez des étoiles dans le fond pour la déco.
+
+Pour ce faire suivez la même procédure que pour faire apparaitre plusieurs `Aliens`.
+
+1 - Faire apparaitre des étoiles statiques en fond de façon aléatoire.
+2 - Faire descendre les étoiles vers le bas et repositionées les en haut du canvas quand elle dépasses de l'écran. Ainsi nous auront l'impression qu'elles défiles sous le joueur.
 
 */src/Classes/GameObjects/Star.ts*
 ```ts
@@ -1129,6 +1308,96 @@ export class Star extends GameObject{
                 y : 0
             });
         }
+    }
+}
+```
+
+*/src/Game.ts*
+```ts
+import { Alien } from "./GameObjects/Alien.js";
+import { GameObject } from "./GameObjects/GameObject.js";
+import { Player } from "./GameObjects/Player.js";
+import { Star } from "./GameObjects/Star.js";
+import { Input } from "./Input.js";
+
+export class Game{
+    // Public attributs
+    public readonly CANVAS_WIDTH : number = 900;
+    public readonly CANVAS_HEIGHT : number = 600;
+    
+    // Private attributs
+    private context : CanvasRenderingContext2D;
+    private nbAliens : number = 10;
+
+
+    private player : Player;
+    private gameObjects : GameObject[] = [];
+    
+    constructor(){
+        // Init Game canvas
+        const canvas : HTMLCanvasElement = document.querySelector("canvas");
+        canvas.height = this.CANVAS_HEIGHT;
+        canvas.width = this.CANVAS_WIDTH;
+        this.context = canvas.getContext("2d");
+    }
+
+    public start() : void{
+        // Clear context
+        this.context.clearRect(0,0,this.CANVAS_WIDTH,this.CANVAS_HEIGHT);
+        this.context.fillStyle = "#141414";
+        this.context.fillRect(0,0,this.CANVAS_WIDTH,this.CANVAS_HEIGHT);
+    
+        this.player = new Player(this);
+        this.instanciate(this.player)
+    
+        for (let i = 0; i < this.nbAliens; i++) {
+            this.instanciate(new Alien(this));
+        }
+
+
+
+        /**
+         * Instanciation des Stars
+         */
+        for (let i = 0; i < 100; i++) {
+            this.instanciate(new Star(this));
+        }
+
+
+        
+        // Listen to input
+        Input.listen();
+        // Start game loop
+        this.loop();
+    }
+    public instanciate(gameObject : GameObject) : void{
+        this.gameObjects.push(gameObject);
+    }   
+    
+    private draw(gameObject : GameObject){
+        this.context.drawImage(
+            gameObject.getImage(),
+            gameObject.getPosition().x,
+            gameObject.getPosition().y,
+            gameObject.getImage().width,
+            gameObject.getImage().height
+        );
+    }
+
+    private loop(){
+        setInterval(()=>{
+            console.log("Frame!");
+            // Clear context
+            this.context.clearRect(0,0,this.CANVAS_WIDTH,this.CANVAS_HEIGHT);
+            this.context.fillStyle = "#141414";
+            this.context.fillRect(0,0,this.CANVAS_WIDTH,this.CANVAS_HEIGHT);
+            
+            this.gameObjects.forEach(go=>{
+                go.callUpdate();
+                this.draw(go);
+            })
+
+        },10); 
     }
 }
 ```
