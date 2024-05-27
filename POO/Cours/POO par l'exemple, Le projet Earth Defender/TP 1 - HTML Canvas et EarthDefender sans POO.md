@@ -454,7 +454,7 @@ L'alien fonctionne plutôt bien; il faut maintenant apprendre à gérer les inpu
 
 Le joueur se trouve en bas au centre du canvas.
 
-Il ne se déplace que horizontalement en fonction des inputs du clavier de l'utilisateur.
+Il ne se déplace que horizontalement en fonction des *inputs* du clavier de l'utilisateur.
 
 Si le joueur appui :
 - sur `Q` le joueur va à gauche 
@@ -466,7 +466,7 @@ Un cycle de jeu étant un appel de la fontion callback de `setInterval`.
 
 ### Pré-requis
 - le même `setInterval` qui déplace l'alien permet de mettre à jour l'affichage et la position du joueur.
-- les évenements `keydown` et `keyup` et la fonction `addEventListener` pour gérer l'appuie sur `Q` et `D`.
+- les événements `keydown` et `keyup` et la fonction `addEventListener` pour gérer l'appuie sur `Q` et `D`.
 
 ### Conseils
 Utilisez les constantes `CANVAS_WIDTH` et `CANVAS_HEIGHT` pour placer le joueur en bas au centre du canvas.
@@ -501,7 +501,7 @@ playerPos.x+=10*direction;      // Immobile
 ```
 Il vous reste maintenant juste à tirez parti des événements `keydown` et `keyup` pour définir la valeur de la variable direction.
 
-#### Créer ses propre types avec TypeScript
+#### Créer des types avec TypeScript
 La variable `direction` est un `number` certe mais elle ne possède que 3 valeurs possible.
 Je peux donc créer un type `Direction` spécifique à la direction.
 ```ts
@@ -623,7 +623,7 @@ Avant de commencer à utiliser la programmation orientée objet pour crée notre
 ## Exercice 3 :
 
 ### Aliens
-Faites apparaitre 4 aliens chacun à une position aléatoire. - Chaque aliens se déplace tout droit vers le bas du canvas.
+Faites apparaitre 4 aliens chacun à une position aléatoire. Chaque aliens se déplace tout droit vers le bas du canvas.
 
 ### Joueur
 Faire se déplacer le joueur de gauche à droite
@@ -643,7 +643,7 @@ Faire apparaitre des étoiles à des positions aléatoires.
 window.onload = main;
 
 function main(){
-    // Canavas initalisation----------------//
+    // Canvas initalisation----------------//
     const CANVAS_WIDTH = 900;
     const CANVAS_HEIGHT = 500;
 
@@ -895,7 +895,7 @@ function main(){
 ```
 
 # Nous avons besoin d'objets
-Vous l'avez remarquez, faire apparaitre deux ou trois personnages différent et utiliser des variables globales pour les déplacer est faisable sans OOP. Mais dès que plusieurs instance d'un personnage comme l'alien ou les étoiles doivent apparaitres plusieurs fois tout se complexifie et **les variables globales se multiplies.**
+Vous l'avez remarquez, faire apparaitre deux ou trois personnages différent et utiliser des variables globales pour les déplacer est faisable sans POO. Mais dès que plusieurs instances d'un personnage comme l'alien ou les étoiles doivent apparaitres plusieurs fois tout se complexifie et **les variables globales se multiplies.**
 
 
 ## Modifier deux personnages similaire
@@ -921,11 +921,11 @@ let alienPosition3 = {
 ```
 Je me retrouve avec autant de variables globales que d'aliens. Et ce nombres ne fera que grandir au fur et à mesure que le jeu grandit.
 
-Pire encore si l'on ne connais pas à l'avance le nombre de personnages comment pour les étoiles ou les lasers tirer par le joueur. Impossible de créer des variables globales pour ça et donc, une fois crée, il est impossible d'accéder à nouveaux à ces objets.
+Pire encore si l'on ne connais pas à l'avance le nombre de personnages comme pour les étoiles ou les lasers tirés par le joueur; impossible de créer des variables globales dans ce cas il faut donc utiliser une boucle *for* et donc, une fois crée, il est impossible d'accéder à nouveaux à ces objets locaux à la boucle *for*.
 
-Il faudrait un moyen de créer des personnages de façon dynamique pour pouvoir avoir autant de variables personnages que l'on souhaite. On pourrait appeler ces personnages des gameObjects.
+Il faudrait un moyen de créer des personnages de façon dynamique pour pouvoir avoir autant de variables personnages que l'on souhaite. On pourrait appeler ces personnages des *GameObjects*.
 
-Pour les créer il nous faudrait un genre de fonction de construction de gameObject.
+Pour les créer il nous faudrait un genre de fonction de construction de *GameObject*.
 
 Ceci est faisable en TypeScript grâce au classe et au interface.
 
@@ -935,7 +935,7 @@ Une classe représente un patron d'objet reproduisible et un interface représen
 
 GameObject est une classe qui possède une fonction de construction qui défini ses variables.
 
-Position est un interface qui défini x et y comme variables internes.
+`Position` est un interface qui défini x et y comme variables internes.
 
 > Les interface et les type dynamique sont plutot similaire en TypeScript à la différence qu'un type représente une union de type primaires et un interface une structure d'objet.
 
@@ -990,7 +990,7 @@ for(let i = 0; i<nbAliens; i++){
 }
 ```
 
-Je peux ensuite les afficher dans le setInterval via une autre boucle for.
+Je peux ensuite les afficher dans le *setInterval* via une autre boucle for.
 
 ```ts
 for(alien of aliens){
@@ -1135,12 +1135,12 @@ setInterval(()=>{
 
 ## Conclusion
 
-- Nous avons appréhendez l'api *canvas* qui permet de dessiner des images et de les faire bouger grâce à l'utilisation de `setInterval`.
+- Nous avons appréhendé l'api *canvas* qui permet de dessiner des images et de les faire bouger grâce à l'utilisation de `setInterval`.
 - Nous avons crée de nombreux gameObjects et sommes venu à la conclusion qu'il etait très pénible de travailler avec des variables globales.
 - Nous avons donc fabriqué une classe `GameObject` qui permet de créer des objets. La classe contient toutes la logique d'un gameObject comme : sa position, son image, la façon dont il ce déplace.
 - Les variables d'un objet sont appelées attributs.
 - Les fonctions d'un objet sont appelées méthodes
-- Un objet est réponsable de ses attributs et implémente des fonctions pour les modifier; comme la fonction `GameObject.move()` per exemple.
+- Un objet est réponsable de ses attributs et implémente des fonctions pour les modifier; comme la fonction `GameObject.move()` par exemple.
 
 **C'est la fin de ce TP.**
 
