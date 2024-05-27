@@ -21,6 +21,7 @@ Retrouvez toute les assets graphiques du projet via ce lien figma : https://www.
 Voici le diagramme de cas d'utilisation de l'application.
 ![Alt text](EarthDefenderUseCase.png)
 
+
 ## Technologies néccessaires
 
 - NPM

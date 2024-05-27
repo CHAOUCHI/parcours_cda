@@ -15,8 +15,7 @@ Retrouvez toute les assets graphiques du projet via ce lien figma : https://www.
 
 ## Use Case Diagramme
 Voici le diagramme de cas d'utilisation de l'application.
-![Alt text](EarthDefenderUseCase.png)
-
+![alt text](usecase.drawio.png)
 ## Technologies néccessaires
 
 - TypeScript
