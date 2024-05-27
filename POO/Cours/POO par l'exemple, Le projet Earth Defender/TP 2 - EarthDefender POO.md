@@ -146,8 +146,8 @@ Dans le constructeur de la classe Game :
 export class Game{
 
     private context : CanvasRenderingContext2D;
-    private readonly CANVAS_WIDTH : number = 900;
-    private readonly CANVAS_HEIGHT : number = 600;
+    public readonly CANVAS_WIDTH : number = 900;
+    public readonly CANVAS_HEIGHT : number = 600;
     
     constructor(){
         // Init Game canvas
@@ -168,17 +168,9 @@ export class Game{
 */src/Classes/Game.ts*
 ```ts
 export class Game{
-    /**
-     * Public attributs
-     */
-
-
-    /**
-     * Private attributs
-     */
     private context : CanvasRenderingContext2D;
-    private readonly CANVAS_WIDTH : number = 900;
-    private readonly CANVAS_HEIGHT : number = 600;
+    public readonly CANVAS_WIDTH : number = 900;
+    public readonly CANVAS_HEIGHT : number = 600;
     
     constructor(){
         // Init Game canvas
@@ -217,8 +209,8 @@ export class Game{
     
     // Private attributs
     private context : CanvasRenderingContext2D;
-    private readonly CANVAS_WIDTH : number = 900;
-    private readonly CANVAS_HEIGHT : number = 600;
+    public readonly CANVAS_WIDTH : number = 900;
+    public readonly CANVAS_HEIGHT : number = 600;
     
     constructor(){
         // Init Game canvas
@@ -249,8 +241,8 @@ export class Game{
     
     // Private attributs
     private context : CanvasRenderingContext2D;
-    private readonly CANVAS_WIDTH : number = 900;
-    private readonly CANVAS_HEIGHT : number = 600;
+    public readonly CANVAS_WIDTH : number = 900;
+    public readonly CANVAS_HEIGHT : number = 600;
     
     constructor(){
         // Init Game canvas
@@ -475,8 +467,8 @@ export class Game{
     
     // Private attributs
     private context : CanvasRenderingContext2D;
-    private readonly CANVAS_WIDTH : number = 900;
-    private readonly CANVAS_HEIGHT : number = 600;
+    public readonly CANVAS_WIDTH : number = 900;
+    public readonly CANVAS_HEIGHT : number = 600;
     
     constructor(){
         // Init Game canvas
@@ -511,8 +503,8 @@ export class Game{
     
     // Private attributs
     private context : CanvasRenderingContext2D;
-    private readonly CANVAS_WIDTH : number = 900;
-    private readonly CANVAS_HEIGHT : number = 600;
+    public readonly CANVAS_WIDTH : number = 900;
+    public readonly CANVAS_HEIGHT : number = 600;
     
     constructor(){
         // Init Game canvas
@@ -591,8 +583,8 @@ export class Game{
     
     // Private attributs
     private context : CanvasRenderingContext2D;
-    private readonly CANVAS_WIDTH : number = 900;
-    private readonly CANVAS_HEIGHT : number = 600;
+    public readonly CANVAS_WIDTH : number = 900;
+    public readonly CANVAS_HEIGHT : number = 600;
     
     constructor(){
         // Init Game canvas
