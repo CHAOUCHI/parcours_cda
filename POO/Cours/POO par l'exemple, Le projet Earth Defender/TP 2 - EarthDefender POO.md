@@ -1,6 +1,10 @@
 # La POO par l'exemple - EarthDefender
 
-Pour apprendre la POO nous allons concevoir un petit jeu vidéo nommée EarthDefender.
+Pour apprendre la POO nous allons conçevoir un petit jeu vidéo nommée *EarthDefender*.
+
+
+## Pré-requis
+- Avoir fini le TP 1 sur HTML Canvas et *EarthDefender* sans POO
 
 ## Concept du jeu
 Ce jeu est une version simplifié de *SpaceInvader* où un petit vaisseau spacial détruit des aliens pour proteger la Terre.
@@ -19,6 +23,7 @@ Voici le diagramme de cas d'utilisation de l'application.
 
 ## Technologies néccessaires
 
+- NPM
 - TypeScript
 - HTML Canva
 
@@ -45,91 +50,38 @@ TypeScript est un surcouche de JavaScript développé par Microsoft, il renforce
 | Bonus SON Joueur | Emmettre un son au tir du joueur |
 | Bonus SON musique | Faire tourner une musique en boucle en fond. |
 
+## Mise en place du projet
 
-# Pré-requis
-
-# NPM
-Le code TypeScript que nous écrivont n'est pas compréhensible du navigateur (il ne comprend que le JS), il nous faut donc installer le *TypeScript Compiler* (`tsc`), qui compile le code TypeScript en code JavaScript.
-
-Pour installer le compilateur TypeScript nous utilisons le Node Package Manager (`NPM`), c'est le gestionnaire d'extension de JavaScript. NPM est inclu dans l'installation de NodeJS, il nous suffit donc d'installer NodeJS.
-
-## Installer NodeJS et NPM sous Windows
-Télécharger NodeJS Long term Support (LTS) ici : https://nodejs.org/en
-![Alt text](image.png)
-> Long Term Support signifie que cette version de NodeJS est stable et toutes les failles sont corrigées pendant encore un moment. C'est donc une version fiable à utiliser pour la plupart des projets.
-
-## Installer NodeJS et npm sous Linux
-```bash
-sudo apt install nodejs npm
-```
-## Installer NodeJS et npm sous Mac
-Avec HomeBrew le gestionnaire de paquet MacOS :
-```bash
-brew install node
-```
-Ou à la main via le lien suivant : https://nodejs.org/en/download/
-
-## Installer le compilateur TypeScript
-Dans un invité de commande, executez la commande suivante pour installer TypeScriptCompiler(tsc) :
+### Logiciel pré-requis
+Installation de TypeScript Compiler
 ```bash
 npm install -g typescript
 ```
-> `-g` signifie `global`, le compilateur TypeScript est donc disponible sur l'ensemble de votre ordinateur.
-## Arborescence du projet
-Dans VSCode créer un nouveau dossier pour votre projet nommé : `EarthDefender`. 
+### Arborsecence
+![alt text](image-1.png)
+- `build` contient le code JS compilé
+- `src` contient notre code TypeScript (TS)
+- `public` contient les assets : images, sons.
+- `index.html` la page d'accueil du site.
+- `tsconfig.json` configure le compilateur TS
 
-Ce dossier contient :
-- un fichier `index.html`, la page d'accueil de votre jeu
-- un dossier nommé `src`, il contiendra notre code TypeScript
-- un dossier nommé `build`, il contiendra le code JavaScript compilé par TypeScript. Ce sera ce code qui sera importé par la balise `<script>` dans le index.html.
-- un fichier nommé `tsconfig.json`, il dictera à TypeScript comment se comporter.
-
-*Arborescence du projet EarthDefender*
-![Alt text](image-1.png)
-
-Dans le dossier `src`, créez un fichier nommée `script.ts` et placez y le code suivant :
-
-*src/script.ts*
-```ts
-let gameName : string = "EarthDefender !";
-console.log(gameName);
-```
-> Vous remarquez qu'en TypeScript on peut préciser le type d'un variable. Ainsi si je fais une erreur et tente de mettre, par exemple, un `number` dans une `string`, le compilateur TypeScript me retournera une erreur.
-
-## Configurer TypeScript
-
-Nous avons écrit un peu de TypeScript. Avant de le complier, nous allons indiquer au compilateur TypeScript de placer les fichiers compilés dans le dossier `build`.
-
-Dans `tsconfig.json` écrivez le code suivant :
-
-*tsconfig.json*
+### tsconfig.json
 ```json
 {
     "compilerOptions": {
-        "rootDir": "./src", // Les fichiers à compiler sont dans ./src
-        "outDir": "./build",    // Les fichiers JavaScript compilés seront dans ./build
-        "module": "ESNext"  /* Le JavaScript généré lors de la compilation utilise
-         la norme ECMAScript la plus récente.*/
+        "rootDir": "./src",
+        "outDir": "./build",
+        "module": "ESNext"
     }
 }
 ```
-
-> **Rappel : "module" : "ESNext"**
-> Le nom de la norme qui défini la syntaxe et le comportement du langage JavaScript est ECMAScript. A l'heure où j'écrit ce cours nous somme à ECMAScript2024. 
->
-> Dans tsconfig.json, **si le paramètre `module` prend la valeur `ESNext`, le compilateur compilera toujours le code dans le respect de la norme ECMAScript la plus récente.** En 2025 il utilisera donc la norme ECMAScript2025.
-> - Tout la norme ECMAScript est définie ici : https://tc39.es/ecma262/, c'est ce document qui est utilisé par les concepteurs de navigateur web pour implementer JavaScript.
-> - Plus de détail sur le fichier tsconfig.json ici : https://www.typescriptlang.org/docs/handbook/tsconfig-json.html
-
-## Compiler mon TypeScript en JavaScript
-
-Pour compiler, rendez-vous dans le dossier de votre projet avec une ligne de commande et tapez :
-```bash
-tsc
+### Compiler le TS
+Dans un fichier */src/script.ts*
+```ts
+const gameName : string = "EarthDefender!";
+console.log(gameName);
 ```
-TypeScript va compiler votre code pour transformer le TypeScript en JavaScript. Un fichier `script.js` est apparu dans le dossier `build`, nous pouvons donc l'importer dans le fichier `index.html`.
-
-*index.html*
+Dans un fichier */index.html*
 ```html
 <!DOCTYPE html>
 <html lang="fr">
@@ -137,47 +89,9 @@ TypeScript va compiler votre code pour transformer le TypeScript en JavaScript. 
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Earth Defender</title>
-    
-</head>
-<body>
-      
-</body>
-<script type="module" src="./build/script.js"></script>
-</html>
-```
-> Vous remarquez l'utilisation du `type=module` sur la balise `<script>`. Il est obligatoire de préciser `type=module` car à l'avenir le fichier `script.js` importera des classes contenu dans d'autres fichiers JavaScript or ceci n'est possible que si le navigateur interprète le fichier `script.js` comme un module JavaScript.
-
-Ouvrez votre projet dans le navigateur (j'utilise l'extension VSCode *Live Preview* ). Si tout c'est bien passé, il est écrit dans la console : `"Earth Defender !"`.
-
-## Watch mode - Compiler lors de la sauvegarde
-A chaque modification d'un fichier TypeScript il faut relancer la commande `tsc` pour recompiler le code en JavaScript, c'est génant.
-
-Nous souhaitons donc voir TypeScript compiler notre code à chaque fois que l'on sauvegarde un fichier pour ne pas avoir à lancer le compilateur à la main à chaque modification.
-
-Pour ceci rien de plus simple, il suffit de lancez le compilateur en mode *watch*.
-```bash
-tsc -w
-```
-![Alt text](image-2.png)
-
-Voilà ! A present TypeScript surveille nos fichiers et recompile le code à chaque modifications !
-
-# Canva HTML
-Avant de concevoir notre jeu grâce à la POO il convient de comprendre les bases de l'API Canvas. 
-
-Un canvas HTML est une balise `<canvas>` qui permet de dessiner librement à l'interieur. L'intérieur d'un canvas fait exeption à la manière traditonnel d'afficher des éléments en HTML et par concequant le CSS ne vous sera d'occupe utilité à l'interieur du canva.
-
-Tout les éléments interne au canva devront être dessiner en JavaScript.
-
-Soit le fichier HTML suivant qui permet d'afficher un canvas vide à la bordure noire.
-*index.html*
-```html
-<!DOCTYPE html>
-<html>
-<head>
     <style>
         canvas{
-            border : black solid 1px;
+            border : 1px solid black;
         }
     </style>
 </head>
@@ -189,454 +103,1032 @@ Soit le fichier HTML suivant qui permet d'afficher un canvas vide à la bordure 
 <script type="module" src="./build/script.js"></script>
 </html>
 ```
-*Résultat*
-![alt text](image-3.png)
 
-Une fois ce code mit en place la suite du code se passera en typescript dans le dossier `src`.
-
-## Initaliser le canva
-Avant de pouvoir dessiner il faut recupérer ce que l'on nomme le *contexte de canvas* à savoir un objet qui contient des méthodes permettant de dessiner dans le canvas.
-```ts
-// Je récupère la balise nommée canvas
-const canvas = document.querySelector("canvas");
-// Je récupère le contexte du canvas
-// pour pouvoir, à l'avenir, dessiner dedans.
-const context = canvas.getContext("2d");
+Lancez le compilateur TypeScript en *watchmode* avec la commande :
+```bash
+tsc -w
 ```
-Pour finir l'initalisation du canvas nous allons définir sa taille comme etant de 900x500px.
+> Il faut être à la racine du dossier au même niveau que le fichier *tsconfig.json*.
+
+*Résultat dans la console du navigateur*
+![alt text](image-7.png)
+
+Si vous avez le message dans la console tout roule !
+
+## Partie 1 - Initialisation du programme
+
+### Chapitre 1 - Afficher le jeu
+Créez un dossier nommé `Classes` dans `src`, il contiendra toutes nos classes.
+
+*/src/Classes/Game.ts*
 ```ts
-const CANVAS_WIDTH = 900;
-const CANVAS_HEIGHT = 500;
+export class Game{
+    /**
+     * Public attributs
+     */
 
-const canvas = document.querySelector("canvas");
-const context = canvas.getContext("2d");
 
-canvas.width = CANVAS_WIDTH;
-canvas.height = CANVAS_HEIGHT;
+    /**
+     * Private attributs
+     */
+    private context : CanvasRenderingContext2D;
+    private readonly CANVAS_WIDTH : number = 900;
+    private readonly CANVAS_HEIGHT : number = 600;
+    
+    constructor(){
+        // Init Game canvas
+        const canvas : HTMLCanvasElement = document.querySelector("canvas");
+        canvas.height = this.CANVAS_HEIGHT;
+        canvas.width = this.CANVAS_WIDTH;
+        this.context = canvas.getContext("2d");
+    }
+}
 ```
-Voilà s'en ai fini de l'initalisation du canvas! 
 
-Nous avons le contexte qui nous permettra de dessiner, nous avons ajouté une bordure noire autour du canvas pour le voir facilement et également défini une taille à ce canvas (900x500).
-## Définir la couleur de fond du canvas
-La méthode context.fillRect permet de remplir une zone du canvas.
-L'attribut context.fillStyle permet de définir la couleur utiliser par la méthode fillRect lors du remplissage.
+J'importe ensuite la classe Game pour instancier une partie dans le fichier script.ts.
+
+*src/script.ts*
 ```ts
-context.fillStyle = "#141414";  // HexaDec. Gris foncé
-context.fillRect(
-    0,0,            // [x,y] supérieur gauche
-    this.CANVAS_WIDTH,this.CANVAS_HEIGHT // [x,y] inférieur droit
-);
-```
-Les coordonnées [x,y] d'un canvas démarre à [0,0] en haut à gauche du canvas, ont appel ceci l'origine. Ici la fonction fillRect à besoin des coordonnées supérieur gauche et inférieur droit de la zone à remplir. Nous lui fournissont donc l'origine du canvas et le coin inférieur droit pour remplir l'entièreté du canvas.
+import {Game} from "./Classes/Game.js";
 
-> Pour rappel, la largeur correspond à l'axe x (l'abscisse) et la hauteur correspond à l'axe y (l'ordonnée).
-## Effacer le contenu du canvas
-Pour effacer tout le contenu du canvas ont utilise la méthode context.clearReact qui est similaire à fillRect dans ses paramètres et effacer tout ce qui se trouve dans entre les coordonnée fournit.
+const game = new Game();
+```
+> Pour éviter les soucis de type de fichier lors de l'import des scripts par le navigateur, précisez bien `Game.js` et non `Game.ts` dans l'import.
+> Ce sera le nom final du script après compilation et c'est de ce nom dont le navigateur aura besoin.
+
+La méthode `Game.start()` lancera le jeu c'est donc dans cette méthode que nous allons, pour l'instant, colorier le fond du jeu.
+
+J'ajoute la méthode start().
+
+*src/Classes/Game.ts*
 ```ts
-context.clearRect(0,0,CANVAS_WIDTH,CANVAS_HEIGHT);
+export class Game{
+    // Public attributs
+    
+    // Private attributs
+    private context : CanvasRenderingContext2D;
+    private readonly CANVAS_WIDTH : number = 900;
+    private readonly CANVAS_HEIGHT : number = 600;
+    
+    constructor(){
+        // Init Game canvas
+        const canvas : HTMLCanvasElement = document.querySelector("canvas");
+        canvas.height = this.CANVAS_HEIGHT;
+        canvas.width = this.CANVAS_WIDTH;
+        this.context = canvas.getContext("2d");
+    }
+
+    // Public methods
+
+    public start() : void{
+        // Clear context
+        this.context.clearRect(0,0,this.CANVAS_WIDTH,this.CANVAS_HEIGHT);
+        this.context.fillStyle = "#141414";
+        this.context.fillRect(0,0,this.CANVAS_WIDTH,this.CANVAS_HEIGHT);
+    }
+}
 ```
-## Afficher une image
-La méthode `context.drawImage()` permet de dessiner une image dans le canvas. 
 
-Pour se faire elle à besoin : 
-- d'un élément `HTMLImageElement` ( une balise `<img>`)
-- des coordonnées où dessiner l'image. (x,y)
+Et je l'appel dans script.ts pour lancer le jeu.
 
-Un `HTMLImageElement` est récupérable via la méthode querySelector().
+*src/script.ts*
+```ts
+import {Game} from "./Classes/Game.js";
 
-### Ajouter l'image dans le HTML
-Dans le dossier `/public/images/` placer l'image suivant sous le nom `Alien.png`.
+const game = new Game();
+game.start();
+```
 
-*/public/images/Alien.png*
-![alt text](../../TP/EarthDefender/public/images/Alien.png)
-> Cette image est également disponible depuis le lien figma du projet.
+*Résultat :  un canvas noir*
+![alt text](image-8.png)
 
-Dans le code HTML placez l'image comme d'habitude avec une balise `<img>` mais en rajoutant l'attribut HTML `hidden` qui permet de cacher l'image.
+### Chapitre 2 - Créer un afficher un GameObject
+Nous allons maintenant afficher notre premier gameObject à l'écran.
+
+Nous allons avoir besoin d'image pour nos gameObjects.
+Vous pouvez donc copier les assets graphiques qui se trouve dans le lien figma dans un dossier `/public/assets/images`.
+Voici une image par défaut pour les GameObject
+
+*DefaultGameObject.png*
+![alt text](DefaultGameObject.png)
+
+Importez la dans le fichier index.html
 
 *index.html*
 ```html
-...
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Earth Defender</title>
+    <style>
+        canvas{
+            border : 1px solid black;
+        }
+    </style>
+</head>
 <body>
-    <img src="public/images/Alien.png" alt="alien" class="alien" hidden>
+    <img src="./public/images/DefaultGameObject.png" id="asset_default" hidden>
     <canvas>
 
     </canvas>
 </body>
-...
+<script type="module" src="./build/script.js"></script>
+</html>
 ```
 
-### Afficher l'image dans le canvas
-L'affichage d'une image se fait via la fonction `drawImage`. 
+#### Attendre le chargement des images
 
-La fonction `drawImage` prend 4 paramètre :
-- une balise image
-- la position x
-- la position y
-- la largeur de l'image en pixel
-- la hauteur de l'image en pixel
+Le jeu doit se lancer une fois toutes les images chargées.
+Il faut donc attendre le chargement de la page avec la fonction onload avant de démarrer le jeu.
 
+*/src/script.ts*
 ```ts
+import {Game} from "./Classes/Game.js";
 
-// Je récupère une image qui à pour classe alien
-const image : HTMLImageElement = document.querySelector("img.alien");
-
-let position = {
-    x : 0,
-    y : 0
-};
-
-// Je l'affiche
-context.drawImage(
-    image,
-    position.x,  
-    position.y,
-    image.width,
-    image.height
-);
+window.onload = ()=>{
+    const game = new Game();
+    game.start();
+}
 ```
 
-Voilà un alien est afficher en haut à gauche du canvas !
-## Déplacer une image
-Nous souhaitons faire se déplacer l'alien vers le bas de l'écran.
+#### Créer un GameObject
 
-Il nous faut donc augementer la valeur de sa position Y (Vertical) petit à petit, disont par exemple à une vitesse de 1px/10ms.
+Dans un dossier /src/Classes/GameObjects crée un fichier nommée GameObject.ts
 
-## Exercice 1, déplacer un alien vers le bas: 
-### Objectif
-Déplacer l'alien vers le bas à une vitesse de 1px/10ms.
-
-### Pré-requis : 
-- `setInterval()`, la fonction vous permet d'exécuter du code toutes les 10ms.
-- La fonction `context.clearRect()` pour effacer tout ce qu'il y a l'écran.
-- La fonction `context.fillRect()` pour redessiner la couleur de fond.
-- La fonction `context.drawImage()` pour redessiner l'alien tout les 10ms.
-
-> Faite attention à l'ordre dans lequel vous faite les actions de dessin comme `drawImage`, `fillRect`. Le canvas fonctionne par couche et si vous appelez `fillRect` après avoir appelez `drawImage` vous recouverez votre alien par la couleur de fond.
-
-### Correction :
-<pre>
-
-
-
-
-
-
-
-
-
-
-
-attention spoil ;)
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-</pre>
+*src/Classes/GameObjects/GameObject.ts*
 ```ts
-const CANVAS_WIDTH = 900;
-const CANVAS_HEIGHT = 500;
+export class GameObject{
 
-const canvas = document.querySelector("canvas");
-const context = canvas.getContext("2d");
-
-canvas.width = CANVAS_WIDTH;
-canvas.height = CANVAS_HEIGHT;
-
-const alienImg : HTMLImageElement = document.querySelector("img.alien");
-
-let alienPos = {
-    x : 0,
-    y : 0
-};
-
-setInterval(()=>{
-    // Clear context
-    context.clearRect(0,0,this.CANVAS_WIDTH,this.CANVAS_HEIGHT);
-    // Draw back background color
-    context.fillStyle = "#141414";
-    context.fillRect(0,0,this.CANVAS_WIDTH,this.CANVAS_HEIGHT);
-
-    // Draw alien
-    context.drawImage(
-        alienImg,
-        alienPos.x,  
-        alienPos.y,
-        alienImg.width,
-        alienImg.height
-    );
-    // Move the alien for the next loop
-    alienPos.y+=1;
-},10); 
+    
+    constructor(){
+    }
+}
 ```
 
-## Déplacer le joueur avec les touches du clavier
-L'alien fonctionne plutot bien il faut maintenant apprendre à gérer les inputs utilisateur.
+#### La position d'un GameObject
+La position d'un GameObject est défini par deux number x et y.
+Créons donc un interface Position qui possède deux attributs x et y;
 
-
-## Exercice 2, déplacer le joueur
-### Objectif
-Si le joueur appui :
-- sur `Q` le joueur va à gauche 
-- sur `D` le joueur va à droite
-
-### Pré-requis
-- le même setInterval qui déplace l'alien
-- les évenements keydown et keyup et la fonction addEventListener pour gérer l'appuie sur Q et D.
-
-### Conseil
-Utilisez les constantes CANVAS_WIDTH et CANVAS_HEIGHT pour placer le joueur en bas au centre du canvas.
+*/src/Classes/Position.ts*
 ```ts
-const playerPos = {
-    x : CANVAS_WIDTH/2,
-    y : CANVAS_HEIGHT - 100
-};
+export interface Position{
+    x : number;
+    y : number;
+}
 ```
 
-Le joueur se déplace sur l'axe X. Si vous incrémentez la position x du joueur il ira donc à droite.
+Ajoutons ensuite une position a notre GameObject.
+
+*/src/Classes/GameObjects/GameObject.ts*
 ```ts
-playerPos+=10;      // le joueur va à droite
-```
-Si vous la décrementé il ira à gauche.
-```ts
-playerPos+=-10;      // le joueur va à gauche
+import { Position } from "../Position.js";
+
+export class GameObject{
+    
+    private position : Position;
+    
+    constructor(){
+        this.position = {
+            x : 0,
+            y : 0
+        };
+    }
+}
 ```
 
-L'astuce c'est de définir une variable nommé direction qui peut avoir pour valeurs 0,1 ou -1 et de la multiplier à la vitesse de 10px du joueur.
-```ts
-let direction = 1;
-playerPos+=10*direction;      // Droite
-```
-```ts
-let direction = -1;
-playerPos+=10*direction;      // Gauche
-```
-```ts
-let direction = 0;
-playerPos+=10*direction;      // Immobile
-```
-Il vous reste maintenant juste à tirer partit des évenements keydown et keyup pour définir la valeur de direction.
+#### L'image d'un gameObject
 
+> Assurez vous qu'un balise image avec pour id *asset_default* existe dans le index.html
 
-### Correction 
+Notre jeu contiendra de nombreux assets graphique. En POO chaque classe a sa propre résponsabilité; il faut donc crée une classe `Assets` qui gère les assets graphiques.
+
+*/src/Classes/Assets.ts*
+```ts
+export class Assets{
+    public static getDefaultImage(){
+        const image : HTMLImageElement = document.querySelector("img#asset_default");
+        if(image == null){
+            throw Error("No assets found");
+        }
+        return image;
+    }
+}
+```
+> Notez que nous provoquons une erreur si l'image n'est pas trouvée. La bonne pratique veux que l'on privilégie `throw` en cas d'erreur plutôt qu'une valeur de retour comme `null`.
+
+Une fois la fonction getter ajoutée je peux m'en servir dans le constructeur de GameObject.
 
 ```ts
-// Typescript permet de créer des types en plus des types primitif du langage JavaScript.
+import { Assets } from "../Assets.js";
+import { Position } from "../Position.js";
+
+export class GameObject{
+    
+    private position : Position;
+    private image : HTMLImageElement;
+    
+    constructor(){
+        this.position = {
+            x : 0,
+            y : 0
+        };
+        // Assets ne possède que des méthodes static
+        // Car je n'ai besoin que d'une seul instance de Assets
+        this.image = Assets.getDefaultImage();
+    }
+}
+```
+#### Affichage du GameObject
+Pour afficher le gameObject je veux ajouter une méthode draw à la classe Game qui utilise la méthode `context.drawImage()`.
+
+J'ai besoin d'une image et de la position du GameObject pour déssiner une image. Seulement ces données sont privées. Je vais donc créer des getter dans la classe GameObject.
+
+```ts
+import { Assets } from "../Assets.js";
+import { Position } from "../Position.js";
+
+export class GameObject{
+    
+    private position : Position;
+    private image : HTMLImageElement;
+    
+    constructor(){
+        this.position = {
+            x : 0,
+            y : 0
+        };
+        this.image = Assets.getDefaultImage();
+    }
+
+    // Getter d'image et de position
+    public getImage() : HTMLImageElement{
+        return this.image;
+    }
+    public getPosition() : Position{
+        return this.position;
+    }
+}
+```
+
+J'ajoute ensuite ma méthode draw pour dessiner un GameObject.
+
+Elle prend  en paramètre un GameObject et le dessine avec la méthode `context.drawImage()` :
+
+```ts
+import { GameObject } from "./GameObjects/GameObject.js";
+
+export class Game{
+    // Public attributs
+    
+    // Private attributs
+    private context : CanvasRenderingContext2D;
+    private readonly CANVAS_WIDTH : number = 900;
+    private readonly CANVAS_HEIGHT : number = 600;
+    
+    constructor(){
+        // Init Game canvas
+        const canvas : HTMLCanvasElement = document.querySelector("canvas");
+        canvas.height = this.CANVAS_HEIGHT;
+        canvas.width = this.CANVAS_WIDTH;
+        this.context = canvas.getContext("2d");
+    }
+
+    // Public methods
+
+    public start() : void{
+        // Clear context
+        this.context.clearRect(0,0,this.CANVAS_WIDTH,this.CANVAS_HEIGHT);
+        this.context.fillStyle = "#141414";
+        this.context.fillRect(0,0,this.CANVAS_WIDTH,this.CANVAS_HEIGHT);
+    }
+
+    //  La fonction draw qui affiche un gameObject
+    private draw(gameObject : GameObject){
+        this.context.drawImage(
+            gameObject.getImage(),
+            gameObject.getPosition().x,
+            gameObject.getPosition().y,
+            gameObject.getImage().width,
+            gameObject.getImage().height
+        );
+    }
+}
+```
+
+Il ne me reste plus qu'à utiliser cette méthode dans la méthode start().
+
+```ts
+public start() : void{
+        // Clear context
+        this.context.clearRect(0,0,this.CANVAS_WIDTH,this.CANVAS_HEIGHT);
+        this.context.fillStyle = "#141414";
+        this.context.fillRect(0,0,this.CANVAS_WIDTH,this.CANVAS_HEIGHT);
+
+        // J'instancie un GameObject
+        const gameObject = new GameObject();
+        // Je le déssine
+        this.draw(gameObject);
+}
+```
+
+*Résultat un beau game object*
+![alt text](image-9.png)
+
+## Partie 2 - La boucle d'événement
+la boucle d'événement est une fonction qui est appellée en boucle avec un certain interval de temps.
+
+Elle contiendra toute les actions qui doivent perdurer tout au long du jeu comme les déplacements, les inputs et les collisions.
+
+Chaque tour de la boucle est une `frame` de jeu.
+
+### Chapitre 3 - La boucle d'événement
+Pour l'instant nous allons simplement afficher un `console.log()` en boucle toute les 10ms (soit 100fps).
+
+Ajoutez la méthode privée `loop()` dans la classe Game.
+```ts
+private loop(){
+    setInterval(()=>{
+        console.log("Frame!");
+    },10);
+    // 1frame/10ms ---> 100frames/1000ms ---> 100frames/1s
+}
+```
+Puis appelée la dans `Game.start()` :
+```ts
+import { GameObject } from "./GameObjects/GameObject.js";
+
+export class Game{
+    // Public attributs
+    
+    // Private attributs
+    private context : CanvasRenderingContext2D;
+    private readonly CANVAS_WIDTH : number = 900;
+    private readonly CANVAS_HEIGHT : number = 600;
+    
+    constructor(){
+        // Init Game canvas
+        const canvas : HTMLCanvasElement = document.querySelector("canvas");
+        canvas.height = this.CANVAS_HEIGHT;
+        canvas.width = this.CANVAS_WIDTH;
+        this.context = canvas.getContext("2d");
+    }
+
+    // Public methods
+    public start() : void{
+        // Clear context
+        this.context.clearRect(0,0,this.CANVAS_WIDTH,this.CANVAS_HEIGHT);
+        this.context.fillStyle = "#141414";
+        this.context.fillRect(0,0,this.CANVAS_WIDTH,this.CANVAS_HEIGHT);
+
+        const gameObject = new GameObject();
+        this.draw(gameObject);
+        
+        
+        // Start the game loop
+        this.loop();
+    
+    
+    }
+    
+    private draw(gameObject : GameObject){
+        this.context.drawImage(
+            gameObject.getImage(),
+            gameObject.getPosition().x,
+            gameObject.getPosition().y,
+            gameObject.getImage().width,
+            gameObject.getImage().height
+        );
+    }
+
+    private loop(){
+        setInterval(()=>{
+            console.log("Frame!");
+        },10); 
+        // 1frame/10ms ---> 100frames/1000ms ---> 100frames/1s
+    }
+}
+```
+
+### Chapitre 4 - Afficher le joueur
+Le joueur est un gameObject. Seulement à l'avenir nous aurons de nombreux autres game object différent comme des Aliens, des Laser, etc.
+
+Il nous faut donc créer un classe Player qui est une spécialisation de la classe GameObject. Elle possèdera toutes ses capacité sans définir celle des autres GameObject future.
+
+#### L'asset image du Player
+Ajouter l'asset dans le index.html et ajoutez un getter dans la classe Assets.
+```html
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Earth Defender</title>
+    <style>
+        canvas{
+            border : 1px solid black;
+        }
+    </style>
+</head>
+<body>
+    <img src="./public/images/DefaultGameObject.png" id="asset_default" hidden>
+    <img src="./public/images/Player.png" id="asset_player" hidden>
+    <canvas>
+
+    </canvas>
+</body>
+<script type="module" src="./build/script.js"></script>
+</html>
+```
+
+*/src/Classes/Assets.ts*
+```ts
+export class Assets{
+    public static getDefaultImage() : HTMLImageElement{
+        const image : HTMLImageElement = document.querySelector("img#asset_default");
+        if(image == null){
+            throw Error("No assets found");
+        }
+        return image;
+    }
+    // Ajout du getter d'asset player
+    public static getPlayerImage() : HTMLImageElement{
+        const image : HTMLImageElement = document.querySelector("img#asset_player");
+        if(image == null){
+            throw Error("No assets found");
+        }
+        return image;
+    }
+}
+```
+
+#### Fournir le jeu au GameObject
+Les gameobject auront souvent besoin d'info venant du jeu comme la taille du canvas par exemple.
+
+Il faut donc modifier le constructeur de GameObject pour qu'il prennent en paramètre le Game.
+
+*/src/Classes/GamesObjets/GameObject.ts*
+```ts
+private game : Game;
+constructor(game : Game){
+    this.position = {
+        x : 0,
+        y : 0
+    };
+    this.image = Assets.getDefaultImage();
+    this.game = game;
+    this.start();
+}
+```
+
+Et je lui rajoute un getter public pour que les GameObject puissent accéder au Game.
+
+```ts
+public getGame() : Game{
+    return this.game;
+}
+```
+
+Je rajoute également les setter de position et d'image pour que la classe fille Player définir sa propre image et sa propre position.
+
+> En effet un attribut privé et privé même de ses enfants.
+
+Classe complète :
+```ts
+import { Assets } from "../Assets.js";
+import { Game } from "../Game.js";
+import { Position } from "../Position.js";
+
+export class GameObject{
+    
+    private position : Position;
+    private image : HTMLImageElement;
+    private game : Game;
+    constructor(game : Game){
+        this.position = {
+            x : 0,
+            y : 0
+        };
+        this.image = Assets.getDefaultImage();
+        this.game = game;
+    }
+
+    public getImage() : HTMLImageElement{
+        return this.image;
+    }
+    public getPosition() : Position{
+        return this.position;
+    }
+    public getGame() : Game{
+        return this.game;
+    }
+    public setImage(image : HTMLImageElement){
+        this.image = image;
+    }
+    public setPosition(position : Position){
+        this.position = position;
+    }
+}
+```
+
+#### La classe Player hérite de GameObject
+Pour créer la classe `Player` à partir de la classe `GameObject` nous allons la faire hériter de `GameObject` avec le mot clé `extends`;
+```ts
+import { GameObject } from "./GameObject.js";
+
+export class Player extends GameObject{
+}
+```
+
+Nous voulons que le Player puissent gérer indépendement son initialisation (image, position).
+
+Pour ceci la classe GameObject va lui fournir une méthode auquel lui seul aura accès. Une méthode protected.
+
+> Les méthodes protected sont des méthodes accéssible uniquement de la classe et des ses enfants.
+
+Dans la classe `GameObject``:
+
+*/src/Classes/GameObjects/GameObject.ts*
+```ts
+protected start(){ }
+```
+J'appel ensuite cette méthode dans le constructeur.
+```ts
+constructor(game : Game){
+    this.position = {
+        x : 0,
+        y : 0
+    };
+    this.image = Assets.getDefaultImage();
+    this.game = game;
+    // J'appel start
+    this.start();
+}
+```
+Je laisse la méthode start vide car se sera à une classe fille comme Player, Alien ou Laser de la remplir avec n'importe quelle actions qu'elles voudra effectuer.
+
+Dans le cas de Player, il veut définir sa propre image et sa position en bas au centre de l'écran.
+
+```ts
+import { Assets } from "../Assets.js";
+import { GameObject } from "./GameObject.js";
+
+export class Player extends GameObject{
+    protected start(): void {
+        this.setImage(Assets.getPlayerImage());
+        this.setPosition({
+            x : this.getGame().CANVAS_WIDTH/2,
+            y : this.getGame().CANVAS_HEIGHT - this.getImage().height - 10
+        });
+    }
+}
+```
+
+#### Dessiner le joueur 
+De la même façon que j'ai déssiner un gameObject par défaut tout à l'heure je créer un Player dans la méthode `Game.start()`.
+
+Le player est un attribut privée de la classe Game.
+
+```ts
+private player : Player;
+public start() : void{
+        // Clear context
+        this.context.clearRect(0,0,this.CANVAS_WIDTH,this.CANVAS_HEIGHT);
+        this.context.fillStyle = "#141414";
+        this.context.fillRect(0,0,this.CANVAS_WIDTH,this.CANVAS_HEIGHT);
+
+        this.player = new Player(this);
+        this.draw(player);
+        // Start game loop
+        this.loop();
+    }
+```
+
+### Chapitre 5 - Déplacer le joueur
+Pour déplacer le joueur je dois :
+- Modifier la position du joueur à chaque frame et donc dans la boucle d'évenement
+- Redessiner le joueur à chaque frame de la boucle d'évenement
+
+#### Effectuer une action à chaque frame
+Nous voulons donner au Player la liberté de mettre à jour sa position à chaque frame du jeu.
+
+Pour ceci nous allons, comme pour `GameObject.start()`, créer une méthode `protected` nommée `GameObject.update()` qui sera appelée à chaque frame dans le `setInterval()`.
+
+*Dans GameObject.ts*
+```ts
+protected update(){}
+```
+
+Il faut appeler cette méthode dans le setInterval de la méthode `Game.loop()`. Cette méthode étant protected il nous faut ajouter un méthode publique *getter* qui l'appel.
+```ts
+protected update(){}
+public callUpdate(){
+    this.update();
+}
+```
+
+Nous pouvons ensuite appeler la méthode `callUpdate` à chaque frame.
+
+```ts
+    private loop(){
+        setInterval(()=>{
+            console.log("Frame!");
+            
+            
+            this.player.callUpdate();
+
+        },10); // 1frame/10ms ---> 100frames/1000ms ---> 100frames/1s
+    }
+```
+
+La méthode update permet maintenant à n'importe quel `GameObject` d'effectuer une action à chaque frame.
+
+C'est une partie centrale de notre jeu.
+
+#### Déplacer le joueur
+
+Déplaçons le joueur de 10px par frame dans la méthode update().
+
+```ts
+import { Assets } from "../Assets.js";
+import { Input } from "../Input.js";
+import { GameObject } from "./GameObject.js";
+
+export class Player extends GameObject{
+    private speed : number = 10;
+
+    protected start(): void {
+        this.setImage(Assets.getPlayerImage());
+        this.setPosition({
+            x : this.getGame().CANVAS_WIDTH/2,
+            y : this.getGame().CANVAS_HEIGHT - this.getImage().height - 10
+        });
+    }
+    protected update(): void {
+        this.setPosition({
+            x : this.getPosition().x += this.speed,
+            y : this.getPosition().y
+        })
+    }
+}
+```
+
+Une fois ajouter la position du joueur est mise à jour *mais le joueur n'est pas redéssiné* à chaque frame.
+
+Il faut donc le faire :
+
+*/src/Classes/Games.ts*
+```ts
+private loop(){
+    setInterval(()=>{
+        console.log("Frame!");
+        // J'efface la frame précedente.
+        this.context.clearRect(0,0,this.CANVAS_WIDTH,this.CANVAS_HEIGHT);
+        this.context.fillStyle = "#141414";
+        this.context.fillRect(0,0,this.CANVAS_WIDTH,this.CANVAS_HEIGHT);
+        
+        //  Je redessine le joueur à chaque frame
+        this.draw(this.player);
+
+        // Je met à jour le joueur
+        this.player.callUpdate();
+
+    },10); // 1frame/10ms ---> 100frames/1000ms ---> 100frames/1s
+}
+```
+
+Le joueur devrait à présent se déplacer tout seul vers la droite de l'écran.
+
+### Chapitre 6 - Lire les inputs du clavier
+#### Lire les inputs du clavier
+Au même titre que la classe Assets s'occupe des images la classe Input va s'occuper des entrées du clavier.
+
+```ts
+export class Input{
+    private static axisX : Direction = 0;
+    public static getAxisX(){
+        return this.axisX;
+    }
+    public static listen(){
+        // Key Down
+        document.addEventListener("keydown",(event)=>{
+            switch (event.key) {
+                // Go right
+                case "d":
+                case "D":
+                    Input.axisX = 1;
+                    break;
+                // Go left
+                case "q":
+                case "Q":
+                    Input.axisX = -1;
+                    break;
+                default:
+                    break;
+            }
+        });
+
+        // Key Realeased
+        document.addEventListener("keyup",(event)=>{
+            switch (event.key) {
+                // Player Stops
+                case "d":
+                case "D":
+                case "q":
+                case "Q":
+                    Input.axisX = 0;
+                break;
+                default:
+                    break;
+            }
+        });
+    }
+}
+
 type Direction = 0 | 1 | -1;
-// Le type Direction ne peut avoir comme valeurs exlusivement 0, 1 ou -1.
+```
 
-const playerImg : HTMLImageElement = document.querySelector("img.player");
-const playerPos = {
-    x : CANVAS_WIDTH/2,
-    y : CANVAS_HEIGHT - 100
-};
-let direction : Direction = 0;
+Il faut maintenant enclancher la lecture des *inputs* dans la méthode Game.start()
+```ts
+ // Public methods
+    public start() : void{
+        // Clear context
+        this.context.clearRect(0,0,this.CANVAS_WIDTH,this.CANVAS_HEIGHT);
+        this.context.fillStyle = "#141414";
+        this.context.fillRect(0,0,this.CANVAS_WIDTH,this.CANVAS_HEIGHT);
 
-setInterval(()=>{
+        this.player = new Player(this);
+        this.draw(this.player);
+
+        // Listen to input
+        Input.listen();
+        // Start game loop
+        this.loop();
+    }
+```
+
+#### Utiliser l'axisX pour déplacer le Player
+
+La méthode Input.getAxisX() permet de savoir si le joueur va à gauche ou à droite via une `Direction` (0, 1 ou -1).
+
+Je peux multiplier cette direction par la vitesse de déplacement du joueur pour le faire bouger à droite ou à gauche.
+
+*/src/Classes/GameObjects/Player.ts*
+```ts
+import { Assets } from "../Assets.js";
+import { Input } from "../Input.js";
+import { GameObject } from "./GameObject.js";
+
+export class Player extends GameObject{
+    private speed : number = 10;
+
+    protected start(): void {
+        this.setImage(Assets.getPlayerImage());
+        this.setPosition({
+            x : this.getGame().CANVAS_WIDTH/2,
+            y : this.getGame().CANVAS_HEIGHT - this.getImage().height - 10
+        });
+    }
+    protected update(): void {
+        this.setPosition({
+            x : this.getPosition().x += this.speed*Input.getAxisX(),
+            y : this.getPosition().y
+        })
+    }
+}
+```
+Le joueur devrait maintenant être capable de bouger de gauche à droite avec les inputs du clavier.
+
+## Partie 3 - Une infinité de GameObjects
+Nous avons presque fini de mettre en place le socle de notre jeu.
+
+### Chapitre 7 - Ajouter les aliens
+Nous avons une joueur qui se déplace, il nous manque maintenant une horde d'Alien qui fonce sur lui.
+
+Pour faire apparaitre ces aliens il va falloir :
+- Coder un alien via la classe Alien qui hérite de GameObject et en faire apparaitre un qui fonce vers le bas du canvas.
+- Définir le nombre d'alien via une variable privée de la classe Game.
+- Créer un tableau de GameObject et ajouter le joueur et les aliens dedans
+- Parcourir le tableau de GameObject à chaque frame pour mettre à joueur et redessiner tout les GameObject (player et aliens compris).
+
+#### Coder un Alien
+Pour commencez il faut coder un Alien qui descend vers le bas du canvas à chaque frame.
+
+> N'oubliez pas d'ajouter l'asset `Alien.png` dans `index.html` et donc un nouveau getter dans la classe `Assets`.
+
+```ts
+import { Assets } from "../Assets.js"
+import { GameObject } from "./GameObject.js"
+
+export class Alien extends GameObject{
+    private speed : number = 1;
+
+    protected start(): void {
+        this.setImage(Assets.getAlienImage());
+        this.setPosition({
+            x : Math.random() * this.getGame().CANVAS_WIDTH,
+            y : Math.random() * this.getGame().CANVAS_HEIGHT /4 - 50,
+        });
+    }
+
+    protected update(): void {
+        this.setPosition({
+            x : this.getPosition().x,
+            y : this.getPosition().y +=this.speed
+        })
+    }
+}
+```
+
+#### Faire apparaitre un alien dans le jeu
+Pour faire appariatre un GameObject dans le jeu il faut
+- L'instancier dans start en créant un nouvelle attribut privé
+- Le dessiner dans loop avec Game.draw()
+- Le mettre à jour dans loop avec GameObject.callUpdate
+
+Ajoutez un attirbut privé dans la classe Game pour l'alien.
+```ts
+private alien : Alien;
+```
+Instanciez l'Alien dans Game.start()
+```ts
+    // Public methods
+    public start() : void{
+        // Clear context
+        this.context.clearRect(0,0,this.CANVAS_WIDTH,this.CANVAS_HEIGHT);
+        this.context.fillStyle = "#141414";
+        this.context.fillRect(0,0,this.CANVAS_WIDTH,this.CANVAS_HEIGHT);
+
+        this.player = new Player(this);
+        this.draw(this.player);
+
+        // Instanciation de l'alien
+        this.alien = new Alien(this);
+        this.draw(this.alien);
+
+        // Listen to input
+        Input.listen();
+        // Start game loop
+        this.loop();
+    }
+```
+
+Mettez à jour l'alien en appelant sa méthode callUpdate dans Game.loop() et redessiné le avec sa méthode draw().
+
+```ts
+    private loop(){
+        setInterval(()=>{
+            console.log("Frame!");
+            // Clear context
+            this.context.clearRect(0,0,this.CANVAS_WIDTH,this.CANVAS_HEIGHT);
+            this.context.fillStyle = "#141414";
+            this.context.fillRect(0,0,this.CANVAS_WIDTH,this.CANVAS_HEIGHT);
+
+            this.player.callUpdate();
+            this.draw(this.player);
+            
+            this.alien.callUpdate();
+            this.draw(this.alien);
+
+        },10); 
+    }
+```
+
+#### Faire apparaitre plusieurs Aliens
+Nous commençon à être à l'aise avec la création de GameObject.
+
+Il est temps d'en faire apparaitre plusieurs.
+
+Au lieu de créer un attributs privé pour chaque GameObject nous allons créer un tableau de gameObject dans la classe Game.
+
+```ts
+export class Game{
+    // Public attributs
+    
+    // Private attributs
+    private context : CanvasRenderingContext2D;
+    public readonly CANVAS_WIDTH : number = 900;
+    public readonly CANVAS_HEIGHT : number = 600;
+
+    private player : Player;
+    private gameObjects : GameObject[] = [];
+
+    // ...
+}
+```
+
+Pour rajouter un gameObject dans le tableau des gameObjects du jeu il suffit de faire un push(). Nous allons créer une fonction pour ça.
+
+La méthode Game.instanciate()
+
+Dans la classe Game :
+```ts
+public instanciate(gameObject : GameObject) : void{
+    this.gameObjects.push(gameObject);
+}
+```
+
+Ce tableau est lu dans boucle d'événement pour redéssiner et mettre à jour les gameObject.
+
+```ts
+private loop(){
+        setInterval(()=>{
+            console.log("Frame!");
+            // Clear context
+            this.context.clearRect(0,0,this.CANVAS_WIDTH,this.CANVAS_HEIGHT);
+            this.context.fillStyle = "#141414";
+            this.context.fillRect(0,0,this.CANVAS_WIDTH,this.CANVAS_HEIGHT);
+            
+            this.gameObjects.forEach(go=>{
+                go.callUpdate();
+                this.draw(go);
+            })
+
+        },10); 
+    }
+```
+
+Tout les gameObject doivent être contenu dans le tableau de gamebject pour être detecter par la boucle d'évenement, il nous faut donc mettre à jour le code de la fonction Game.start() pour rajouter notre player dans ce tableau.
+
+```ts
+    // Public methods
+    public start() : void{
+        // Clear context
+        this.context.clearRect(0,0,this.CANVAS_WIDTH,this.CANVAS_HEIGHT);
+        this.context.fillStyle = "#141414";
+        this.context.fillRect(0,0,this.CANVAS_WIDTH,this.CANVAS_HEIGHT);
+
+        this.player = new Player(this);
+        // J'aoute le player au tableau de GameObject
+        this.instanciate(this.player);
+
+        // Listen to input
+        Input.listen();
+        // Start game loop
+        this.loop();
+    }
+```
+
+
+Je défini le nombre d'aliens en tant qu'attribut privé de Game.
+```ts
+private nbAliens : number = 10;
+```
+Enfin nous pouvons instancier plusieurs Aliens via une boucle for.
+```ts
+public start() : void{
     // Clear context
-    context.clearRect(0,0,this.CANVAS_WIDTH,this.CANVAS_HEIGHT);
-    // Draw back background color
-    context.fillStyle = "#141414";
-    context.fillRect(0,0,this.CANVAS_WIDTH,this.CANVAS_HEIGHT);
+    this.context.clearRect(0,0,this.CANVAS_WIDTH,this.CANVAS_HEIGHT);
+    this.context.fillStyle = "#141414";
+    this.context.fillRect(0,0,this.CANVAS_WIDTH,this.CANVAS_HEIGHT);
 
-    /* Draw and move alien
-    * ...
-    */
+    this.player = new Player(this);
+    this.instanciate(this.player)
 
-    // Draw and move Player
-    context.drawImage(
-        playerImg,
-        playerPos.x,  
-        playerPos.y,
-        playerImg.width,
-        playerImg.height
-    );
-    // Move the player depending on the direction pressed by 
-    // the player
-    playerPos.x+=10*direction;
-},10);
-
-// Key Down
-document.addEventListener("keydown",(event)=>{
-    switch (event.key) {
-        // Go right
-        case "d":
-        case "D":
-            direction = 1;
-            break;
-        // Go left
-        case "q":
-        case "Q":
-            direction = -1;
-            break;
-        default:
-            break;
+    for (let i = 0; i < this.nbAliens; i++) {
+        this.instanciate(new Alien(this));
     }
-});
 
-// Key Realeased
-document.addEventListener("keyup",(event)=>{
-    switch (event.key) {
-        // Player Stops
-        case "d":
-        case "D":
-        case "q":
-        case "Q":
-            direction = 0;
-        break;
-
-        default:
-            break;
-    }
-});
-```
-
-Notre `setInterval` commence à se remplir, on appel cette boucle : la boucle d'évenement. Elle est présente dans tout les moteurs de jeu et permet de rafrachir l'affichage. Ici notre boucle tourne toute les 10ms donc théoriquement à 100fps.
-
-Vous connaissez à present les bases de l'api canvas. Il est temps de constuire notre jeu en utilisant le paradigme orientée objet.
-
-# Classe et Encaplusation
-
-Jusqu'ici toute notre application etait contenu dans le meme fichier et tout le code etait mélangé au même endroit. La boucle d'évenement, la position du joueur, de l'alien l'affichage des images, toutes ces actions devraient être classifier dans plusieurs fichiers representant chacun une brique de notre programme.
-
-En POO on represente chaqu'une de ses briques dans des objets. Chaque objet est crée à partir d'un paton appelé `classe`.
-
-L'entierter de notre application doit etre encapsuler dans des classes différentes :
-- Les aliens
-- Le joueur
-- Le jeu et sa boucle de jeu
-- Les lasers
-
-Nous allons créer chaque partie de notre jeu classe après classe, à commencez par la classe Game évidement, elle sera le première objet instancié et sera donc le point de départ de notre application.
-
-## La classe Game
-
-Dans le dossier /src/Classes créez un fichier nommé Game.ts est déclarez y une classe nommée Game et exportez la.
-
-/src/Game
-```ts
-export class Game{
-
+    // Listen to input
+    Input.listen();
+    // Start game loop
+    this.loop();
 }
 ```
+*Résultat une vague aléatoire d'aliens*
+![alt text](image-10.png)
 
-Puis dans script.ts, j'importe la classe et j'instancie un objet Game.
+### Chapitre 8 - Ajouter les étoiles
+De la même manière que nous avons ajouter des aliens précedement, il faut maintenant ajoutez des étoiles dans le fond pour la déco.
 
-/src/script.ts
+1 - Faites apparaitre des étoiles statiques en fond
+2 - Faites descendre les étoiles vers le bas et repositioner les aléatoirement en haut du canvas quand elle dépasses de l'écran. Ainsi nous auront l'impression qu'elles défiles sous le joueur.
+
+*/src/Classes/GameObjects/Star.ts*
 ```ts
-import { Game } from "./Classes/Game.js";
+import { Assets } from "../Assets.js";
+import { GameObject } from "./GameObject.js";
 
-const game = new Game();    // Instanciate a Game
-```
-
-Voilà vous venez de crée le point de départ de votre application.
-
-L'opérateur `new` permet de construire le jeu nous allons donc placez le code d'initalisation du jeu dans le `constructor` de l'objet.
-
-/src/Game
-```ts
-export class Game{
-    private context: CanvasRenderingContext2D;
-
-    constructor(){
-        const canvas = document.querySelector("canvas");
-        canvas.height = this.CANVAS_HEIGHT;
-        canvas.width = this.CANVAS_WIDTH;
-        this.context = canvas.getContext("2d");
+export class Star extends GameObject{
+    protected start(): void {
+        this.setImage(Assets.getStarImage());
+        this.setPosition({
+            x : Math.random() * this.getGame().CANVAS_WIDTH,
+            y : Math.random() * this.getGame().CANVAS_HEIGHT - 10
+        });
+    }
+    protected update(): void {
+        this.setPosition({
+            x : this.getPosition().x,
+            y : this.getPosition().y+1
+        });
+        if(this.getPosition().y > this.getGame().CANVAS_HEIGHT){
+            this.setPosition({
+                x : this.getPosition().x,
+                y : 0
+            });
+        }
     }
 }
 ```
-
-A l'avenir je vais avoir besoin du context un peu partout dans ma classe, j'en fait donc un attribut privée.
-
-J'ajoute la méthode start qui déclanchera le debut du jeu.
-
-
-/src/Game
-```ts
-export class Game{
-    private context: CanvasRenderingContext2D;
-
-    constructor(){
-        const canvas = document.querySelector("canvas");
-        canvas.height = this.CANVAS_HEIGHT;
-        canvas.width = this.CANVAS_WIDTH;
-        this.context = canvas.getContext("2d");
-    }
-
-    public start(){
-
-    }
-}
-```
-
-## TP Earth Defender Première essai 
-Mettre en place  : 
-- le déplacement d'un vaisseau joueur
-- L'apparition de façon aléatoire de 15 Aliens.
-- la descente des aliens vers le bas du canvas.
-- Le tir d'un laser par le joueur.
-
-### Pré-requis
-- HTML Canavas et les fonctions :
-    - context.fillRect
-    - context.clearRect
-    - context.drawImage
-- document.querySelector
-- setInterval
-- addEventListener et les events :
-    - onkeydown
-    - onkeyup
-
-### 
-
-# Plan de cours temporaire
-- Pré-requis
-    - TypeScript
-    - watch mode
-- Canva HTML ( Sans OOP)
-    - définir une couleur de fond
-    - afficher une image
-    - déplacer un objet.
-        - update position
-        - clear
-        - draw
-        - setInterval
-        - User inputAxisX
-- Class et Encaplusation : on créer les objets sans réfélchir à l'héritage, 
-    - on créer un class App avec une méthode **public** start qui initialise le jeu et une méthode **privé** `gameLoop` qui est la boucle d'évenement du jeu. 
-    - On crée une class Alien qui se déplace de haut en bas 
-    - et ensuite on crée une class Player qui se deplace de droite à gauche en fonction de l'input du joueur.
-    - Gestion de la collision via la méthode GameObject.collide et la modification de la méthode Game.gameLoop.
-    - GameOver on player collide Alien 
-- Héritage : on syntétise les classes via des classes mère pour supprimer la duplication de code
-    - La classe GameObject
-        - Polymorphisme : Les méthodes update, init et collide de la classe GameObject sont modifier par leurs enfants et donc passer de private à protected.
-- Ajout des laser
-    - Ajout de la classe Laser qui se deplace de haut en bas
-    - Ajout d'un méthode shoot à Player qui instancie un Laser
-    - On Laser collide Alien alien die
-- Ajout de la terre, la classe Earth
-    - pv
-    - pv diminue on collide on Alien, and alien die
-    - Game over si pv == 0
-- Finitions
-    - Game.win si alienCount == 0
-    - Sound laser shoot
-    - Musique de fond
-- BONUS Exercices
-    - Son de mort d'un alien
-    - Ajout de bonus de vitesse qui tombe du ciel
-    - Ajout de malus de vitesse qui tombe du ciel

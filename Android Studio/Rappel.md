@@ -249,4 +249,11 @@ public static Pokemon getPokemon(String name){
 
 ### Le multi-threading
 
+```java
+
+new Thread(()->{
+    Pokemon.getPokemon("Pikachu")
+}).start()
+```
+
 ### L'encapsulation dans une class Facade.
