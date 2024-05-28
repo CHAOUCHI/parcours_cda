@@ -1996,7 +1996,44 @@ export class GameObject{
 }
 ```
 
-#### Solution
+#### Solution Exercice 14
 Ceci est la solution, dans un répo GITHUB privé. Quand vous avez trouvé appelez moi et je vous passerai contributeur pour pouvoir la voir. 😈
 https://github.com/CHAOUCHI/EarthDefender_Exercice-14
 
+### Chapitre 10 - Faire réagir un GameObject à la collision avec un autre GameObject
+Dans le code précedent nous avons réagit à la collision entre un player et n'importe quel Alien.
+Le seul soucis c'est que le code est inscrit un dur dans la boucé d'évenement. Cela signifie que si a l'avenir je veux rajouter la collision entre un Alien et la terre ou entre une Laser et un Alien je vais devoir emcombrer ma fonction Game.loop de code spécifique à chaque classe de GameObject.
+
+La façon de réagir à une collision est la résponsabilité de la classe GameObject pas de la classe Game.
+
+```ts
+private loop(){
+        setInterval(()=>{
+            // Clear context
+            this.context.clearRect(0,0,this.CANVAS_WIDTH,this.CANVAS_HEIGHT);
+            this.context.fillStyle = "#141414";
+            this.context.fillRect(0,0,this.CANVAS_WIDTH,this.CANVAS_HEIGHT);
+            
+            this.gameObjects.forEach(go=>{
+                go.callUpdate();
+                this.draw(go);
+                
+                this.gameObjects.forEach(other=>{
+                    // Si le gameObject overlap un gameObject qui n'est pas lui même
+                    if(other != go  && go.overlap(other)){
+                        console.log("Deux GameObject différent se touches");
+                        go.callCollide(other); // J'appel la méthode collide de mon GameObject
+                    }
+                })
+            })
+        },10); 
+}
+```
+
+#### Exercice 15
+1. Mettez en place une méthode `protected` `GameObject.collide` dans la classe `GameObject` puis implémentez la dans la classe `Alien` pour écrire "Miam Miam" dans la console quand il touche le joueur.
+
+2. Affichez un message *GameOver!* via un `alert()` quand l'alien mange le joueur.
+
+#### Solution Exercice 15
+https://github.com/CHAOUCHI/EarthDefender_Exercice15
