@@ -18,7 +18,7 @@ export class Alien extends GameObject{
     }
 
     // Called when a gameobject collide
-    protected collide(other : GameObject) : void{
+    protected collide(other : GameObject) : void {
         if(other == this.getGame().getPlayer()){
             console.log("Alien hits Player");
             this.getGame().over("An alien ate the last defender(the player).");

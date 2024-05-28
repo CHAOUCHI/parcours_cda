@@ -870,7 +870,6 @@ export class Player extends GameObject{
 #### Dessiner le joueur 
 De la même façon que j'ai dessiné un `GameObject` par défaut tout à l'heure je créer un `Player` dans la méthode `Game.start()`.
 
-
 #### Exercice 6 - Dessiner le joueur
 Complétez le code ci-dessous pour déssiner le joueur.
 
@@ -889,7 +888,6 @@ public start() : void{
         // Je le dessine avec this.draw
         // codez ici..
 
-        this.loop();
     }
 ```
 #### Solution Exercice 6
@@ -916,7 +914,6 @@ public start() : void{
         // Je le dessine
         this.draw(player);
 
-        this.loop();
     }
 ```
 
@@ -967,7 +964,6 @@ Déplaçez le joueur de *10px* par *frame* dans la méthode `GameObject.update()
 
 ```ts
 import { Assets } from "../Assets.js";
-import { Input } from "../Input.js";
 import { GameObject } from "./GameObject.js";
 
 export class Player extends GameObject{
@@ -1005,7 +1001,6 @@ export class Player extends GameObject{
 </pre>
 ```ts
 import { Assets } from "../Assets.js";
-import { Input } from "../Input.js";
 import { GameObject } from "./GameObject.js";
 
 export class Player extends GameObject{
@@ -1892,9 +1887,115 @@ export class Game{
             this.gameObjects.forEach(go=>{
                 go.callUpdate();
                 this.draw(go);
-            })
+            });
 
         },10); 
     }
 }
 ```
+
+## Partie 4 - Aïe, ça fait mal. Les collisions.
+
+### Chapitre 9 - Détecter les collisions entre GameObject
+Pour détecter la collision il faut savoir si un `GameObject` est en contact avec un autre.
+
+Dans la boucle d'événement, j'ai actuellement une boucle *for* qui dessine tout les `GameObjects`.
+
+```ts
+private loop(){
+        setInterval(()=>{
+            // Clear context
+            this.context.clearRect(0,0,this.CANVAS_WIDTH,this.CANVAS_HEIGHT);
+            this.context.fillStyle = "#141414";
+            this.context.fillRect(0,0,this.CANVAS_WIDTH,this.CANVAS_HEIGHT);
+            
+            this.gameObjects.forEach(go=>{
+                go.callUpdate();
+                this.draw(go);
+            })
+        },10); 
+    }
+```
+
+Pour commencer on peut vérifier si un alien touche un joueur.
+```ts
+private loop(){
+    setInterval(()=>{
+        // Clear context
+        this.context.clearRect(0,0,this.CANVAS_WIDTH,this.CANVAS_HEIGHT);
+        this.context.fillStyle = "#141414";
+        this.context.fillRect(0,0,this.CANVAS_WIDTH,this.CANVAS_HEIGHT);
+        
+        this.gameObjects.forEach(go=>{
+            go.callUpdate();
+            this.draw(go);
+            // Je dois donc crée une méthode overlap ...
+            if(go instanceof Alien  && this.player.overlap(go)){ 
+                console.log("Alien touch player");
+            }
+        })
+
+    },10); 
+}
+```
+
+Il me faut donc une méthode publique de la classe `GameObject` qui renvoi `true` si le `GameObject` passé en paramètre touche le `GameObject` appelant.
+
+#### Exercice 14
+
+Implémentez la méthode `GameObject.overlap()` qui permet de vérifier si un `GameObject` en touche un autre.
+
+```ts
+import { Assets } from "../Assets.js";
+import { Game } from "../Game.js";
+import { Position } from "../Position.js";
+
+export class GameObject{
+    
+    private position : Position;
+    private image : HTMLImageElement;
+    private game : Game;
+    constructor(game : Game){
+        this.position = {
+            x : 0,
+            y : 0
+        };
+        this.image = Assets.getDefaultImage();
+        this.game = game;
+        this.start();
+    }
+    protected start(){}
+    protected update(){}
+    public callUpdate(){
+        this.update();
+    }
+
+    /**
+     * Check is the other GameObject collide this GameObject
+     */
+    public overlap(other : GameObject) : boolean{
+        // Codez ici ...
+    }
+
+
+    public getImage() : HTMLImageElement{
+        return this.image;
+    }
+    public getPosition() : Position{
+        return this.position;
+    }
+    public getGame() : Game{
+        return this.game;
+    }
+    public setImage(image : HTMLImageElement){
+        this.image = image;
+    }
+    public setPosition(position : Position){
+        this.position = position;
+    }
+}
+```
+
+#### Solution
+Ceci est la solution, dans un répo GITHUB privé. Quand vous avez trouvez appelez moi et je vous passerez contributeurs pour pouvoir la voir. 😈
+https://github.com/CHAOUCHI/EarthDefender_Exercice-14
