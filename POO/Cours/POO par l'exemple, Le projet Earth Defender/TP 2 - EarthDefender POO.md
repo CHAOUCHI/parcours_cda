@@ -1997,5 +1997,6 @@ export class GameObject{
 ```
 
 #### Solution
-Ceci est la solution, dans un répo GITHUB privé. Quand vous avez trouvez appelez moi et je vous passerez contributeurs pour pouvoir la voir. 😈
+Ceci est la solution, dans un répo GITHUB privé. Quand vous avez trouvé appelez moi et je vous passerai contributeur pour pouvoir la voir. 😈
 https://github.com/CHAOUCHI/EarthDefender_Exercice-14
+
