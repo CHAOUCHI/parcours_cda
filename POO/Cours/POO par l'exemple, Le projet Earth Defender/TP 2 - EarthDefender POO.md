@@ -2035,5 +2035,42 @@ private loop(){
 
 2. Affichez un message *GameOver!* via un `alert()` quand l'alien mange le joueur.
 
+3. Implémentez une méthode public `Game.over()` qui effectue le gameover (alert puis rechargement de la page) et utilisez cette méthode lorsque l'alien mange le player à la place du `alert()` écrit en dur dans `Player.collide()`.
+
 #### Solution Exercice 15
 https://github.com/CHAOUCHI/EarthDefender_Exercice15
+
+### Chapitre 11 - Tirer un `Laser`.
+
+Pour tirer un laser nous allons avoir besoin de la position de joueur dans une futur classe Laser.
+
+Ajoutez donc un getter de Player dans Game.
+
+*class Game*
+```ts
+public getPlayer() : Player{
+        return this.player;
+}
+```
+
+Nous avons également besoin d'une méthode qui detruit un `gameObject`, c'est à dire qui le retire du tableau.
+
+#### Exercice 16 - Detruire un gameObject
+
+Supprimez gameObject du tableau de gameObjects à l'appel de `Game.destroy()`
+*class Game*
+```ts
+public destroy(gameObject : GameObject) : void{
+    // Codez ici ...
+    // Supprimer gameObject du tableau de gameObjects
+}
+```
+#### Exercice 17 - Tirez !
+Créez un laser :
+- Il apparait devant le player
+- Il parcours l'écran de bas en haut tout droit
+- Il détruit un Alien quand il le touche
+- Il est détruit quand il sort du canvas
+- Il apparait quand le joueur appeuie sur espace.
+
+- pour finir faite en sorte que le joueur ne puissent pas tirer une infinité de laser quand il maintien espace.
