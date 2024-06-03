@@ -24,11 +24,11 @@ flowchart
 
 ## 2 - Boutique api crud
 ## Description
-Une petite boutique en ligne qui consomme une api rest conçue par vos soins.
+Une petite boutique en ligne qui consomme une api rest conçue par vos soins.Par exemple l'api que vous avez conçu dans le Projet Boutique NodeJS.
 
 ## Use case UML
 
-### Stack et architecture logicielle
+### Stack et architecture logiciel
 
 - Angular pour la boutique
 - NodeJS/Express pour l'api REST
@@ -41,6 +41,15 @@ flowchart
     API["API REST ExpressJS"]
     Angular --"HTTP JSON"--> API
 ```
+
+### Plan de travail
+1. Définir le diagramme de cas d'utilisation de la boutique en ligne : ce que l'utilisateur ou l'admin poura faire sur la boutique.
+2. Créer l'API Rest et la testé sur postman
+3. Créer un service qui fait l'interface entre l'api et la boutique angular
+4. Créer les composants angular et les assembler pour mettre en place la boutique (mettez en place un routing)
+
+5. Mettez en place un token JWT pour sécuriser l'api et bloquer l'accès à certaine page de la boutique.
+
 ### Cours et documentation
 - Cours sur NODEJS et express : https://github.com/CHAOUCHI/parcours_cda/blob/master/NodeJS/Express/Cr%C3%A9er%20un%20back%20end%20en%20JavaScript%20avec%20NodeJS.md
 
@@ -57,5 +66,7 @@ Ajoutez une autre api rest d'upload de fichier conçu avec NodeJS et express
 ## 4 - Boutique Paiement
 ### Description
 Créez une autre api express qui se connecte à stripe pour gérer le paiment.
+Voir stripe checkout.
 
 ## 5 - Dockeriser le tout
+Utiliser docker compose pour dockeriser nodejs et apache et servir le front et tout les services nodejs du backend.
