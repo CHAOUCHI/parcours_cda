@@ -56,6 +56,10 @@ flowchart
 -  Page CGU
 -  Barre de recherche
 -  Page panier
+-  Page Admin
+    -  ajout de produit
+    -  liste de produits avec bouton supprimer
+    -  modification de produit
 
 ### Cours et documentation
 - Cours sur NODEJS et express : https://github.com/CHAOUCHI/parcours_cda/blob/master/NodeJS/Express/Cr%C3%A9er%20un%20back%20end%20en%20JavaScript%20avec%20NodeJS.md
