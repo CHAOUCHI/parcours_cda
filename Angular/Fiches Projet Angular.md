@@ -44,11 +44,18 @@ flowchart
 
 ### Plan de travail
 1. Définir le diagramme de cas d'utilisation de la boutique en ligne : ce que l'utilisateur ou l'admin poura faire sur la boutique.
-2. Créer l'API Rest et la testé sur postman
+2. Créer l'API Rest et la tester sur postman
 3. Créer un service qui fait l'interface entre l'api et la boutique angular
 4. Créer les composants angular et les assembler pour mettre en place la boutique (mettez en place un routing)
 
-5. Mettez en place un token JWT pour sécuriser l'api et bloquer l'accès à certaine page de la boutique.
+### Cahier des charges
+- Page d'accueil qui affiche des produits aléatoire.
+-  header avec une barre de recherche
+-  menu de navigation qui contient des liens vers toutes les categories de produits
+-  Page de categorie qui décrit la catégorie et affiche ses produits (doit contenir une pagination)
+-  Page CGU
+-  Barre de recherche
+-  Page panier
 
 ### Cours et documentation
 - Cours sur NODEJS et express : https://github.com/CHAOUCHI/parcours_cda/blob/master/NodeJS/Express/Cr%C3%A9er%20un%20back%20end%20en%20JavaScript%20avec%20NodeJS.md
