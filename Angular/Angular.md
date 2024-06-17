@@ -1299,6 +1299,9 @@ L'attibut FormGroup.valid est un boolean qui défini si un formulaire rempli ses
 
 > Voir la doc sur les FormArray : https://angular.dev/guide/forms/reactive-forms#creating-dynamic-forms
 
+# Verrouiller l'accès au routes
+https://angular.dev/guide/routing/common-router-tasks#preventing-unauthorized-access
+
 # Mettre à jour Angular
 Angular subit une mise à jour majeur tout les 6 mois. Il est donc important de mettre à jour le projet régulièrement pour éviter les breaking changes au bon de plusieurs années.
 
