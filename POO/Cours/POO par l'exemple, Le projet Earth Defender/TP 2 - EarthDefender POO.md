@@ -159,28 +159,8 @@ export class Game{
 ```
 
 ##### Solution Exercie 1
-<pre>
+https://github.com/CHAOUCHI/EarthDefender_Exercice1
 
-
-
-
-</pre>
-*/src/Classes/Game.ts*
-```ts
-export class Game{
-    private context : CanvasRenderingContext2D;
-    public readonly CANVAS_WIDTH : number = 900;
-    public readonly CANVAS_HEIGHT : number = 600;
-    
-    constructor(){
-        // Init Game canvas
-        const canvas : HTMLCanvasElement = document.querySelector("canvas");
-        canvas.height = this.CANVAS_HEIGHT;
-        canvas.width = this.CANVAS_WIDTH;
-        this.context = canvas.getContext("2d");
-    }
-}
-```
 
 J'importe ensuite la classe Game pour instancier une partie dans le fichier script.ts.
 
@@ -229,39 +209,7 @@ export class Game{
 }
 ```
 ##### Solution Exercice 2
-<pre>
-
-
-
-</pre>
-*src/Classes/Game.ts*
-```ts
-export class Game{
-    // Public attributs
-    
-    // Private attributs
-    private context : CanvasRenderingContext2D;
-    public readonly CANVAS_WIDTH : number = 900;
-    public readonly CANVAS_HEIGHT : number = 600;
-    
-    constructor(){
-        // Init Game canvas
-        const canvas : HTMLCanvasElement = document.querySelector("canvas");
-        canvas.height = this.CANVAS_HEIGHT;
-        canvas.width = this.CANVAS_WIDTH;
-        this.context = canvas.getContext("2d");
-    }
-
-    // Public methods
-
-    public start() : void{
-        // Clear context
-        this.context.clearRect(0,0,this.CANVAS_WIDTH,this.CANVAS_HEIGHT);
-        this.context.fillStyle = "#141414";
-        this.context.fillRect(0,0,this.CANVAS_WIDTH,this.CANVAS_HEIGHT);
-    }
-}
-```
+https://github.com/CHAOUCHI/EarthDefender_Exercice2
 
 Et je l'appel dans `script.ts` pour lancer le jeu.
 
@@ -495,46 +443,7 @@ export class Game{
 }
 ```
 ##### Solution Exercice 3
-```ts
-import { GameObject } from "./GameObjects/GameObject.js";
-
-export class Game{
-    // Public attributs
-    
-    // Private attributs
-    private context : CanvasRenderingContext2D;
-    public readonly CANVAS_WIDTH : number = 900;
-    public readonly CANVAS_HEIGHT : number = 600;
-    
-    constructor(){
-        // Init Game canvas
-        const canvas : HTMLCanvasElement = document.querySelector("canvas");
-        canvas.height = this.CANVAS_HEIGHT;
-        canvas.width = this.CANVAS_WIDTH;
-        this.context = canvas.getContext("2d");
-    }
-
-    // Public methods
-
-    public start() : void{
-        // Clear context
-        this.context.clearRect(0,0,this.CANVAS_WIDTH,this.CANVAS_HEIGHT);
-        this.context.fillStyle = "#141414";
-        this.context.fillRect(0,0,this.CANVAS_WIDTH,this.CANVAS_HEIGHT);
-    }
-
-    //  La fonction draw qui affiche un gameObject
-    private draw(gameObject : GameObject){
-        this.context.drawImage(
-            gameObject.getImage(),
-            gameObject.getPosition().x,
-            gameObject.getPosition().y,
-            gameObject.getImage().width,
-            gameObject.getImage().height
-        );
-    }
-}
-```
+https://github.com/CHAOUCHI/EarthDefender_Exercice3
 
 Il ne me reste plus qu'à utiliser cette méthode dans la méthode `Game.start()`.
 
@@ -685,34 +594,7 @@ export class Assets{
 ```
 
 ##### Solution Exercice 4
-<pre>
-
-
-
-
-
-</pre>
-
-*/src/Classes/Assets.ts*
-```ts
-export class Assets{
-    public static getDefaultImage() : HTMLImageElement{
-        const image : HTMLImageElement = document.querySelector("img#asset_default");
-        if(image == null){
-            throw Error("No assets found");
-        }
-        return image;
-    }
-    // Ajout du getter d'asset player
-    public static getPlayerImage() : HTMLImageElement{
-        const image : HTMLImageElement = document.querySelector("img#asset_player");
-        if(image == null){
-            throw Error("No assets found");
-        }
-        return image;
-    }
-}
-```
+https://github.com/CHAOUCHI/EarthDefender_Exercice4
 
 #### Fournir le jeu au GameObject
 Les `GameObjects` auront parfois besoin d'infos venant du jeu comme la taille du canvas par exemple.
@@ -841,31 +723,7 @@ export class Player extends GameObject{
 ```
 
 ##### Solution Exercice 5
-<pre>
-
-
-
-
-
-
-
-
-</pre>
-
-```ts
-import { Assets } from "../Assets.js";
-import { GameObject } from "./GameObject.js";
-
-export class Player extends GameObject{
-    protected start(): void {
-        this.setImage(Assets.getPlayerImage());
-        this.setPosition({
-            x : this.getGame().CANVAS_WIDTH/2,
-            y : this.getGame().CANVAS_HEIGHT - this.getImage().height - 10
-        });
-    }
-}
-```
+https://github.com/CHAOUCHI/EarthDefender_Exercice5
 
 #### Dessiner le joueur 
 De la même façon que j'ai dessiné un `GameObject` par défaut tout à l'heure je créer un `Player` dans la méthode `Game.start()`.
@@ -891,31 +749,7 @@ public start() : void{
     }
 ```
 #### Solution Exercice 6
-<pre>
-
-
-
-
-
-
-
-
-
-</pre>
-```ts
-private player : Player;
-public start() : void{
-        this.context.clearRect(0,0,this.CANVAS_WIDTH,this.CANVAS_HEIGHT);
-        this.context.fillStyle = "#141414";
-        this.context.fillRect(0,0,this.CANVAS_WIDTH,this.CANVAS_HEIGHT);
-
-        // J'instancie le GameObject
-        this.player = new Player(this);
-        // Je le dessine
-        this.draw(player);
-
-    }
-```
+https://github.com/CHAOUCHI/EarthDefender_Exercice6
 
 ### Chapitre 5 - Déplacer le joueur
 Pour déplacer le joueur je dois :
@@ -986,41 +820,7 @@ export class Player extends GameObject{
 ```
 
 #### Solution Exercice 7
-<pre>
-
-
-
-
-
-
-
-
-
-
-
-</pre>
-```ts
-import { Assets } from "../Assets.js";
-import { GameObject } from "./GameObject.js";
-
-export class Player extends GameObject{
-    private speed : number = 10;
-
-    protected start(): void {
-        this.setImage(Assets.getPlayerImage());
-        this.setPosition({
-            x : this.getGame().CANVAS_WIDTH/2,
-            y : this.getGame().CANVAS_HEIGHT - this.getImage().height - 10
-        });
-    }
-    protected update(): void {
-        this.setPosition({
-            x : this.getPosition().x += this.speed,
-            y : this.getPosition().y
-        })
-    }
-}
-```
+https://github.com/CHAOUCHI/EarthDefender_Exercice7
 
 La position du joueur est maintenant mise à jour à chaque *frame*.
 
@@ -1093,66 +893,7 @@ type Direction = 0 | 1 | -1;
 ```
 
 #### Solution Exercice 8
-<pre>
-
-
-
-
-
-
-
-
-
-
-
-
-</pre>
-
-*/src/Classes/Input.ts*
-```ts
-export class Input{
-    private static axisX : Direction = 0;
-    public static getAxisX(){
-        return this.axisX;
-    }
-    public static listen(){
-        // Key Down
-        document.addEventListener("keydown",(event)=>{
-            switch (event.key) {
-                // Go right
-                case "d":
-                case "D":
-                    Input.axisX = 1;
-                    break;
-                // Go left
-                case "q":
-                case "Q":
-                    Input.axisX = -1;
-                    break;
-                default:
-                    break;
-            }
-        });
-
-        // Key Realeased
-        document.addEventListener("keyup",(event)=>{
-            switch (event.key) {
-                // Player Stops
-                case "d":
-                case "D":
-                case "q":
-                case "Q":
-                    Input.axisX = 0;
-                break;
-                default:
-                    break;
-            }
-        });
-    }
-}
-
-type Direction = 0 | 1 | -1;
-```
+https://github.com/CHAOUCHI/EarthDefender_Exercice8
 
 Il faut maintenant écouter les *inputs*.
 
@@ -1215,45 +956,7 @@ export class Player extends GameObject{
 ```
 
 #### Solution Exercice 9
-<pre>
-
-
-
-
-
-
-
-
-
-
-
-
-</pre>
-
-*/src/Classes/GameObjects/Player.ts*
-```ts
-import { Assets } from "../Assets.js";
-import { Input } from "../Input.js";
-import { GameObject } from "./GameObject.js";
-
-export class Player extends GameObject{
-    private speed : number = 10;
-
-    protected start(): void {
-        this.setImage(Assets.getPlayerImage());
-        this.setPosition({
-            x : this.getGame().CANVAS_WIDTH/2,
-            y : this.getGame().CANVAS_HEIGHT - this.getImage().height - 10
-        });
-    }
-    protected update(): void {
-        this.setPosition({
-            x : this.getPosition().x += this.speed*Input.getAxisX(),
-            y : this.getPosition().y
-        })
-    }
-}
-```
+https://github.com/CHAOUCHI/EarthDefender_Exercice9
 
 Le joueur devrait maintenant être capable de bouger de gauche à droite en fonction des *inputs* du clavier.
 
@@ -1305,47 +1008,7 @@ export class Alien extends GameObject{
 ```
 
 ##### Solution Exercice 10
-<pre>
-
-
-
-
-
-
-
-
-
-
-
-
-</pre>
-
-```ts
-import { Assets } from "../Assets.js"
-import { GameObject } from "./GameObject.js"
-
-export class Alien extends GameObject{
-    private speed : number = 1;
-
-    protected start(): void {
-        // Définissez l'image de l'alien
-        this.setImage(Assets.getAlienImage());
-        // Faite le apparaitre à une position aléatoire dans le canvas
-        this.setPosition({
-            x : Math.random() * this.getGame().CANVAS_WIDTH,
-            y : Math.random() * this.getGame().CANVAS_HEIGHT /4 - 50,
-        });
-    }
-
-    protected update(): void {
-        // Faite avancer l'alien vers le bas du Canvas
-        this.setPosition({
-            x : this.getPosition().x,
-            y : this.getPosition().y +=this.speed
-        })
-    }
-}
-```
+https://github.com/CHAOUCHI/EarthDefender_Exercice10
 
 #### Faire apparaitre un alien dans le jeu
 Pour faire appariatre un `GameObject` dans le jeu il faut
@@ -1532,37 +1195,7 @@ private loop(){
 ```
 
 ##### Solution Exercice 11
-<pre>
-
-
-
-
-
-
-
-
-
-
-
-
-</pre>
-```ts
-private loop(){
-        setInterval(()=>{
-            console.log("Frame!");
-            // Clear context
-            this.context.clearRect(0,0,this.CANVAS_WIDTH,this.CANVAS_HEIGHT);
-            this.context.fillStyle = "#141414";
-            this.context.fillRect(0,0,this.CANVAS_WIDTH,this.CANVAS_HEIGHT);
-            
-            this.gameObjects.forEach(go=>{
-                go.callUpdate();
-                this.draw(go);
-            })
-
-        },10); 
-    }
-```
+https://github.com/CHAOUCHI/EarthDefender_Exercice11
 
 Tout les `GameObject` doivent être contenu dans le tableau de `GameObjects` pour être détectés par la boucle d'événement, il nous faut donc mettre à jour le code de la fonction `Game.start()` pour rajouter notre `player` dans ce tableau.
 
@@ -1614,38 +1247,8 @@ public start() : void{
 }
 ```
 #####  Solution Exercice 12
-<pre>
+https://github.com/CHAOUCHI/EarthDefender_Exercice12
 
-
-
-
-
-
-
-
-
-
-</pre>
-```ts
-public start() : void{
-    // Clear context
-    this.context.clearRect(0,0,this.CANVAS_WIDTH,this.CANVAS_HEIGHT);
-    this.context.fillStyle = "#141414";
-    this.context.fillRect(0,0,this.CANVAS_WIDTH,this.CANVAS_HEIGHT);
-
-    this.player = new Player(this);
-    this.instanciate(this.player)
-
-    for (let i = 0; i < this.nbAliens; i++) {
-        this.instanciate(new Alien(this));
-    }
-
-    // Listen to input
-    Input.listen();
-    // Start game loop
-    this.loop();
-}
-```
 *Résultat une vague aléatoire d'aliens*
 ![alt text](image-10.png)
 
@@ -1776,33 +1379,7 @@ Pour cette exercice vous devez êtres plus autonome. Il vous faudra créer la cl
 
 </pre>
 ##### Solution Exercice 13
-*/src/Classes/GameObjects/Star.ts*
-```ts
-import { Assets } from "../Assets.js";
-import { GameObject } from "./GameObject.js";
-
-export class Star extends GameObject{
-    protected start(): void {
-        this.setImage(Assets.getStarImage());
-        this.setPosition({
-            x : Math.random() * this.getGame().CANVAS_WIDTH,
-            y : Math.random() * this.getGame().CANVAS_HEIGHT - 10
-        });
-    }
-    protected update(): void {
-        this.setPosition({
-            x : this.getPosition().x,
-            y : this.getPosition().y+1
-        });
-        if(this.getPosition().y > this.getGame().CANVAS_HEIGHT){
-            this.setPosition({
-                x : this.getPosition().x,
-                y : 0
-            });
-        }
-    }
-}
-```
+https://github.com/CHAOUCHI/EarthDefender_Exercice13
 
 */src/Game.ts*
 ```ts
