@@ -76,7 +76,9 @@ flowchart
 
 ## 3 - Boutique Auth et JWT
 ### Cahier des charges :
-Verrouiller les pages suivantes à l'aide des guards et d'un service AuthService.
+**Verrouiler les routes sensibles de l'api rest** : POST, DELETE, PUT (eventuelement GET en fonction de la route) voir le cours sur middleware JWT : https://github.com/CHAOUCHI/parcours_cda/blob/master/Auth/JWT.md
+
+**Verrouiller les pages suivantes à l'aide des guards et d'un service AuthService.**
 - Page panier pour les utilisateurs connectés
 - Page Admin pour les utilisateurs connectés ayant pour rôle admin.
 
