@@ -9,9 +9,13 @@ L'utilisateurs peux naviger vers une autre page de détail des pokemons au click
 
 ### Maquette
 *Page d'accueil*
+
 ![alt text](Pokedex(1).png)
+
 *Page details d'un pokemon*
+
 ![alt text](Pokedex.png) 
+
 ### Stack et architecture logicielle
 - Angular
 - NPM
@@ -70,14 +74,35 @@ flowchart
 
 > Vous n'êtes pas obligés de faire tout les exercices du cours sur Express
 
-## 3 - Boutique upload de fichiers
-### Description
-Ajoutez une autre api rest d'upload de fichier conçu avec NodeJS et express
+## 3 - Boutique Auth et JWT
+### Cahier des charges :
+Verrouiller les pages suivantes à l'aide des guards et d'un service AuthService.
+- Page panier pour les utilisateurs connectés
+- Page Admin pour les utilisateurs connectés ayant pour rôle admin.
 
-## 4 - Boutique Paiement
+### Cours et doc
+- Angular.fr pour le cours sur les guards (fonction middleware pour les routes) : https://angular.fr/routing/guard
+- Le chapitre sur les guards du cours Angular : *a venir...*
+- Cours sur les tokens JWT pour créer un token sur la route */login* et le renvoyer en body de la réponse: https://github.com/CHAOUCHI/parcours_cda/blob/master/Auth/JWT.md
+- *localstorage* pour stocker le token JWT renvoyer par la route */login* , le service AuthService sert d'interface pour accéder au token et le decoder pour lire les infos comme le role, etc... . AuthService contient des méthodes publiques comme isLogin(), isAdmin() ou encore login(username,password).
+- la fonction atob() pour décoder un token de base64 vers json : https://developer.mozilla.org/fr/docs/Web/API/Window/atob
+- JSON.parse pour décoder le token de JSON à Object : https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/JSON/parse
+
+## 4 - Boutique upload de fichiers
+### Description
+Ajoutez une autre api rest d'upload de fichier conçu avec NodeJS et express.
+L'upload de fichier doit ce faire dans un autre programme nodejs vous aurez donc deux backend : api-boutique pour le crud et api-file-upload pour l'upload d'images.
+
+Dans la page admin :
+- L'ajout et la modification d'un produit doit fournir une liste des images disponibles dans un popup
+- L'ajout et la modification d'un produit doit fournir un bouton "upload file" qui permet d'uploader une image dans l'api file-upload.
+
+https://github.com/CHAOUCHI/parcours_cda/blob/master/NodeJS/Express/file_upload/Uploader%20un%20fichier%20sur%20un%20back-end.md
+
+## 5 - Boutique Paiement
 ### Description
 Créez une autre api express qui se connecte à stripe pour gérer le paiment.
 Voir stripe checkout.
 
-## 5 - Dockeriser le tout
+## 6 - Dockeriser le tout
 Utiliser docker compose pour dockeriser nodejs et apache et servir le front et tout les services nodejs du backend.
