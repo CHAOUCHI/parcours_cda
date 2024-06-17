@@ -84,7 +84,7 @@ flowchart
 
 ### Cours et doc
 - Angular.fr pour le cours sur les guards (fonction middleware pour les routes) : https://angular.fr/routing/guard
-- Le chapitre sur les guards du cours Angular : *a venir...*
+- Le chapitre sur les guards du cours Angular : https://github.com/CHAOUCHI/parcours_cda/blob/master/Angular/Angular.md#verrouiller-lacc%C3%A8s-au-routes
 - Cours sur les tokens JWT pour créer un token sur la route */login* et le renvoyer en body de la réponse: https://github.com/CHAOUCHI/parcours_cda/blob/master/Auth/JWT.md
 - *localstorage* pour stocker le token JWT renvoyer par la route */login* , le service AuthService sert d'interface pour accéder au token et le decoder pour lire les infos comme le role, etc... . AuthService contient des méthodes publiques comme isLogin(), isAdmin() ou encore login(username,password).
 - la fonction atob() pour décoder un token de base64 vers json : https://developer.mozilla.org/fr/docs/Web/API/Window/atob

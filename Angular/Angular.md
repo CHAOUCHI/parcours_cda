@@ -1218,15 +1218,11 @@ export const authGuard: CanActivateFn = (role)=>{
 }
 ```
 
-
 # Les formulaires
 Il existe de façon de créer des formulaire avec Angular :
 
 - Template Driven, des formulaire simple codez dans le HTML.
 - Reactive form, des forumulaire complexe et solide codez dans le TypeScript.
-
-
-
 
 ## Template driven formulaire
 Le Template driven, consiste à définir son formulaire principalement dans le HTML sans se prendre la tête avec du TypeScript. Cette solution est très rapide et simple à mettre en place et convient au petit formulaire qui ne sont pas destiné à beaucoup évoluer. Un exemple de template driven form serait une barre de recherche par exemple.
