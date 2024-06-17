@@ -2063,14 +2063,23 @@ Supprimez gameObject du tableau de gameObjects à l'appel de `Game.destroy()`
 public destroy(gameObject : GameObject) : void{
     // Codez ici ...
     // Supprimer gameObject du tableau de gameObjects
+
 }
 ```
+
+#### Solution Exercice 16
+https://github.com/CHAOUCHI/EarthDefender_Exercice-16
+
 #### Exercice 17 - Tirez !
 Créez un laser :
 - Il apparait devant le player
 - Il parcours l'écran de bas en haut tout droit
 - Il détruit un Alien quand il le touche
 - Il est détruit quand il sort du canvas
-- Il apparait quand le joueur appeuie sur espace.
+- Il apparait quand le joueur appuie sur la touche espace.
+- pour finir faite en sorte que le joueur ne puissent pas tirer une infinité de laser quand il maintient espace.
 
-- pour finir faite en sorte que le joueur ne puissent pas tirer une infinité de laser quand il maintien espace.
+#### Solution Exercice 17
+https://github.com/CHAOUCHI/EarthDefender-Exercice17
+
+### Chapitre 12 - Améliorer le Gameplay
