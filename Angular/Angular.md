@@ -1140,6 +1140,85 @@ export class PokemonDetailComponent{
 >password : "$2y$10$wyIB5okQN2lxpFfGBZacFeSxir6WpfgwJ0KHN/tH4cdNVt5I022Y2"
 >```
 
+## Verrouiller l'accès au routes
+https://angular.dev/guide/routing/common-router-tasks#preventing-unauthorized-access
+Pour vérrouiller l'accès à une route en fonction d'une condition précise Angular utilise des fonctions middleware appellés `Guard`.
+
+> Un middleware est un programme / fonction qui fait l'interface entre deux programmes / fonctions.
+
+La logique d'un Guard est la suivante :
+Je veux vérrouiler la route /admin
+1. Je crée une fonction guard
+2. J'écrit un if/else et renvoi true ou false en fonction de la condition
+3. J'ajoute cette guard dans l'attribut canActivate de la route de mon tableau de route dans `app.routes.ts`.
+
+```bash
+ng g guard auth # Je créer une fonction guard nommé authGuard
+```
+J'écrit une condition et renvoi un boolean
+> Une guard doit toujours renvoyer un boolean
+
+```ts
+import { CanActivateFn } from '@angular/router';
+
+export const authGuard: CanActivateFn = (route, state) => {
+  if(/*check somethings*/){
+    return true;
+  }else{
+    return false;
+  }
+};
+
+```
+Un exemple plus réaliste pourrait utiliser un service d'autentification qui consulte le JWT(JSON Web Token) dans le `localstorage` par exemple.
+```ts
+import { CanActivateFn } from '@angular/router';
+import { AuthService } from './auth.service';
+import { inject } from '@angular/core';
+
+export const authGuard: CanActivateFn = (route, state) => {
+  const auth = inject(AuthService);
+  return auth.isAdmin();
+};
+```
+
+Je peux ensuite verrouiller ma route dans app.routes.ts grace à CanActivate
+
+```ts
+import { Routes } from '@angular/router';
+import { AdminPanelComponent } from './admin-panel/admin-panel.component';
+import { LoginComponent } from './login/login.component';
+import { HomeComponent } from './home/home.component';
+import { authGuard } from './auth.guard';
+
+export const routes: Routes = [
+    {path : "admin",component : AdminPanelComponent, canActivate:[authGuard]}, // Ici
+    {path : "login",component : LoginComponent},
+    {path : "home",component : HomeComponent}
+];
+```
+
+> Exercice - Créez un composant nightclub qui n'est accessible que lorsque la nuit est tombée grâce a : `new Date()`.
+
+### Pour allez plus loin - les guards paramétrable
+Je peut facilement créer une guard paramètrable en renvoyant une fonction en tant que valeur de retour de mon guard :
+```ts
+import { CanActivateFn } from '@angular/router';
+import { AuthService } from './auth.service';
+import { inject } from '@angular/core';
+
+export const authGuard: CanActivateFn = (role)=>{
+  return (route, state) :  CanActivateFn  => {
+    const auth = inject(AuthService);
+    if(role == "admin"){
+      return auth.isAdmin();
+    }
+    return false;
+  };
+}
+```
+
+
 # Les formulaires
 Il existe de façon de créer des formulaire avec Angular :
 
@@ -1299,8 +1378,7 @@ L'attibut FormGroup.valid est un boolean qui défini si un formulaire rempli ses
 
 > Voir la doc sur les FormArray : https://angular.dev/guide/forms/reactive-forms#creating-dynamic-forms
 
-# Verrouiller l'accès au routes
-https://angular.dev/guide/routing/common-router-tasks#preventing-unauthorized-access
+
 
 # Mettre à jour Angular
 Angular subit une mise à jour majeur tout les 6 mois. Il est donc important de mettre à jour le projet régulièrement pour éviter les breaking changes au bon de plusieurs années.

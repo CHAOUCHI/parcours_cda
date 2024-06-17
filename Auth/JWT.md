@@ -139,6 +139,7 @@ function checkJwt(req,res,next){
     
     const token = req.cookies.token; // Lire les cookies plutôt que le body.
 
+
     jwt.verify(token,secret,(err,decodedToken)=>{
         if(err){
             res.status(401).json("Unauthorized, wrng token");
