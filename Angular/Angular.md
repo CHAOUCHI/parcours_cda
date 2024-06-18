@@ -1200,24 +1200,6 @@ export const routes: Routes = [
 
 > Exercice - Créez un composant nightclub qui n'est accessible que lorsque la nuit est tombée grâce a : `new Date()`.
 
-### Pour allez plus loin - les guards paramétrable
-Je peut facilement créer une guard paramètrable en renvoyant une fonction en tant que valeur de retour de mon guard :
-```ts
-import { CanActivateFn } from '@angular/router';
-import { AuthService } from './auth.service';
-import { inject } from '@angular/core';
-
-export const authGuard: CanActivateFn = (role)=>{
-  return (route, state) :  CanActivateFn  => {
-    const auth = inject(AuthService);
-    if(role == "admin"){
-      return auth.isAdmin();
-    }
-    return false;
-  };
-}
-```
-
 # Les formulaires
 Il existe de façon de créer des formulaire avec Angular :
 
