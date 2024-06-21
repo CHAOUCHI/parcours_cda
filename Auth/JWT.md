@@ -160,6 +160,37 @@ function checkJwt(req,res,next){
 
 > Le status code 401 correspond à la réponse HTTP `Unauthorized`.
 
+## Comment stocker le token dans le front
+Le token envoyé par l'api peut être facilement stocké dans le localStorage.
+```js
+localStorage.setitem("token",token);
+```
+Je peut ensuite facilement accéder au payload du token pour vérifier des infos comme le role ou l'expiration du token par exemple.
+```js
+function getPayload(){
+    const token = localStorage.getItem("token");
+    const asciiPayload = token.split(".")[1];
+    const jsonPayload = atob(ascciPayload);
+    const payload = JSON.parse(jsonPayload);
+}
+
+const role = getPayload().role;
+const isSessionExpired = new Date(getPayload().exp) < Date.now();
+```
+> atob (ascii to binary) permet de décrypté une string base64 en sa forme d'origine.
+
+### Se *déconnecter*
+Un système de connexion via JWT a pour vocation *d'effectuer une deconnexion* de façon automatique quand le token expire.
+
+Cependant si vous souhaitez que le client n'est plus accès au token pour limité son accès à certaine page du front-end par exemple, il suffit de le supprimer du localStorage.
+```js
+localStorage.removeItem("token");
+```
+
+Se genre d'action peut s'effectuer si le token à expiré par exemple ou que le back-end me renvoi une erreur 401; je redige alors vers un formulaire de connexion pour que le client récupére un nouveau jeton JWT.
+
+> Plus haut je dis *effectuer une deconnexion* mais en réalité le serveur est sans état (il n'a pas consience des utilisateurs qui le consomme); il n'effectue donc pas expréssement de déconnexion mais vérifie juste si le token à expiré via la méthode `jwt.verify()`.
+
 <!-- ## Le client envoi son token
 
 L'exemple plus haut montre comment fournir au client un token JWT et comment lire un token envoyé par le client. Cependant pour des raisons de sécurité il est préférable de fournir au client le token via un Http Cookie. 
