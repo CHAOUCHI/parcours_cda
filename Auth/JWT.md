@@ -99,7 +99,8 @@ Authorization : Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3
 ```
 En JS :
 ```js
-const token = "eyJhbGciOiJIUzI..."; // Soit un token
+const token = localStorage.getItem("token"); // Soit un token
+if(!token)return;
 
 const headers = new Headers();
 headers.append("Content-type","application/json");
