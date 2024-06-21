@@ -1,7 +1,7 @@
 # Les jetons JWT (JSON Web Token)
 Un jeton (token) JWT est un moyen d'autoriser l'accès à une ressource HTTP. Dans sa forme la plus classique, un token est généré coté serveur lorsque le client effectue une requête d'autentification. Si le client fourni les bons identifiants, le jeton généré lui est fourni. Le client va ensuite fournir ce jeton à chaque requête, si le jeton est valide le serveur va lui renvoyer la ressource demandée, sinon un status code 401.
 
-Un jeton peut transporter des données au format JSON appelées `payload` (un rôle utilisateur, un pseudo, ...). Il possède une signature qui certifie de sa validité et seul le serveur est capable de vérifier le jeton.
+Un jeton peux transporter des données au format JSON appelées `payload` (un rôle utilisateur, un pseudo, ...). Il possède une signature qui certifie de sa validité et seul le serveur est capable de vérifier le jeton.
 
 Un jeton JWT doit obligatoirement posséder une durée de validité (1semaine, 1mois, 1an).
 
