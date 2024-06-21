@@ -174,6 +174,7 @@ function getPayload(){
     const asciiPayload = token.split(".")[1];
     const jsonPayload = atob(ascciPayload);
     const payload = JSON.parse(jsonPayload);
+    return payload;
 }
 
 const role = getPayload().role;
