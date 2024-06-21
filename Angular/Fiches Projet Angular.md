@@ -101,12 +101,42 @@ Dans la page admin :
 - L'ajout et la modification d'un produit doit fournir une liste des images disponibles dans un popup
 - L'ajout et la modification d'un produit doit fournir un bouton "upload file" qui permet d'uploader une image dans l'api file-upload.
 
+> Vous pouvez vérrouiller l'accès à l'upload de fichier via un token JWT de plusieurs manière : fournir le secret au deux api via un fichier commun ou bien ajouter des routes dans votre api qui vérifie si un token est valide.
+
 https://github.com/CHAOUCHI/parcours_cda/blob/master/NodeJS/Express/file_upload/Uploader%20un%20fichier%20sur%20un%20back-end.md
 
 ## 5 - Boutique Paiement
 ### Description
 Créez une autre api express qui se connecte à stripe pour gérer le paiment.
-Voir stripe checkout.
+Voir stripe checkout : https://docs.stripe.com/checkout/quickstart?lang=node
 
 ## 6 - Dockeriser le tout
-Utiliser docker compose pour dockeriser nodejs et apache et servir le front et tout les services nodejs du backend.
+Utiliser docker compose pour dockeriser les deux services nodejs et apache et servir le front angular complié.
+
+#### Comment créer un docker compose
+Créez un fichier compse.yaml à la racine du projet
+https://docs.docker.com/compose/
+
+##### Ressources annexes 
+- Techworld with Nana; une chaine youtube spécialisé dans le DevOps :  https://www.youtube.com/watch?v=3c-iBn73dDE
+
+#### Comment complier angular
+```bash
+ng build
+```
+Cette commande compile angular et place le site web compilé dans un dossier nommé dist
+#### Comment copier des fichiers dans un container docker
+La commande COPY copie des fichiers dans un container.
+Par exemple ici je copie les fichiers compilés d'angular dans la dossier du serveur apache.
+```Dockerfile
+COPY ./front/dist/. /var/www/html/.
+```
+#### Comment executer des commandes dans un container
+```Dockerfile
+RUN node ci
+```
+> node ci effectue un clean install des dépendances du fichier package.json.
+#### Comment lancer un service
+```Dockerfile
+ENTRYPOINT node app.js
+```
