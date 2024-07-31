@@ -230,7 +230,6 @@ client{
 order{
     id INT
     clientId INT
-    products JSON
 }
 
 ```
@@ -544,7 +543,6 @@ erDiagram
     }
     cart{
         pk_id INT
-        products JSON
         fk_user INT
     }
 ```
@@ -556,7 +554,6 @@ CREATE TABLE user(
 );
 CREATE TABLE cart(
     pk_id  INT PRIMARY KEY AUTO_INCREMENT,
-    products JSON,
     fk_user INT UNIQUE,
     FOREIGN KEY (fk_user) REFERENCES user(pk_id)
 );
