@@ -3,7 +3,7 @@
 ## 1 - Pokedex
 ### Description
 Un simple pokedex qui consomme l'api pokebuild pour récupérer les pokemons.
-L'utilisateurs peux naviger vers une autre page de détail des pokemons au click sur un pokemon et aussi recherche un pokemon spécifique pour mettre à jour en temps réel la liste des pokemons de la page d'accueil.
+L'utilisateur peut naviguer vers une autre page de détail des pokemons au click sur un pokemon et aussi rechercher un pokemon spécifique pour mettre à jour en temps réel la liste des pokemons de la page d'accueil.
 
 ## Use Case UML
 
