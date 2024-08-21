@@ -202,7 +202,7 @@ Cela empèche le client d'avoir accès au token et donc sécurise le token en ca
 
 Une fois placé dans un cookie une donnée est automatiquement renvoyée par le navigateur à chaque requête. Le client n'a donc pas besoin de gérer l'envoi du token.
 
-Pour placer le token dans le cookie avec express je peux :
+Pour placer le token dans le cookie avec express :
 
 ```js
 const jwt = require("jsonwebtoken");

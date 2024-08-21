@@ -65,7 +65,7 @@ export class Game{
         this.player = new Player(this);
         this.instanciate(this.player);
 
-        this.instanciate(new Pomme(this));
+        //this.instanciate(new Pomme(this));
        
         // Ecoute les input de l'utilisateur
         Input.listenPlayerInput();

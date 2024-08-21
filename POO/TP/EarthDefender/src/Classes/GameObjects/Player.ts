@@ -23,7 +23,8 @@ export class Player extends GameObject{
     }
 
     private movesListener() : void{
-        this.getPosition().x+=this.getVitesse() * Input.getAxisX();
+        //this.getPosition().x+=this.getVitesse() * Input.getAxisX();
+        this.getPosition().x += this.getVitesse() * Math.random()*10 * Input.getAxisX();
     }
     
     private shootLaserListener() : void{

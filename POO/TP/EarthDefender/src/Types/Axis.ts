@@ -6,4 +6,5 @@
  * 1 : signifie l'appuie sur la droite : touche D ou fleche de droite
  * 0 : signifie l'absence de direction, le joueur n'appuie sur aucune touche directionnel.
  */
+
 export type Axis = -1 | 0 | 1;  

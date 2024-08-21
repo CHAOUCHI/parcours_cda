@@ -7,9 +7,9 @@ Pour apprendre la POO nous allons conçevoir un petit jeu vidéo nommée *EarthD
 - Avoir fini le TP 1 sur HTML Canvas et *EarthDefender* sans POO
 
 ## Concept du jeu
-Ce jeu est une version simplifié de *SpaceInvader* où un petit vaisseau spacial détruit des aliens pour proteger la Terre.
+Ce jeu est une version simplifiée de *SpaceInvader* où un petit vaisseau spacial détruit des aliens pour protéger la Terre.
 
-Les aliens se déplacent vers la terre et lui font perdre des points de vie lors de leurs collisions. 
+Les aliens se déplacent vers la terre et lui font perdre des points de vie lors de leurs collisions.
 
 Le joueur contrôle le vaisseau spacial, il se déplace latéralement. Il peut également tirer des missiles qui détruisent alors un alien lors de la collision.
 
@@ -20,7 +20,6 @@ Retrouvez toute les assets graphiques du projet via ce lien figma : https://www.
 ## Use Case Diagramme
 Voici le diagramme de cas d'utilisation de l'application.
 ![Alt text](EarthDefenderUseCase.png)
-
 
 ## Technologies néccessaires
 
