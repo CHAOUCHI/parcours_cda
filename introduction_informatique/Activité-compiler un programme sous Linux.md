@@ -72,3 +72,55 @@ Bonjour !
 ```
 > *./* permet de dire à l'invité de commande (shell) de chercher un fichier qui se trouve dans le répertoire courant. 
 >Par defaut le shell cherche le nom des programmes dans des dossiers inscrit dans la variable d'environnement *PATH* (chemin) or notre dossier my_first_app n'est pas connu du *PATH*.
+
+### Récupérez l'entrée utilisateur
+```c
+int user_input;
+printf("Tapez un nombre\n");
+scanf("%d",&user_input);
+printf("%d",user_input);
+```
+Récupérer 
+# Questions
+1. Si je retire la ligne scanf, que ce passe-t-il a l'execution et pourquoi ?
+2. A quoi sert scanf() ?
+
+**Fonctionnement d'une variable**
+Une variable est un espace mémoire auquelle je donne un nom.
+Voyez sa comme un casier que je crée et dans lequel je mes une valeur.
+```c
+int age; // Déclaration de la age variable dans la RAM
+age = 24; // Affection d'une valeur à age.
+```
+
+**Fonctionnement de printf**
+printf() signifie Print formated, car il permet d'afficher un texte dans la console et qu'il foit donc la possibilité d'y ajouter des variables à afficher avec des code de formatage.
+
+```c
+// %d permet d'afficher un nombre
+int nombre = 10;
+printf("%d\n",&nombre);
+```
+> *\n* est le caractère retour à ligne
+
+**Programmation conditionnel, le fonctionnement du If**
+Avec un SI (if) je peut vérifier si une chose est vrai avant d'effectuer une action.
+```c
+int age = 24;
+// Si age est inférieur à 18
+if(age < 18){
+    // J'execute cette ligne
+    printf("Je suis mineur");
+}
+if(age > 17){
+    // Sinon je fais celle-ci
+    printf("Je suis majeur");
+}
+```
+Ecrivez un programme,
+3. Qui dit si le nombre rentré est inférieur à 100.
+4. Qui affiche le carré du nombre
+5. Qui demande deux nombres et affiche leurs produit.
+4. Avec l'aide de scanf() et printf() essayez de coder un mini-jeu "Question pour champion !" ! :D
+5. (Par équipe de 2) Inventez une idée de jeu suffisement simple pour être fait avec les outils que vous connaissez et codez le ensemble ! :)
+6. Préparez ensemble un petit oral et expliquez comment vous vous y êtes pris pour faire le jeu.
