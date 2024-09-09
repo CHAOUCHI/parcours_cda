@@ -67,6 +67,11 @@ Installez le avec *apt* :
 sudo apt-get install mingw-w64
 ```
 
+> Si le paquet est introuvable mettez à jour votre système WSL avant d'installer minGw avec la commande suivante:
+> ```
+> sudo apt update && sudo apt upgrade
+> ```
+
 ## Compiler le code source
 ```bash
 x86_64-w64-mingw32-gcc main.c
