@@ -185,9 +185,10 @@ En fonction de notre système d'exploitation l'installation d'un compilateur et 
 Même si la majorité des utilisateurs d'ordinateurs utilise Windows, aujourd'hui la plupart des programmes son executés sur des serveurs Linux et la connaissance des commandes et du système Linux est un compétences qu'un étudiant doit aborder le plus tôt possible.
 
 ### Activité - Créer son premier programme !
-Si vous êtes sous Windows :
+Si vous êtes sous Windows : Activité-compiler un programme sous Windows
  
-Si vous êtes sous Linux : Activité-compiler un programme sous Linux
+Si vous êtes sous Linux ou MAC : Activité-compiler un programme sous Linux
+> Sous Mac utilisez *brew* plutot que apt pour installer des logiciels.
 
 ### L'algorithmie ou comment concevoir un programme ?
 L'algorithmie est un domaine des mathématiques qui consiste à définir, via des rêgles non-anbigüe, une procedure permettant de résoudre un problème.

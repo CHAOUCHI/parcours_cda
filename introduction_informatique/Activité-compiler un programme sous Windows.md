@@ -135,7 +135,7 @@ printf() signifie Print formated, car il permet d'afficher un texte dans la cons
 ```c
 // %d permet d'afficher un nombre
 int nombre = 10;
-printf("%d",&nombre);
+printf("%d",nombre);
 ```
 
 #### **Programmation conditionnel, le fonctionnement du If**
@@ -155,6 +155,21 @@ if(age > 17){
 
 #### **Fonctionnement de scanf**
 *scanf* permet de demander à l'utilisateur de taper du texte au clavier.
+Il prend en deuxième paramètre l'adresse d'une variable pour y stocker la valeur forunit par l'utilisateur.
+```c
+int nombre; // nombre est égal à ???
+scanf("%d",&nombre);
+// L'utilisateur tape 5
+// nombre est égal à 5
+```
+En lanagage C l'opérateur *&* permet de récupérer l'adresse de l'espace mémoire d'une variable.
+```c
+int nombre = 5;
+printf("%d",nombre); // AFFICHE 5
+printf("%d",&nombre); // AFFICHE L'adresse de la variable
+```
+Passer l'adresse mémoire de la variable à scanf lui permet de modifier la variable, nous 
+
 
 Ecrivez un programme,
 3. Qui dit si le nombre rentré est inférieur à 100.
