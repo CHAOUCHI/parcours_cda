@@ -80,30 +80,44 @@ printf("Tapez un nombre\n");
 scanf("%d",&user_input);
 printf("%d",user_input);
 ```
-Récupérer 
+
 # Questions
 1. Si je retire la ligne scanf, que ce passe-t-il a l'execution et pourquoi ?
 2. A quoi sert scanf() ?
 
-**Fonctionnement d'une variable**
-Une variable est un espace mémoire auquelle je donne un nom.
+#### **Fonctionnement d'une variable**
+Une variable est un espace mémoire auquel je donne un nom.
 Voyez sa comme un casier que je crée et dans lequel je mes une valeur.
 ```c
-int age; // Déclaration de la age variable dans la RAM
-age = 24; // Affection d'une valeur à age.
+// %d permet d'afficher un nombre
+int nombre = 10;
+printf("%d\n",nombre);
 ```
+> *\n* est le caractère de retour à ligne
 
-**Fonctionnement de printf**
+La taille de l'espace mémoire occupé par une variable varie en fonction du ***type de variable***.
+
+Parmis les types variables les plus classique ont retrouve.
+
+|type|syntaxe en C|taille en mémoire|
+|-|-|-|
+|integer|*int age = 24;*|2 octets|
+|float|*float taille = 1.70;*|4 octets|
+|character|*char lettre = 'h';*|1 octet|
+|chaine de caractère|*char\* mot = "hello";*|1octet * le nombre de caractère (4 octets pour la chaine *hello* par exemple)|
+
+>Une chaine de caractère est une suite de caractère stocké dans la mémoire les uns à la suite des autres.
+
+#### **Fonctionnement de printf**
 printf() signifie Print formated, car il permet d'afficher un texte dans la console et qu'il foit donc la possibilité d'y ajouter des variables à afficher avec des code de formatage.
 
 ```c
 // %d permet d'afficher un nombre
 int nombre = 10;
-printf("%d\n",&nombre);
+printf("%d",nombre);
 ```
-> *\n* est le caractère retour à ligne
 
-**Programmation conditionnel, le fonctionnement du If**
+#### **Programmation conditionnel, le fonctionnement du If**
 Avec un SI (if) je peut vérifier si une chose est vrai avant d'effectuer une action.
 ```c
 int age = 24;
@@ -117,10 +131,35 @@ if(age > 17){
     printf("Je suis majeur");
 }
 ```
+
+#### **Fonctionnement de scanf**
+*scanf* permet de demander à l'utilisateur de taper du texte au clavier.
+Il prend en deuxième paramètre l'adresse d'une variable pour y stocker la valeur forunit par l'utilisateur.
+```c
+int nombre; // nombre est égal à ???
+scanf("%d",&nombre);
+// L'utilisateur tape 5
+// nombre est égal à 5
+```
+En lanagage C l'opérateur *&* permet de récupérer l'adresse de l'espace mémoire d'une variable.
+```c
+int nombre = 5;
+printf("%d",nombre); // AFFICHE 5
+printf("%d",&nombre); // AFFICHE L'adresse de la variable
+```
+Passer l'adresse mémoire de la variable à scanf lui permet de modifier la variable, nous 
+
+
 Ecrivez un programme,
+
 3. Qui dit si le nombre rentré est inférieur à 100.
+
 4. Qui affiche le carré du nombre
+
 5. Qui demande deux nombres et affiche leurs produit.
+
 4. Avec l'aide de scanf() et printf() essayez de coder un mini-jeu "Question pour champion !" ! :D
+
 5. (Par équipe de 2) Inventez une idée de jeu suffisement simple pour être fait avec les outils que vous connaissez et codez le ensemble ! :)
+
 6. Préparez ensemble un petit oral et expliquez comment vous vous y êtes pris pour faire le jeu.
