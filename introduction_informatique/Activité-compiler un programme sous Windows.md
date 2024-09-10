@@ -112,7 +112,7 @@ Voyez sa comme un casier que je crée et dans lequel je mes une valeur.
 ```c
 // %d permet d'afficher un nombre
 int nombre = 10;
-printf("%d\n",&nombre);
+printf("%d\n",nombre);
 ```
 > *\n* est le caractère de retour à ligne
 
