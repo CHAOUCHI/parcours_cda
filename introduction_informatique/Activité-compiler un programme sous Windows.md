@@ -172,9 +172,15 @@ Passer l'adresse mémoire de la variable à scanf lui permet de modifier la vari
 
 
 Ecrivez un programme,
+
 3. Qui dit si le nombre rentré est inférieur à 100.
+
 4. Qui affiche le carré du nombre
+
 5. Qui demande deux nombres et affiche leurs produit.
+
 4. Avec l'aide de scanf() et printf() essayez de coder un mini-jeu "Question pour champion !" ! :D
+
 5. (Par équipe de 2) Inventez une idée de jeu suffisement simple pour être fait avec les outils que vous connaissez et codez le ensemble ! :)
+
 6. Préparez ensemble un petit oral et expliquez comment vous vous y êtes pris pour faire le jeu.
