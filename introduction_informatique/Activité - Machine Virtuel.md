@@ -34,7 +34,7 @@ ISO de Debian (GNU/Linux) : //
 
 **Lancer VirtualBox et créer une nouvelle VM.**
 
-Utilisez le bouton *Ajouter* pour créer une VM et suivez les instructions d'installation.
+Utilisez le bouton *Nouvelle* pour créer une VM et suivez les instructions d'installation.
 
 N'oubliez pas de télécharger une image ISO de *Ubuntu* avant car le téléchargement peut prendre un peu de temps !
 ![alt text](image-33.png)
