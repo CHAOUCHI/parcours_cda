@@ -2,29 +2,32 @@
 ## Activité - Comment compiler son premier programme ?
 
 ### Pré-requis
-Je recommande de coder en C sous linux car la plupart des logiciels codé en C tourne sous Linux ou dans un environnement UNIX.
+Je recommande de coder en C sous linux car la plupart des logiciels codés en C tourne sous Linux ou dans un environnement UNIX.
 
-Il est également important pour vous de vous familiarisez le plus tot possible avec les commandes Linux pour ne pas être handicapé plus tard lors de la conception de vértiable logiciel.
+Il est également important de vous familiarisez le plus tôt possible avec les commandes Linux pour ne pas être handicapé plus tard lors de la conception de véritable logiciel.
 
 Il existe plusieurs moyens d'être sous Linux sans abandonner Windows : 
 - Le dual-boot, installer deux OS sur le même PC.
-- Un Machine Virtuel(VM) qui va émuler un ordinateur et dans laquelle je peux installer Linux.
-- WSL, Windows Subsystem for Linux. Qui rajoute un surcouche Linux à Windows, ce n'est pas un OS Linux au complet mais c'est suffisant pour se que nous voulons faire.
+- Un Machine Virtuel(VM) qui va émuler un ordinateur dans lequelle je peux installer Linux.
+- WSL, Windows Subsystem for Linux. Qui rajoute une surcouche Linux à Windows, ce n'est pas un OS Linux au complet mais c'est suffisant pour se que nous voulons faire.
 
 Comme première expérience je vais compiler un programme sous Windows.
 
 ## Installer WSL
-Dans un PowerShell utiliser la commande *wsl* pour installer Ubuntu une distribution ("version") de Linux.
+Dans un PowerShell utilisez la commande *wsl* pour installer *Ubuntu* une distribution ("version") de Linux.
 
 ```bash
 wsl --install -d Ubuntu
 ```
 
-Vous pouvez ensuite lancer le logiciel wsl.
-![alt text](image-28.png)
+
+## Accédez à Linux avec wsl
+Vous pouvez ouvrir wsl directement dans un dossier Windows spécifique. 
+
+Dans le bureau, faite : *Shift+Clic-Droite* et séléctionnez "Ouvrir un terminal linux dans ce dossier".
+![alt text](image-32.png)
 
 ### Ecrire le le code source.
-
 Pour compiler un programme il faut d'abord l'écrire dans un fichier texte en respectant la syntaxe d'un langage de programmation.
 
 Le texte ainsi écrit est appelé *code source*.
@@ -39,7 +42,7 @@ int main(){
 }
 ```
 1. Créez un fichier nommée ***main.c*** sur le Bureau
-2. Ecrivez ce code source dans un editeur de texte (blocnote, notepad++ ou vscode) à l'intérieur du fichier.
+2. Ecrivez le code source suivant dans un editeur de texte (blocnote, notepad++ ou vscode) dans le fichier main.c.
 ```c
 #include <stdio.h>
 
@@ -59,7 +62,7 @@ Pour compiler notre code source il nous faut un compilateur.
 
 ### Installer le compilateur MinGW
 
-*minGw* est un compilateur C pour windows
+*minGw* est un compilateur C pour windows. 
 
 Installez le avec *apt* :
 
@@ -73,6 +76,18 @@ sudo apt-get install mingw-w64
 > ```
 
 ## Compiler le code source
+Pour compiler le fichier vous devez être dans le dossier du fichier main.c
+
+La commande ls, permet de lister le contenu d'un dossier.
+
+Utilisez ls pour afficher les fichiers du répertoire courant.
+
+```bash
+ls
+```
+
+Si le fichier ne s'y trouve pas enregistrez le ou ouvrez WSL dans le bon dossier.(avec le raccourcis Shift+ClicDroit)
+
 ```bash
 x86_64-w64-mingw32-gcc main.c
 ```
@@ -82,21 +97,39 @@ Il est temps d'éxécuter notre programme !
 
 Double cliquez sur le fichier *a.exe* qui est apparu sur votre *Bureau*.
 
+> Si vous voulez nommer votre programme autrement que a ajoutez le parametre -o à gcc.
+>```bash
+>x86_64-w64-mingw32-gcc main.c -o application
+>```
+
 # Questions
-1. Si je retire la ligne scanf, que ce passe-t-il a l'exection et pourquoi ?
+1. Si je retire la ligne scanf, que ce passe-t-il a l'execution et pourquoi ?
 2. A quoi sert scanf() ?
 
-**Fonctionnement d'une variable**
-Une variable est un espace mémoire auquelle je donne un nom.
+#### **Fonctionnement d'une variable**
+Une variable est un espace mémoire auquel je donne un nom.
 Voyez sa comme un casier que je crée et dans lequel je mes une valeur.
 ```c
 // %d permet d'afficher un nombre
 int nombre = 10;
 printf("%d\n",&nombre);
 ```
-> *\n* est le caractère retour à ligne
+> *\n* est le caractère de retour à ligne
 
-**Fonctionnement de printf**
+La taille de l'espace mémoire occupé par une variable varie en fonction du ***type de variable***.
+
+Parmis les types variables les plus classique ont retrouve.
+
+|type|syntaxe en C|taille en mémoire|
+|-|-|-|
+|integer|*int age = 24;*|2 octets|
+|float|*float taille = 1.70;*|4 octets|
+|character|*char lettre = 'h';*|1 octet|
+|chaine de caractère|*char\* mot = "hello";*|1octet * le nombre de caractère (4 octets pour la chaine *hello* par exemple)|
+
+>Une chaine de caractère est une suite de caractère stocké dans la mémoire les uns à la suite des autres.
+
+#### **Fonctionnement de printf**
 printf() signifie Print formated, car il permet d'afficher un texte dans la console et qu'il foit donc la possibilité d'y ajouter des variables à afficher avec des code de formatage.
 
 ```c
@@ -105,7 +138,7 @@ int nombre = 10;
 printf("%d",&nombre);
 ```
 
-**Programmation conditionnel, le fonctionnement du If**
+#### **Programmation conditionnel, le fonctionnement du If**
 Avec un SI (if) je peut vérifier si une chose est vrai avant d'effectuer une action.
 ```c
 int age = 24;
@@ -119,6 +152,10 @@ if(age > 17){
     printf("Je suis majeur");
 }
 ```
+
+#### **Fonctionnement de scanf**
+*scanf* permet de demander à l'utilisateur de taper du texte au clavier.
+
 Ecrivez un programme,
 3. Qui dit si le nombre rentré est inférieur à 100.
 4. Qui affiche le carré du nombre
