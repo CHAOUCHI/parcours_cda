@@ -424,13 +424,14 @@ Les opérateurs logiques sont utilisés pour combiner ou inverser des conditions
     #include <stdio.h>
 
     int main() {
-        int a = 0;
-        if (!a) {
-            printf("a est égal à 0\n");
+        int a = 5;
+        if (!(a == 5)) {
+            printf("a est différent de 5\n");
         }
         return 0;
     }
     ```
+    Le NON permet d'inverser la logique.
 
 ## 4. Opérateurs d'Incrémentation et de Décroissement
 
