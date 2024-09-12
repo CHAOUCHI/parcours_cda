@@ -136,7 +136,7 @@ La taille de l'espace mémoire alloué par le système dépend du type de donné
 
 |Type|Ensemble de définition|Syntaxe en C|Taille en mémoire|
 |-|-|-|-|
-|integer|Les nombres entier|*int age;*|2 octets|
+|integer|Les nombres entier|*int age;*|4 octets|
 |float|Les nombres à virgule|*float taille;*|4 octets|
 |character|Les caractères|*char lettre;*|1 octet|
 |chaine de caractère|Les chaines de caractère (string ou texte)|*char\* mot;*|1 octet * le nombre de caractère (4 octets pour la chaine *hello* par exemple)|
@@ -186,22 +186,37 @@ Les fonctions pour lire l'entrée clavier et afficher sur le terminal sont dans 
 
 ## printf() - Afficher du texte
 
-Pour afficher une variable dans un texte on peut utiliser printf() et ses caratère de formatage : `%d`(entier), `%f` (virgule), `c` (char), `s` (string).
+Pour afficher une variable dans un texte on peut utiliser printf() et ses caratère de formatage : `%d`(entier), `%f` (virgule), `c` (char), `s` (string),`%p` (adresse ou pointeur).
 ```c
 int pv = 100;
 float endurance = 118.19;
 char lettre = 'M';
 char* mot_ou_texte = "Massinissa";
-printf("%d %f %c %s",pv,endurance,lettre,mot_ou_texte);
+printf("%d %f %c %s %p",pv,endurance,lettre,mot_ou_texte,&pv);
 ```
 
 La valeur de chaque variable est remplacée dans le temps par le %X correspondant.
 
+Il faut voir `printf()` comme un texte à trou.
+
+Je lui fournit en premier paramètre une chaine de caratère contenant la phrase à écrire ainsi que l'endroit où placer des variables.
+
+```c
+char* prenom = "Massi"; 
+int age = 24;
+printf("Je m'appelle %s j'ai %d ans \n",prenom,age);
+```
+
 ## scanf() - Récupérer une entrée
+`scanf()` permet de récupérer une entrée que l'utilisateur tape dans la commande.
 ```c
 int age;
 scanf("%d",&age);
+printf("J'ai %d ans",age);
 ```
+> ***N'oubliez pas le `&` de `scanf()` !*** Le & de scanf est obligatoire pour toute valeur : int, float, char.
+> `&` fournit l'adresse de l'espace mémoire de la variable et donne donc la possibilité a `scanf()` de modifier la variable.
+
 
 # Les opérateurs
 
@@ -905,12 +920,17 @@ int main() {
     int nombres[5] = {1, 2, 3, 4, 5};
     
     for (int i = 0; i < 5; i++) {
-        printf("nombres[%d] = %d\n", i, nombres + i);
+        printf("Adresse de nombres[%d] = %p\n", i, nombres + i);
     }
     
     return 0;
 }
 ```
+Les éléments d'un tableau sont placez les uns à la suite des autres en mémoire, donc leurs adresse ce suivent.
+
+1. Cherchez l'adresse mémoire de chaqu'un des éléments du tableau `nombres`.
+2. Les adresses se suivent en sautant de 4 en 4. Pourquoi ?
+
 <!-- 
 ## 3. Allocation Dynamique de Mémoire
 
@@ -954,7 +974,6 @@ int main() {
     return 0;
 }
 ``` -->
-<!-- 
 ## Les bibliothèques
 
 Les bibliothèques en C offrent des fonctions et des outils supplémentaires pour diverses tâches.
@@ -981,6 +1000,7 @@ int main() {
     return 0;
 }
 ```
+<!-- 
 
 ### Math
 
