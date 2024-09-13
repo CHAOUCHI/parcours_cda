@@ -389,12 +389,27 @@ ip addr
 ipconfig
 ```
 
-> ##### Ping
-> Ping est un programme qui utilise le protocole ICMP encapsulé dans une trame IP pour savoir si un hôte est accessible sur le réseau. 
-> *Cette commande permet de "pinger" un autre hôte à l'adresse 192.168.224.97*
-> ```
-> ping 192.168.224.97
-> ```
+Ces commandes affiche deux adresse IP:
+- L'adresse du *PC dans le LAN* qui commence par `192.168`, ici `192.168.1.102`. C'est à cette adresse que les autre PC du réseau peuvent envoyer des requêtes.
+- L'adresse de *loopback* `127.0.0.1` l'adresse local du PC qui permet de mettre en place des services TCP/IP locaux à la machine sans être connecté à un LAN. On s'en sert beaucoup en développement web comme adresse pour un serveur web local sur le port 80.
+```
+
+1: lo: <LOOPBACK,UP,LOWER_UP> mtu 65536 qdisc noqueue state UNKNOWN group default qlen 1000
+    link/loopback 00:00:00:00:00:00 brd 00:00:00:00:00:00
+    inet 127.0.0.1/8 scope host lo
+       valid_lft forever preferred_lft forever
+       
+2: wlp0s20f3: <BROADCAST,MULTICAST,UP,LOWER_UP> mtu 1500 qdisc noqueue state UP group default qlen 1000
+    inet 192.168.1.102/24 brd 192.168.1.255 scope global dynamic
+```
+
+##### Ping
+Ping est un programme qui utilise le protocole ICMP encapsulé dans une trame IP pour savoir si un hôte est accessible sur le réseau. 
+*Cette commande permet de "pinger" un autre hôte à l'adresse 192.168.224.97*
+```
+ping 192.168.224.97
+```
+> **Attention !** Ping permet de pinger une adresse IP mais pas de spécifier le port TCP. En effet ping fait partie de la même couche réseau que IP, une couche inférieur à TCP dans le modèle OSI.
 
 #### Le protocole TCP
 Le protocole TCP est un des protocoles les plus utilisés sur Internet, il permet de créer une connection entre deux programmes situés sur des ordinateurs différents, ces programmes sont appellés sockets. Une fois la connection crée, les deux sockets sont capables de s’envoyer des messages.
@@ -402,6 +417,15 @@ Le protocole TCP est un des protocoles les plus utilisés sur Internet, il perme
 Le TCP permet d'envoyer énormement de type de données et de nombreux protocole demande une connexion TCP pour envoyer des données, comme : le HTTP, le FTP ou le SSH par exemple.
 
 La spécificité du  TCP est sa capcitié à garantir que les paquets de données soit  correctement acheminés du serveur au client. Pour chaque requête envoyer le TCP attend une réponse pour vérifier que le programme destinataire à bien reçu le paquet de donnée.
+
+##### Service TCP
+Les serveurs et clients TCP sont des programmes. Ils peuvents être codée dans des langage de programmation bas niveau comme le C par exemple. Ce programme sont appelés ***service*** ou ***deamon***.
+
+Un service TCP est toujours relié à une adresse IP et un port.
+
+Par exemple, par défaut, le serveur web *apache2* est relié à l'adresse IP du PC dans le LAN (192.168.x.x) et au port 80. Alors que celui de *vsftpd*(un serveur ftp) est également relié à l'adresse IP du PC dans le LAN mais cette fois ci sur le port 21.
+
+Si chaque service est une "maison" voyez l'adresse IP comme le nom de la rue et le port comme le numéro de maison.
 
 #### Le protocole UDP
 L’UDP permet, tout comme le TCP, de créer une connection entre deux sockets à la différence que l’UDP n’a que faire de savoir si un paquet est bien arrivé; il envoie ce qu’on lui demande et ne s’en occupe plus après.
@@ -446,7 +470,7 @@ Il existe deux modèles hiérachiques de représentation des protocoles :
 ![alt text](image-27.png)
 *Le modèle TCP/IP à droite*
 
-Pour un developpeur il est plus important de connaitre le modèle TCP/IP que le modèle ISO car la plupart des applications développées aujourd'hui utilise les protocoles TCP et IP pour fonctionner.
+Pour un developpeur il est plus important de connaitre le modèle TCP/IP que le modèle OSI car la plupart des applications développées aujourd'hui utilises les protocoles TCP et IP pour fonctionner.
 
 Le modèle TCP/IP à l'avantage de rendre plus abordable la distinction des rôles de chaque protocoles.
 
