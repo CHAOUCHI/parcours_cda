@@ -1,34 +1,106 @@
-# Service FTP vsftpd
+### **Service FTP vsftpd**
 
-## Qu'est ce qu'un serveur ftp
+#### **1. Qu'est-ce qu'un serveur FTP ?**
+FTP (File Transfer Protocol) est un protocole standard pour transférer des fichiers entre un client et un serveur sur un réseau. Un **serveur FTP** est un logiciel qui permet de stocker, recevoir et envoyer des fichiers, en fonction des permissions configurées. Le serveur FTP écoute les connexions entrantes des clients sur le port 21 par défaut et traite les commandes de transfert de fichiers.
 
-## Qu'est ce qu'un client ftp
+#### **2. Qu'est-ce qu'un client FTP ?**
+Un **client FTP** est un logiciel ou une interface utilisée pour se connecter à un serveur FTP afin de télécharger ou télécharger des fichiers. Exemples de clients FTP : FileZilla, WinSCP, ou les commandes FTP disponibles en ligne de commande sur Linux.
 
-## Comment il fonctionne, utilisateur linux, port 21 et accès aux fichiers
+#### **3. Comment fonctionne un serveur FTP ?**
+- Le serveur FTP utilise un modèle client-serveur basé sur le protocole TCP/IP.
+- Les utilisateurs Linux et les permissions d'accès déterminent qui peut accéder aux fichiers.
+- Le port par défaut utilisé par FTP est le **port 21**.
+- Les fichiers sont transférés au serveur grâce à un client ftp comme FileZilla
 
-## Installer vsftpd
+### **Installation de vsftpd**
 
-## Ajouter un utilisateur linux spécifique pour le service
+1. **Mise à jour du système**
+    ```bash
+    sudo apt update && sudo apt upgrade
+    ```
+2. **Installation de vsftpd**
+    ```bash
+    sudo apt install vsftpd
+    ```
+3. **Vérification du statut de vsftpd**
+    ```bash
+    sudo systemctl status vsftpd
+    ```
 
-## Envoyer des fichiers avec fileZilla client
+### **Ajouter un utilisateur Linux spécifique pour le service**
 
-## Mettre en production un site web avec ftp
+- Créez un nouvel utilisateur Linux pour les accès FTP :
+    ```bash
+    sudo adduser ftpuser
+    ```
+- Définissez un mot de passe pour cet utilisateur :
+    ```bash
+    sudo passwd ftpuser
+    ```
 
-## Configurer vsftpd
+### **Envoyer des fichiers avec FileZilla Client**
 
-### Changer le dossier accessible par ftp
+1. Télécharger et installer **FileZilla Client** depuis [le site officiel](https://filezilla-project.org).
+2. Configurer FileZilla pour se connecter au serveur :
+   - **Host** : Adresse IP du serveur.
+   - **Username** : Nom de l'utilisateur Linux (`ftpuser`).
+   - **Password** : Mot de passe défini pour l'utilisateur Linux.
+   - **Port** : 21 (par défaut pour FTP).
 
-### Accès anonyme
+### **Mettre en production un site web avec FTP**
 
+- Utiliser un client FTP (comme FileZilla) pour transférer les fichiers du site web vers le serveur.
+- Copier les fichiers dans le répertoire accessible par le serveur web, par exemple `/var/www/html/`.
 
-# Activité FTP / HTTP
+### **Configurer vsftpd**
 
-Dans une VM Debian
+#### **Changer le dossier accessible par FTP**
+- Modifier le fichier de configuration `/etc/vsftpd.conf` pour définir un nouveau dossier de base :
+    ```bash
+    sudo nano /etc/vsftpd.conf
+    ```
+- Rechercher et modifier la ligne :
+    ```conf
+    local_root=/home/ftpuser/ftp
+    ```
+- Redémarrer le service vsftpd :
+    ```bash
+    sudo systemctl restart vsftpd
+    ```
 
-1. Mettez en place un accès FTP pour un utilisateur linux spécifique 
-2. Configurer apache pour que la racine du serveur HTTP soit /home/user/www
+#### **Configurer l'accès anonyme**
+- Activer l'accès FTP anonyme dans le fichier de configuration :
+    ```conf
+    anonymous_enable=YES
+    ```
+- Redémarrer le service vsftpd :
+    ```bash
+    sudo systemctl restart vsftpd
+    ```
 
-3. Mettez en prod :
-    - site 1
-    - site 2
-    - site 3
+---
+
+### **Activité FTP / HTTP**
+
+Dans une machine virtuelle Debian :
+
+1. **Mettre en place un accès FTP pour un utilisateur Linux spécifique :**
+   - Créer un utilisateur (`ftpuser`).
+   - Configurer le service FTP pour restreindre l'accès à cet utilisateur.
+2. **Configurer Apache pour que la racine du serveur HTTP soit `/home/user/www` :**
+   - Modifier le fichier de configuration d'Apache (`/etc/apache2/sites-available/000-default.conf`) pour définir :
+     ```conf
+     DocumentRoot /home/user/www
+     ```
+   - Redémarrer Apache :
+     ```bash
+     sudo systemctl restart apache2
+     ```
+3. **Mettre en production :**
+   - **Site 1** : Transférer les fichiers vers `/home/user/www/site1`.
+   - **Site 2** : Transférer les fichiers vers `/home/user/www/site2`.
+   - **Site 3** : Transférer les fichiers vers `/home/user/www/site3`.
+
+---
+
+Ce cours te donne une vue d'ensemble pour configurer et utiliser un service FTP avec **vsftpd** et intégrer des sites web via Apache sur une machine Debian. N'hésite pas à me dire si tu veux plus de détails sur certaines sections !
