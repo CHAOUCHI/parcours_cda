@@ -58,7 +58,7 @@ sudo adduser <nom_d'utilisateur>
 - Crée un nouvelle identifant Linux nommé `ftpuser`.
 - Utiliser un client FTP (comme FileZilla) pour transférer les fichiers du site web vers le serveur.
 - Ajouter les fichiers d'un site HTML/CSS dans le répertoire accessible par le serveur web, par exemple `/var/www/html/`.
-- Testé si le site est visible.
+- Testez si le site est visible.
 
 ### **Configurer vsftpd**
 
@@ -68,15 +68,15 @@ sudo adduser <nom_d'utilisateur>
     sudo nano /etc/vsftpd.conf
     ```
 - Rechercher et modifier la ligne :
-    Par exemple resteindre le serveur ftp au seul dossier nommé `ftp` du répertoire personnelle de `ftpuser`.
+    Par exemple resteindre le serveur ftp au seul dossier nommé `html` du répertoire `var/www/`.
     ```conf
-    local_root=/home/ftpuser/ftp
+    local_root=/var/www/html
     ```
 - Redémarrer le service vsftpd :
     ```bash
     sudo systemctl restart vsftpd
     ```
-
+ -->
 
 ### **Activité FTP / HTTP**
 
@@ -84,16 +84,6 @@ Dans une machine virtuelle Debian :
 
 1. **Mettre en place un accès FTP pour un utilisateur Linux spécifique :**
    - Créer un utilisateur (`ftpuser`).
-   - Configurer le service FTP pour restreindre l'accès de cet utilisateur à un seul dossier `/home/ftpuser/www`.
-2. **Configurer Apache**
-    - La racine du serveur HTTP doit être `/home/ftpuser/www`
-   - Modifier le fichier de configuration d'Apache (`/etc/apache2/sites-available/000-default.conf`) pour définir :
-     ```conf
-     DocumentRoot /home/user/www
-     ```
-   - Redémarrer Apache :
-     ```bash
-     sudo systemctl restart apache2
-     ```
+   - Configurer le service FTP pour restreindre l'accès de cet utilisateur à un seul dossier `/var/www/html`.
 
 Ce cours te donne une vue d'ensemble pour configurer et utiliser un service FTP avec **vsftpd** et intégrer des sites web via Apache sur une machine Debian.
