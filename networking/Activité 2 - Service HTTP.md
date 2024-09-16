@@ -70,7 +70,7 @@ Apache démarre le serveur HTTP sur l'ip de la machine sur le port 80.
    ```html
    <h1>Bonjour je suis un titre écrit en HTML. Copié moi dans le fichier index.html !</h1>
    ```
-
+<!-- 
 #### **Configurer Apache2**
 
 ##### **1. Changer le dossier racine du site web**
@@ -86,7 +86,7 @@ Apache démarre le serveur HTTP sur l'ip de la machine sur le port 80.
    sudo systemctl restart apache2
    ```
 
-    - Placez un fichier `index.html` contenant un peu de HTML dans le nouveau dossier `DocumentRoot` puis affichez la page web dans le navigateur.
+    - Placez un fichier `index.html` contenant un peu de HTML dans le nouveau dossier `DocumentRoot` puis affichez la page web dans le navigateur. -->
 
 <!-- ##### **2. Ajouter le HTTPS avec un certificat SSL**
    - Installer `certbot` pour générer un certificat SSL :
