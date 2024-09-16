@@ -269,8 +269,22 @@ Voici le cours rapide sur les concepts de base en **CSS** formalisé en **Markdo
 
 Le CSS (Cascading Style Sheets) permet de styliser des éléments HTML en contrôlant leur apparence visuelle. Nous allons explorer ici les propriétés les plus courantes comme la couleur, les bordures, le margin, le padding, et l'ombre de boîte, puis nous verrons comment utiliser Flexbox et Grid pour organiser des éléments.
 
----
-
+## 0. Ajouter un fichier CSS
+1. Dans le même dossier que `index.html` créez un fichier `style.css`.
+2. Ajouter la balise link dans le head pour inclure le fichier style.css à la page.
+```html
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Ma première page</title>
+    <link href="style.css" rel="stylesheet" />
+</head>
+<body>
+    <h1>Bienvenue sur mon blog Cat'Good !</h1>
+    <p>Bienvenue !</p>
+</body>
+</html>
+```
 ## 1. Couleur
 
 La propriété `color` permet de définir la couleur du texte, tandis que la propriété `background-color` gère la couleur de fond des éléments HTML.
