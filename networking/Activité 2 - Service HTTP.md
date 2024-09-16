@@ -75,8 +75,8 @@ Apache démarre le serveur HTTP sur l'ip de la machine sur le port 80.
 
 ##### **1. Changer le dossier racine du site web**
    - Modifier le fichier de configuration principal d'Apache (`/etc/apache2/sites-available/000-default.conf`).
-   - Le fichier ce trouve dans/etc qui est un dossier admin, il vous faut donc des droits sur ce dossier.
-   - Le plus simple est de l'ouvrir avec l'editeur de texte nano.
+   - Le fichier se trouve dans `/etc` qui est un dossier admin, il vous faut donc des droits sur ce dossier.
+   - On peut utiliser la commande chmod mais le plus simple est de l'ouvrir avec l'editeur de texte nano.
    ```bash
    sudo nano /etc/apache2/sites-available/000-default.conf
    ```
