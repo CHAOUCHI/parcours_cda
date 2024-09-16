@@ -45,10 +45,12 @@ Par défaut *apache* place un site web de test dans le dossier : `/var/www/html/
 
 Apache démarre le serveur HTTP sur l'ip de la machine sur le port 80.
 
-Rendez-vous sur un navagiateur web et tapez l'ip et le port dans la barre de recherche pour voir le site test d'apache :
+**Rendez-vous sur un navigateur web et tapez l'ip** et le port dans la barre de recherche pour voir le site test d'apache :
 ```
 192.168.1.102:80
 ```
+> Remplacez l'ip par votre adresse ip.
+
 ![alt text](image-6.png)
 
 > Le **port 80** est le port par défaut des navigateurs web, il n'est pas obligatoire de le taper après l'ip dans la barre de recherche.
@@ -64,7 +66,7 @@ Rendez-vous sur un navagiateur web et tapez l'ip et le port dans la barre de rec
    code /var/www/html
    ```
 
-   - Modifiez le fichier *index.html* du site contenu dans le dossier racine d'Apache : `/var/www/html/`.
+   - Remplacez tout le contenu du fichier *index.html* du site dans le dossier racine d'Apache : `/var/www/html/`.
    ```html
    <h1>Bonjour je suis un titre écrit en HTML. Copié moi dans le fichier index.html !</h1>
    ```
@@ -73,7 +75,7 @@ Rendez-vous sur un navagiateur web et tapez l'ip et le port dans la barre de rec
 
 ##### **1. Changer le dossier racine du site web**
    - Modifier le fichier de configuration principal d'Apache (`/etc/apache2/sites-available/000-default.conf`).
-   - Changer la directive `DocumentRoot` vers le nouveau dossier souhaité.
+   - Changer la directive `DocumentRoot` vers le nouveau dossier souhaité (n'importe quel dossier de votre choix, par exemple un dossier perso `/home/user/www`).
    - Redémarrer Apache :
    ```bash
    sudo systemctl restart apache2
@@ -90,8 +92,7 @@ Rendez-vous sur un navagiateur web et tapez l'ip et le port dans la barre de rec
    ```
    - Configurer Apache pour utiliser le certificat SSL. -->
 
-
-### **Activité - Créer un site web GROUPE DE 2**
+### **Activité - Créer un site web**
 
 #### Introduction succincte à HTML
 Le **HTML (Hypertext Markup Language)** : Langage de balisage utilisé pour structurer le contenu des pages web.
