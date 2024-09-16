@@ -47,10 +47,18 @@ Un **client FTP** est un logiciel ou une interface utilisée pour se connecter �
    - **Password** : Mot de passe défini pour l'utilisateur Linux.
    - **Port** : 21 (par défaut pour FTP).
 
+Les accès FTP sont en faiite de simple identifiants Linux.
+On peut créer un utilisateur avec la commande adduser :
+```bash
+sudo adduser <nom_d'utilisateur>
+```
+
 ### **Mettre en production un site web avec FTP**
 
+- Crée un nouvelle identifant Linux nommé `ftpuser`.
 - Utiliser un client FTP (comme FileZilla) pour transférer les fichiers du site web vers le serveur.
-- Copier les fichiers dans le répertoire accessible par le serveur web, par exemple `/var/www/html/`.
+- Ajouter les fichiers d'un site HTML/CSS dans le répertoire accessible par le serveur web, par exemple `/var/www/html/`.
+- Testé si le site est visible.
 
 ### **Configurer vsftpd**
 
@@ -60,6 +68,7 @@ Un **client FTP** est un logiciel ou une interface utilisée pour se connecter �
     sudo nano /etc/vsftpd.conf
     ```
 - Rechercher et modifier la ligne :
+    Par exemple resteindre le serveur ftp au seul dossier nommé `ftp` du répertoire personnelle de `ftpuser`.
     ```conf
     local_root=/home/ftpuser/ftp
     ```
@@ -68,17 +77,6 @@ Un **client FTP** est un logiciel ou une interface utilisée pour se connecter �
     sudo systemctl restart vsftpd
     ```
 
-#### **Configurer l'accès anonyme**
-- Activer l'accès FTP anonyme dans le fichier de configuration :
-    ```conf
-    anonymous_enable=YES
-    ```
-- Redémarrer le service vsftpd :
-    ```bash
-    sudo systemctl restart vsftpd
-    ```
-
----
 
 ### **Activité FTP / HTTP**
 
@@ -86,8 +84,9 @@ Dans une machine virtuelle Debian :
 
 1. **Mettre en place un accès FTP pour un utilisateur Linux spécifique :**
    - Créer un utilisateur (`ftpuser`).
-   - Configurer le service FTP pour restreindre l'accès à cet utilisateur.
-2. **Configurer Apache pour que la racine du serveur HTTP soit `/home/user/www` :**
+   - Configurer le service FTP pour restreindre l'accès de cet utilisateur à un seul dossier `/home/ftpuser/www`.
+2. **Configurer Apache**
+    - La racine du serveur HTTP doit être `/home/ftpuser/www`
    - Modifier le fichier de configuration d'Apache (`/etc/apache2/sites-available/000-default.conf`) pour définir :
      ```conf
      DocumentRoot /home/user/www
@@ -96,11 +95,5 @@ Dans une machine virtuelle Debian :
      ```bash
      sudo systemctl restart apache2
      ```
-3. **Mettre en production :**
-   - **Site 1** : Transférer les fichiers vers `/home/user/www/site1`.
-   - **Site 2** : Transférer les fichiers vers `/home/user/www/site2`.
-   - **Site 3** : Transférer les fichiers vers `/home/user/www/site3`.
 
----
-
-Ce cours te donne une vue d'ensemble pour configurer et utiliser un service FTP avec **vsftpd** et intégrer des sites web via Apache sur une machine Debian. N'hésite pas à me dire si tu veux plus de détails sur certaines sections !
+Ce cours te donne une vue d'ensemble pour configurer et utiliser un service FTP avec **vsftpd** et intégrer des sites web via Apache sur une machine Debian.
