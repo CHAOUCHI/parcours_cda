@@ -61,7 +61,7 @@ Rendez-vous sur un navagiateur web et tapez l'ip et le port dans la barre de rec
    - Autorisez l'utilisateur à modifier le dossier `/var/www/html/` puis ouvrez VSCode dans le dossier `/var/www/html/`:
    ```bash
    sudo chmod 777 -R html
-   sudo code /var/www/html
+   code /var/www/html
    ```
 
    - Modifiez le fichier *index.html* du site contenu dans le dossier racine d'Apache : `/var/www/html/`.
@@ -398,8 +398,6 @@ Crée une "carte" en utilisant un `div` avec du `padding`, une `box-shadow`, et 
 
 ### Exercice 2 :
 Ajoute plusieurs cartes avec des marges entre elles.
-
----
 
 ## 7. Flexbox (Alignement d'éléments)
 
