@@ -86,7 +86,7 @@ Apache démarre le serveur HTTP sur l'ip de la machine sur le port 80.
    sudo systemctl restart apache2
    ```
 
-    - Placez un fichier `index.html` contenant un peu de HTML dans le nouveau dossier `DocumentRoot` puis afficher la page web dans le navigateur.
+    - Placez un fichier `index.html` contenant un peu de HTML dans le nouveau dossier `DocumentRoot` puis affichez la page web dans le navigateur.
 
 <!-- ##### **2. Ajouter le HTTPS avec un certificat SSL**
    - Installer `certbot` pour générer un certificat SSL :
@@ -223,12 +223,12 @@ Décrivez le processus de requête échanger entre le client et le serveur depui
 </html>
 ```
 
-### 2.4. `<a>` - Bouton
+### 2.4. `<a>`
 
 La balise `<a>` crée un lien cliquable dans une page HTML.
 
 ```html
-<a href="http://www.youtube.com">Cliquez-moi</button>
+<a href="http://www.youtube.com">Cliquez-moi</a>
 ```
 
 ### Exercice 1 :
