@@ -62,7 +62,7 @@ Apache démarre le serveur HTTP sur l'ip de la machine sur le port 80.
 2. **Déploiement du site web**
    - Autorisez l'utilisateur à modifier le dossier `/var/www/html/` puis ouvrez VSCode dans le dossier `/var/www/html/`:
    ```bash
-   sudo chmod 777 -R html
+   sudo chmod -R 777 html
    code /var/www/html
    ```
 
@@ -294,10 +294,23 @@ p {
     color: red;
 }
 
-div {
+p {
     background-color: lightblue;
 }
 ```
+
+Si je veux mettre un background-color sur la balise p et la balise body complete je peux :
+```css
+p {
+    color: red;
+}
+
+p,body {
+    background-color: lightblue;
+}
+```
+
+> Retrouvez toute la documentation HTTML et CSS sur w2switch
 
 ### Exercice 1 :
 Applique une couleur de texte rouge à un paragraphe et une couleur de fond bleu clair à un `div`.

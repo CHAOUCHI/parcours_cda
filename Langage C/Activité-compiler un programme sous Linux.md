@@ -9,6 +9,7 @@ Il est également important pour vous de vous familirisez le plus tot possible a
 Il existe plusieurs moyens d'être sous Linux sans abandonner Windows : 
 - Le dual-boot, installer deux OS sur le même PC.
 - Un Machine Virtuel(VM) qui va émuler un ordinateur et dans laquelle je peux installer Linux.
+- WSL(Windows subsytem for Linux)
 
 Si vous n'etes pas sous linux veuillez consulter l'activité sur les machines virtuel pour mêttre en place une VM Debian.
 
