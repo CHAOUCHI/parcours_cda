@@ -38,6 +38,14 @@ Un **client FTP** est un logiciel ou une interface utilisée pour se connecter �
     sudo passwd ftpuser
     ```
 
+### Autoriser l'écriture sur le serveur FTP
+Par défaut vsftp est très restrictif, il n'autorise pas l'écriture sur le serveur ftp.
+
+Il faut donc activer l'écriture dans le fichier `/etc/vsftpd.conf`.
+
+*Vous trouvez cette procédure dans la documention de ubuntu :*
+https://doc.ubuntu-fr.org/vsftpd#configuration_de_base
+
 ### **Envoyer des fichiers avec FileZilla Client**
 
 1. Télécharger et installer **FileZilla Client** depuis [le site officiel](https://filezilla-project.org).
