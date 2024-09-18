@@ -75,7 +75,7 @@ sudo adduser <nom_d'utilisateur>
     ```bash
     sudo nano /etc/vsftpd.conf
     ```
-- Rechercher et modifier la ligne :
+- Ajoutez la ligne en fin de fichier:
     Par exemple resteindre le serveur ftp au seul dossier nommé `html` du répertoire `var/www/`.
     ```conf
     local_root=/var/www/html
