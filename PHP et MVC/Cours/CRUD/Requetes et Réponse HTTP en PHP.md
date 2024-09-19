@@ -196,7 +196,7 @@ Soit un formulaire HTML :
 ```
 Les données du formulaire sont simplement dans le tableau `$_POST`.
 ```php
-echo $_POST["name"];  
+<h2> Bonjour <?= $_POST["name"] ?> !</h2>
 echo $_POST["email"];
 echo $_POST["password"];
 ```
