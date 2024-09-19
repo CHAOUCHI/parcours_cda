@@ -18,10 +18,20 @@ sudo apt install git
 sudo apt install gh
 ```
 
+## Décliner son identité à Git
+Pour pouvoir pousser les modifications de code sur GitHub le programme git doit pouvoir donner un nom à la source de l'envoi (vous).
+
+Donnez donc votre identité à git avec les commandes suivantes :
+```bash
+git config --global user.name "Billie JOE"
+git config --global user.email joe.billie@gmail.com
+```
+
 ## 3. Se connecter à GitHub
 ```bash
 sudo auth login
 ```
+
 
 ## 4. Créer un nouveau répo GitHub
 Créer un projet avec la commande suivante et donnez lui un nom, par exemple `my-repo`.
@@ -67,6 +77,10 @@ git push
 - add : ajoute les changements dans un colis (commit)
 - commit : donne un nom au colis
 - push : envoyez le colis sur GitHub
+
+> ***Si git commit echoue***
+> Si git vous demande email et nom entrée les commandes qu'il vous fournit:
+> 
 
 ## 7. Récupérer les changements des autres collaborateurs
 Si un collègues à vous à modifié le répo depuis une autre machine et publié avec git push, vous pouvez récupérer ses changements avec `git pull`.
