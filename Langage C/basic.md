@@ -816,14 +816,23 @@ int main() {
 ```
 
 ## Les Chaines de caractère
-Les chaine de caractère (string) sont des tableaux. Les caractère d'une string sont stocké les un à la suite des autres.
+Les chaine de caractère (`char*` ou *string*) sont des tableaux de `char`. Les caractères d'une *string* sont stockés les uns à la suite des autres.
+
+On accède au `char` d'une string via l'opérateur d'indexation `[]`.
 
 ```c
-char* prenom = "Massinissa";
-printf("%c\n",prenom[0]); // M
-printf("%c\n",prenom[1]); // a
-printf("%c\n",prenom[2]); // s
+char* prenom = "abc";
+printf("%c\n",prenom[0]); // a
+printf("%c\n",prenom[1]); // b
+printf("%c\n",prenom[2]); // c
 ```
+
+On peut connaitre le nombres de caractère d'une chaine de caractère avec la fonction `strlen()`.
+
+### `0` le charactère de fin de *string*.
+Une chaine de caractère fin toujours par le caractère `0` de la table *ASCII*.
+
+
 
 ## 2. Les Pointeurs
 
