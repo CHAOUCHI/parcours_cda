@@ -145,7 +145,7 @@ La taille de l'espace mémoire alloué par le système dépend du type de donné
 On peut affecter à une variable une valeur qui fait parti de son ensemble de défintion(type).
 
 ```c
-int age;
+int age; // Declaration
 age = 25; // Affectation
 ```
 
@@ -295,6 +295,79 @@ Les opérateurs arithmétiques sont utilisés pour effectuer des opérations mat
         return 0;
     }
     ```
+
+### La conversion de type
+La conversion de type en langage C, aussi appelée *casting*, permet de changer le type d'une valeur. Il existe deux types principaux de conversion : la conversion implicite (ou automatique) et la conversion explicite (ou forcée).
+
+#### 1. **Conversion Implicite (Automatique)**
+
+Le compilateur C effectue automatiquement certaines conversions lorsqu'il le juge nécessaire. Cela se produit généralement lors de l'exécution d'expressions où les types de données diffèrent.
+
+##### Exemple de conversion implicite :
+```c
+int a = 10;
+float b = 5.5;
+float result = a + b;  // 'a' est implicitement converti en 'float'
+```
+Dans cet exemple, l'entier `a` est automatiquement converti en `float` avant d'effectuer l'addition avec `b`, car ***l'opération entre types différents nécessite que les deux soient du même type.***
+
+#### 2. **Conversion Explicite (Casting)**
+
+La conversion explicite est effectuée par le programmeur et indique clairement au compilateur de changer le type d'une variable. Cela est utile, par exemple, pour éviter une perte de données ou pour obtenir un résultat spécifique.
+
+##### Syntaxe du *casting* explicite :
+```c
+(type) expression
+```
+
+##### Exemple de conversion explicite :
+```c
+int a = 10;
+int b = 3;
+float result = (float) a / b;  // 'a' est converti en 'float' avant la division
+```
+Ici, nous avons converti `a` en `float` pour forcer une division à virgule flottante au lieu d'une division entière. Sans cette conversion, le résultat serait un entier (`3`), mais avec le *casting*, nous obtenons `3.33333`.
+
+#### 3. **Importance des conversions**
+
+Les conversions explicites sont importantes pour éviter des erreurs de type ou des comportements indésirables dans les calculs, en particulier lorsque vous travaillez avec des types de données différents. Une conversion incorrecte peut entraîner des pertes de données, par exemple lorsqu'un type de plus grande capacité (comme un `double`) est converti en un type de capacité inférieure (comme un `int`).
+
+##### Exemple de perte de données :
+```c
+double pi = 3.14159;
+int pi_as_int = (int) pi;  // La partie décimale est perdue, résultat : 3
+```
+
+Dans cet exemple, la conversion d'un `double` en `int` entraîne la perte des décimales.
+
+#### 4. **Promotion de type dans les expressions**
+
+En C, lors de l'évaluation d'expressions complexes, le compilateur effectue souvent une "promotion de type". Cela signifie que les types de données moins précis (comme les `int`) sont convertis en types plus précis (comme les `float` ou `double`) pour garantir la précision des calculs.
+
+##### Exemple de promotion :
+```c
+int a = 5;
+double b = 4.5;
+double result = a + b;  // 'a' est promu en 'double' avant l'addition
+```
+
+### Exercice :
+Trouvez l'erreur dans le programme suivant et corrigez-le en utilisant le *casting* approprié :
+
+```c
+int a = 5;
+int b = 2;
+float result = a / b;
+```
+
+Solution :
+```c
+int a = 5;
+int b = 2;
+float result = (float) a / b;  // 'a' est converti en float pour éviter la division entière
+```
+
+Dans cet exercice, sans *casting*, la division entre deux entiers produirait un entier (`2`), mais avec la conversion explicite, nous obtenons le résultat attendu : `2.5`.
 
 ## 2. Opérateurs de Comparaison
 

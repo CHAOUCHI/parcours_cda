@@ -166,6 +166,27 @@ Voici le cours rapide sur les concepts de base en **CSS** formalisé en **Markdo
 
 Le CSS (Cascading Style Sheets) permet de styliser des éléments HTML en contrôlant leur apparence visuelle. Nous allons explorer ici les propriétés les plus courantes comme la couleur, les bordures, le margin, le padding, et l'ombre de boîte, puis nous verrons comment utiliser Flexbox et Grid pour organiser des éléments.
 
+## 0. Lier un fichier CSS a un fichier HTML
+La balise `link` permet d'inclure le fichier CSS contenant notre code CSS dans la page HTML.
+
+La balise `link` se place dans la balise `head` et référence un autre fichier sur le serveur nommé `style.css` (ou tout autre nom `.css`).
+
+```html
+<!DOCTYPE html>
+<html lang="fr">
+    <head>
+        <meta charset="UTF-8">
+        <title>Mon site</title>
+        <link rel="stylesheet" href="style.css">
+    </head>
+    <body>
+       <h2>Titre</h2>
+    </body>
+</html>
+```
+
+C'est dans le fichier `style.css` que je vais placez mon code CSS.
+
 ---
 
 ## 1. Couleur
@@ -177,16 +198,40 @@ p {
     color: red;
 }
 
-div {
+body {
     background-color: lightblue;
 }
 ```
 
 ### Exercice 1 :
-Applique une couleur de texte rouge à un paragraphe et une couleur de fond bleu clair à un `div`.
+Applique une couleur de texte rouge à un paragraphe et une couleur de fond bleu clair au `body`.
 
 ### Exercice 2 :
 Essaye d'utiliser des couleurs en utilisant les noms (`blue`, `red`), les valeurs hexadécimales (`#ff0000`) et les valeurs RGB (`rgb(255, 0, 0)`).
+
+---
+
+## Syntaxe
+La syntaxe du CSS est :
+
+```css
+selecteur{
+    regle : valeur;
+    regle : valeur;
+    regle : valeur;
+    ...
+}
+
+autre_selecteur{
+    regle : valeur;
+    regle : valeur;
+    regle : valeur;
+    ...
+}
+```
+
+### Le sélécteur
+Un sélécteur est un moyen d'identifier une ou un groupe de balise.
 
 ---
 
