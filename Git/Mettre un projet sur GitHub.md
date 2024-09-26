@@ -27,9 +27,15 @@ git config --global user.name "Billie JOE"
 git config --global user.email joe.billie@gmail.com
 ```
 
+## Configurer les merges
+Executez la commande suivante pour autoriser git à fusionner (merge) les commits en cas de conflits.
+```bash
+git config pull.rebase false
+```
+
 ## 3. Se connecter à GitHub
 ```bash
-sudo auth login
+gh auth login
 ```
 
 
