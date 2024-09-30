@@ -56,6 +56,7 @@ https://www.geeksforgeeks.org/modulo-operator-in-c-cpp-with-examples/
 
 5. Afficher la somme des nombres de 1 à 67
 
+6. Afficher le produit des nombres de -10 à 50.
 6. Afficher le quotient des nombres de -10 à 50.
 
 7. Afficher la table de 13

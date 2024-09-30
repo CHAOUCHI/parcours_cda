@@ -44,11 +44,11 @@ for(int i = 0;i<10;i++){
 3. A l'aide d'une boucle for afficher tout les nombres paires
 4. A l'aide d'une boucle for remplissez un tableau de int `int tab[12]` avec uniquement des 0. Afficher son contenu.
 
-5. Remplissez un tableau avec une boucle for pour tout valeur de i de 0 à 7.
+5. Remplissez un tableau avec une boucle for pour tout valeur de i de 1 à 7.
 
 6. Faite la somme des élements du tableau précedent
 
-7. Faite le quotient des élements du tableau précedent puis afficher si le resultat est un nombre pair ou non.
+7. Faite le produit des élements du tableau précedent puis afficher si le resultat est un nombre pair ou non.
 
 8. A l'aides des deux tableaux `notes` et `coefs` remplissez un troisième tableau `notes_coef` qui contient les notes multiplier par leurs coef respectif.
 ```c
