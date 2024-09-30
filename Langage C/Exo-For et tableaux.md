@@ -99,3 +99,46 @@ int main(){
 
 16. Écris un programme qui effectue une rotation circulaire à droite d'un tableau d'entiers. Cela signifie que chaque élément du tableau est déplacé vers la droite, et que le dernier élément devient le premier.
 
+## La taille d'un tableau sizeof()
+sizeof() est un opérateur qui permet de connaitre la taille en octet d'un espace mémoire.
+
+```c
+int numbers[10];
+printf("%d\n",sizeof(numbers)); // 40, car 40 octets
+```
+Ici le tableau de numbers fait 40 octets car un int fait 4octets et le tableau en possède 10 : *10*4=40*.
+
+Je peux également connaitre la taille d'un type avec sizeof().
+```c
+printf("%d\n",sizeof(int)); // 4 octets
+printf("%d\n",sizeof(char)); // 1 octet
+printf("%d\n",sizeof(float)); // 4 octets
+```
+
+1. Afficher la taille des types float, int, char et double en octets et en bits.
+
+2. Afficher la taille d'un tableau int `int tab[7]`.
+
+Je peux déduire la taille d'un tableau à partir de son type et de la taille de son espace mémoire.
+
+```
+Pour un tableau de 4à octets de type int(4octet)
+40/4 = 10
+Il y a donc 10 éléments dans un tableau de 40 octets de type int
+```
+
+3. Afficher le nombres d'éléments du tableau suivant sans utiliser la constante `SIZE_TAB` ou la valeur `17` en dur.
+
+```c
+#include <stdio.h>
+#define SIZE_TAB 17
+
+int main(){
+    int tab[SIZE_TAB];
+
+    // todo...
+
+    return 0;
+}
+```
+> `#define` permet de créer des constantes réutilisables partout dans le programme, celà évite d'écrire des valeurs en dures difficile à comprendre et vide de sens.
