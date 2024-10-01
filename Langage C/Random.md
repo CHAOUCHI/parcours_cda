@@ -90,19 +90,22 @@ Pour générer un nombre aléatoire entre 0 et 1 je dois diviser le nombre par `
 int main(){
     while(1){
         srand(time(NULL));
-        int r = (float)rand()/RAND_MAX;
-        printf("%d\n",r);
+        float r = (float)rand()/RAND_MAX;
+        printf("%f\n",r);
     }
     return 0;
 }
 ```
-### Exercices
+#### Exercices
 3. Générez un nombre compris entre 0 et 10
 4. Générez un nombre compris entre 0 et 17
 5. Générez un nombre compris entre 5 et 15
-6. Générez un nombre compris entre les varaible `float from` et `float to`.
+6. Générez un nombre compris entre deux variables `float from` et `float to`.
 
-<!-- ```c
+
+<!-- 
+Correction 6.
+```c
 #include <stdio.h>
 #include <stdlib.h>
 #include <time.h>
@@ -119,8 +122,13 @@ int main(){
 }
 ``` -->
 
-<!-- 
+
 ## L'entropie - Générer un nombre aléatoire solide entre A et B
+
+Générer un nombre aléatoire avec la fonction time() possède plusieurs défauts:
+
+- On ne peux pas générer 
+
 
 ```c
 #include <stdio.h>
@@ -186,4 +194,4 @@ int main(){
     }
     return 0;
 }
-``` -->
+```
