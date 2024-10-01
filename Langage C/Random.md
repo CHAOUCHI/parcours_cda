@@ -127,9 +127,118 @@ int main(){
 
 Générer un nombre aléatoire avec la fonction time() possède plusieurs défauts:
 
-- On ne peux pas générer 
+- On ne peux générer des nombres qu'une fois toutes les secondes.
+- La seed est facilement devinable, il suffit de connaitre la date à laquelle la seed à été générée pour trouver la valeur aléatoire.
 
 
+**La clé d'une bonne valeur aléatoire réside dans sa seed**.
+
+Plus la seed est imprévisible plus la valeur sera aléatoire.
+
+Il nous faut donc un moyen de fabriquer une seed la plus aléatoire possible.
+
+La solution réside dans la fonction `getentropy()`.
+
+### `getentropy()` obtenir des valeurs imprévisibles.
+Pour fabriquer une seed de grande qualitée il faut obtenir des valeurs imprévisibles.
+
+La fonction `getentropy()` renvoie un tableau de `int` aléatoires basés sur les valeurs de tous les ports de l'ordinateur (processeur, carte wifi, usbs, carte graphique). Plus il se passe de chose sur la machine plus la *seed* sera imprévisible.
+
+La fonction `getentropy()` fait partie de la bibliotèque `sys/random.h`
+
+```c
+#include <sys/random.h>
+#include <stdlib.h>
+#include <stdio.h>
+
+int main(){
+    // Generating a random buf of bytes
+    int buf[255];
+    getentropy(buf,sizeof(buf));
+    for(int i = 0; i < 255;i++){
+        printf("%d\n",buf[i]);
+    }
+}
+```
+
+1. Executer le code suivant et observer la suite d'octets aléatoire affichés à l'écran par le `printf()`.
+2. Faite la somme de tout ces `int` et stockez la dans une variable `int seed` qui contiendra notre *seed* de qualité.
+3. Maintenant que vous avez cette *seed* fournissez la à la fonction `srand()` puis utiliser `rand()` dans une boucle `while` infinie.Ainsi vous générerez une infinité de nombre aléatoire à haute vitesse. Afficher cette suite de valeur aléatoire à l'infini avec un `printf()` dans le `while`.
+4. Complétez la fonction suivante (`aleatoire()`) pour qu'elle fabrique une nombre aléatoire entropique compris entre `from` et `to` :
+```c
+#include <stdio.h>
+#include <stdlib.h>
+#include <sys/random.h>
+
+float aleatoire(float,float);
+
+int main(){
+    while(1){
+        float r = aleatoire(5,15);
+        printf("random : %f\n",r);
+    }
+    return 0;
+}
+
+
+/**
+ * Generating a random value between from and to
+ * @dependecies : stdlib.h, sys/random.h
+ */
+float aleatoire(float from, float to){
+    // Generating a random buf of bytes
+    int buf[255];
+    getentropy(buf,sizeof(buf));
+    
+    // Generating a random seed with the sum of all random bytes.
+    int seed = 0;
+    for (int i = 0; i < sizeof(buf); i++)
+    {
+        // addition des éléments du tableau d'int buf pour fabriquer une seed de qualité
+        /**
+            TO DO...
+
+
+
+
+        */
+    }
+    // Give the seed to srand
+    srand(seed);
+    // Generating random value
+    int valeur_random = rand();
+    float random_from_to = /*  ???? calcul d'un random entre from et to */
+    return random_from_to;
+}
+```
+<!-- 
+#### *Valeur random de qualité grâce à l'entropie entre 0 et RAND_MAX*
+```c
+#include <stdio.h>
+#include <stdlib.h>
+#include <time.h>
+#include <sys/random.h>
+
+int main(){
+    while(1){
+
+        int buf[255];
+        getentropy(buf,sizeof(buf));
+        int seed = 0;
+        for (int i = 0; i < sizeof(buf); i++)
+        {
+            seed+=buf[i];
+        }
+        printf("seed : %d\n",seed);
+        
+        srand(seed);
+        int valeur_random = rand();
+        printf("random : %d\n\n",valeur_random);
+    }
+    return 0;
+}
+```
+#### Fonction de génération d'un nombre aléatoire de qualité en deux `int` `from` et `to`
 ```c
 #include <stdio.h>
 #include <stdlib.h>
@@ -169,29 +278,3 @@ float aleatoire(float from, float to){
     return (to-from)*((float)valeur_random/RAND_MAX)+from;
 }
 ``` -->
-<!-- 
-```c
-#include <stdio.h>
-#include <stdlib.h>
-#include <time.h>
-#include <sys/random.h>
-
-int main(){
-    while(1){
-
-        int buf[255];
-        getentropy(buf,sizeof(buf));
-        int seed = 0;
-        for (int i = 0; i < sizeof(buf); i++)
-        {
-            seed+=buf[i];
-        }
-        printf("seed : %d\n",seed);
-        
-        srand(seed);
-        int valeur_random = rand();
-        printf("random : %d\n\n",valeur_random);
-    }
-    return 0;
-}
-```
