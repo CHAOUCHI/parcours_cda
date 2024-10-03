@@ -13,3 +13,6 @@ Quand vous avez fini le projet :
 - Améliorer l'expérience utilisateur avec des printf() qui explique les règle affiche le nom du jeu et pose la question "Pile ou Face"?
 - Faite en sorte que votre executable soit nommé pile-ou-face
 - Mettez le projet sur github dans un repo.
+
+> Astuce
+> la fonction `system("clear")` permet de clear l'écran du terminal
