@@ -20,3 +20,8 @@ int main(){
 }
 ```
 
+> Cette valeur est souvent utilisé comme *seed* de génération d'un nombre aléatoire.
+>```c
+> srand(time(NULL));
+> int valeur_random = rand();
+>```

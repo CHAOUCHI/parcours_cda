@@ -21,17 +21,19 @@ for(int i = 0;i<10;i++){
 }
 ```
 
-La boucle for permet d'éviter les boucle infini et également de parcourir un tableau.
+La boucle for permet d'éviter les boucles infinies et également de parcourir un tableau.
 
 ```c
 int tab[3] = {4,8,7};
 
-for(int i = 0;i<10;i++){
+for(int i = 0;i<3;i++){
     printf("%d",tab[i]);
 }
 ```
+J'utilise une variable de type `int` nommé `i` qui permet de garde le compte du nombre de tour de la boucle `for`.
 
 > ### Rappel - modifier un élément d'un tableau
+> Les elements d'un tableau commence à `0`.
 > ```c
 > int tab[3];
 > tab[0] = 4;
