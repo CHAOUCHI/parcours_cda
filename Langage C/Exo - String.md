@@ -16,6 +16,8 @@ Comme ma string est un tableau je peut y accéder avec l'opérateur d'indexation
 
 > **Attention je rappel que les tableaux commence à l'index `0` !**
 ```c
+char prenom[5] = {'M','a','s','s','i'};
+
 printf("%c\n",prenom[0]); // M
 printf("%c\n",prenom[1]); // a
 printf("%c\n",prenom[2]); // s
@@ -23,11 +25,19 @@ printf("%c\n",prenom[3]); // s
 printf("%c\n",prenom[4]); // i
 ```
 
+1. Pour la string "Je suis un pigeon" afficher la lettre p et e.
+
+Comme n'importe quel tableau je peux aussi changer ses éléments.
+```c
+char prenom[5] = {'M','a','s','s','i'};
+
+prenom[0] = 'L';
+printf("%c",prenom[0]); // L
+```
 ## Parcourir une chaine de caractère
 Nous avons vu que je peut accéder au caractère d'une string avec l'opérateur d'indexation en écrivant *en dur* les index : `0,1,2,3,4`.
 
 Avec une boucle for je peut parcourir une chaine de caractère automatiquement grâce à une variable d'index i.
-
 
 1. A partir de la boucle for suivante, affichez chaque élément de la string en passant à la ligne à chaque fois avec `\n`.
 ```c
@@ -45,6 +55,30 @@ int main(){
 ```
 
 > `#define` permet de définir une constante. Le compilateur remplacera toutes les utilisation de `TAILLE` par la valeur `5`. Ca nous évite de reécrire `5` à chaque fois et évite ainsi les erreurs de frappe.
+
+## La table ASCII
+En informatique les caractères sont des nombres entiers de la table ASCII.
+
+Par exemple :
+- `'a'` est égale à `97`
+- `'b'` est égale à `98`
+- `'A'` est égale à `65`
+
+![alt text](table-ascii-1.png)
+
+```c
+#include <stdio.h>
+#define TAILLE 5
+
+int main(){
+    char lettres[5] = {'a','b','c','d','e'};
+
+    for(int i = 0;i < TAILLE;i++){
+        printf("%c : %d\n",lettres[i],lettres[i]);
+    }
+    return 0;
+}
+```
 
 ## Le caractère de fin de string `\0`.
 Les chaine de caractère doivent toujours finir par le caractère NULL de la tableau ASCII. Celà permet de savoir quand est ce que le texte est fini.
@@ -272,10 +306,3 @@ int main(){
     return 0;
 }
 ```
-
-<!-- 
-<!--  -->
-Le soucis avec sizeof : pointeur sur char fiat 8octets
-<!--  -->
-
-Connaitre la taille d'une chaine de caractère. -->
