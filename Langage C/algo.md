@@ -47,9 +47,6 @@
 17. **Table de Multiplication**
     - Écrivez un programme qui demande à l'utilisateur de saisir un nombre entier et affiche la table de multiplication de ce nombre (de 1 à 10).
 
-18. **Échange de Valeurs avec Variable Temporaire**
-    - Écrivez un programme qui échange les valeurs de deux variables entières en utilisant une variable temporaire et affiche les valeurs avant et après l'échange.
-
 19. **Calcul du Facteur de Conversion**
     - Écrivez un programme qui convertit une distance en kilomètres en miles. Utilisez le facteur de conversion : `1 kilomètre = 0.621371 mile`.
 

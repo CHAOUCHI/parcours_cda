@@ -10,7 +10,7 @@ Python est un langage de programmation généraliste interprété.
 > Un langage interprété n'as pas besoin de compilateur, le fichier source va etre lu ligne par ligne par un programme qui va directemenr executer le code sans généré de fichier binaire.
 
 
-L'interpréteur python est codé en langage C, ce qui fait de python une surcouche plus rapide à utiliser que le C. Cette simplicité ce paye par un gros écart de performances entre un script python et un programme en C compilé ( le C ayant des perforamances bien mailleures ).
+L'interpréteur python est codé en langage C, ce qui fait de python une surcouche plus rapide à utiliser que le C. Cette simplicité ce paye par un gros écart de performances entre un script python et un programme en C compilé ( le C ayant des perforamances bien meilleures ).
 
 ## Installer l'interpréteur python et PyGamezero
 
