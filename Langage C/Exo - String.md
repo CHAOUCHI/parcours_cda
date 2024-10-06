@@ -25,7 +25,7 @@ printf("%c\n",prenom[3]); // s
 printf("%c\n",prenom[4]); // i
 ```
 
-1. Pour la string "Je suis un pigeon" afficher la lettre p et e.
+1. Pour la string `"Je suis un pigeon"` afficher les lettres `p` et `e`.
 
 Comme n'importe quel tableau je peux aussi changer ses éléments.
 ```c
@@ -33,6 +33,7 @@ char prenom[5] = {'M','a','s','s','i'};
 
 prenom[0] = 'L';
 printf("%c",prenom[0]); // L
+printf("%s",prenom); // Lassi
 ```
 
 1. Modifier la valeur des éléments pour former le mot "Manny".
@@ -40,9 +41,9 @@ printf("%c",prenom[0]); // L
 ## Parcourir une chaine de caractère
 Nous avons vu que je peux accéder au caractère d'une string avec l'opérateur d'indexation en écrivant *en dur* les index : `0,1,2,3,4`.
 
-Avec une boucle `for` je peux parcourir une chaine de caractère automatiquement grâce à une variable d'index i.
+Avec une boucle `for` je peux parcourir une chaine de caractère automatiquement grâce à une variable d'index `i`.
 
-1. A partir de la boucle for suivante, affichez chaque élément de la string en passant à la ligne à chaque fois avec `\n`.
+1. A partir de la boucle `for` suivante, affichez chaque élément de la `string` en passant à la ligne à chaque fois avec `\n`.
 ```c
 #include <stdio.h>
 #define TAILLE 5
@@ -59,7 +60,9 @@ int main(){
 
 > `#define` permet de définir une constante. Le compilateur remplacera toutes les utilisation de `TAILLE` par la valeur `5`. Ca nous évite de reécrire `5` à chaque fois et évite ainsi les erreurs de frappe.
 
-Les éléments d'un tableau sont stocké à la suite en mémoire.
+Les éléments d'un tableau sont stockés à la suite en mémoire.
+
+<!-- Faire un schéma -->
 
 Vous pouvez afficher leurs adresses avec l'opérateur `&`.
 
@@ -107,7 +110,7 @@ int main(){
   char str1[6] = "massi";
   char str2[11] = "CHAOUCHI";
   char str3[8] = "Bonjour";
-  char str4[8] = "Bonjour ça va ?";
+  char str4[17] = "Bonjour ca va ?";
   char str5[26] = "anticonstitutionnellement";
   char str6[28] = "intergouvernementalisations";
 
@@ -116,10 +119,10 @@ int main(){
 }
 ```
 
-Un caractère est un nombre entier je peux donc effectuer des calculs sur un caractère pour naviguer dans la table ASCII.
+Un caractère est un nombre entier, je peux donc effectuer des calculs sur un caractère pour naviguer dans la table ASCII.
 
 ```c
-printf("%c",'a'+1);
+printf("%c",'a'+1); // b
 printf("%d",'a' < 'b'); // VRAIE ! 
 ```
 ```
@@ -127,6 +130,7 @@ b
 1
 ```
 
+1. Afficher tout les caractère de la table ASCII de 0 à 127.
 2. Afficher la string `str1` en majuscule.
 2. Afficher la string `str2` en minuscule.
 2. Afficher la string `str3` en majuscule.
@@ -153,7 +157,7 @@ int main(){
 
 Ce caractère est utilisable pour connaitre la fin d'une chaine de caractère.
 
-Par exemple ici j'utilise une boucle `while` pour avancer dans le tableau jusqu'à le caractère `0`. Avec la fonction `putchar()` j'affiche une seul caractère à l'écran.
+Par exemple ici j'utilise une boucle `while` pour avancer dans le tableau jusqu'au caractère `0`. Avec la fonction `putchar()` j'affiche **un seul** caractère à l'écran.
 > putchar est une fonction fondamentale du C, sur laquelle print() est basée. Elle ne sert qu'à afficher un `char`.
 ```c
 #include <stdio.h>
@@ -202,12 +206,33 @@ Résultat :
 Massi
 ```
 
+1. Déclarer un tableau de `char` dans lequelle il y a un `0` placé à la fin puis afficher le avec un `printf()`.
+```c
+char mot[6] = {'s','a','l','u','t',0};
+```
+2. Déclarer un tableau de `char` mais placez cette fois un `0` en plein millieu du tableau. Affichez le dans un `printf()` et expliquez le résultat.
+```c
+char mot[6] = {'s','a','l',0,'u','t'};
+```
+> **Note**
+> Le caractère `'\0'` et l'*integer* `0` ont la même valeur.
+>```c
+>#include <stdio.h>
+>
+>int main(){
+>  if(0 == '\0'){
+>    printf("equal");
+>  }
+>  return 0;
+>}
+>```
 
 ## Déclarer une string litérale
-Une string doit **TOUJOURS** avoir un `\0` à la fin, c'est ainsi que l'on connais la fin du texte. Mais rassuré vous i n'y à pas à le placer à la main à chaque fois, les string litérale sont là pour ça.
+Une string doit **TOUJOURS** avoir un `\0` à la fin, c'est ainsi que l'on connais la fin du texte. Mais rassurez-vous il n'y à pas à le placer à la main à chaque fois, les *strings* litérales sont là pour ça.
 
-Les string litérale sont des chaines de caractère qui possède déjà le caractère `0` à la fin.
+Les strings litérales sont des chaines de caractère qui possède déjà la valeur `0` à la fin de leurs tableau et ce *dès la déclaration.*
 
+### Syntaxes de déclaration
 Au lieu de déclarer un tableau de `char` je dois déclarer un pointeur sur `char`, c'est à dire *une variable qui contient l'adresse du premier caractère du tableau*.
 
 ```c
@@ -220,7 +245,14 @@ Ou en une ligne :
 char* nom = "Chaouchi";
 ```
 
-Comme dit précedemment les strings litérales contiennent déjà le caratère `0` à la fin.
+Je peux également déclarer un tableau et demander au compilateur de deviner sa taille(`0` inclus).
+
+```c
+char nom[] = "Chaouchi";
+```
+
+### Le zéro est présent d'office
+Comme dit précédemment les strings litérales contiennent déjà le caratère `0` à la fin.
 
 Je peux le voir avec une boucle `for()`
 ```c
@@ -230,7 +262,7 @@ int main(){
     char* nom = "Chaouchi";
     int i = 0;
     for (int i = 0; i < 9; i++){
-        printf("%d : %c\n",nom[i],nom[i]);
+        printf("%d \t %c\n",nom[i],nom[i]);
     }
     return 0;
 }
@@ -362,6 +394,9 @@ int main(){
     return 0;
 }
 ```
+
+Typiquement vous utilisez `sprintf()` si vous souhaitez placer des variables dans une `string`.
+
 
 ## Utiliser les strings.
 
