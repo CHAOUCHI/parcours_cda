@@ -540,7 +540,6 @@ int isEgale(char* str1,char* str2){
  * Ne pas oubliez de placer un \0 après avec copié une string
  */
 
-### 
 
 ### 1. **Inverser une chaîne**
 Écrivez une fonction `inverseString()` qui : 

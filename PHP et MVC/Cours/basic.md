@@ -14,7 +14,7 @@ Comme d'habitude **W3schools** est également là : https://www.w3schools.com/ph
 
 # Les possibilités du PHP
 PHP est le premier langage de programmation du web et comme son nom l'indique PHP est un *Préprocesseur d'Hypertext*.  Concrètement, un hypertext est un fichier HTML et PHP permet de d'exectuer un algorithme avant l'envoi de l'hypertext au client pour envoyer du contenu dynamique.
->Aujourd'hui on n'envoi pas execlusivement de l'hypertext (html) mais également du JSON ou du XML.
+>Aujourd'hui on n'envoi pas exclusivement de l'hypertext (html) mais également du JSON ou du XML.
 
 Avec PHP vous pourrez entre autre : 
 - **Créer un site web dynamique** sans l'utilisation de JavaScript.
@@ -59,7 +59,7 @@ Rendez vous dans le dossier dans lequel vous souhaitez mettre vos futurs sites w
 
 Puis écrivez ceci pour lancer le serveur en `localhost` sur le port `8080`.
 ```
-php - S localhost:8080
+php -S localhost:8080
 ```
 > Si vous souhaitez que votre serveur soit accéssible à tout les PC du réseau local de chez vous : remplacez `localhost` par l'adresse ipv4 de votre pc.
 
@@ -69,7 +69,9 @@ Dans l'industrie on ne fournit pas un site PHP grâce à cette commande le plus 
 # Hello World !
 Tout code `php` doit être contenu dans un fichier .php et entre les balises php : `<?php ... ?>`
 
-Dans une fichier **index.php**:
+Dans le dossier ou vous avez lancé le serveur php créer un fichier **index.php**.
+
+Dans le fichier **index.php** écrivez:
 ```php
 <?php
 echo "Hello World";
