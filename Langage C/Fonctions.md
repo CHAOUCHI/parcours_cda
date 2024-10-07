@@ -97,7 +97,8 @@ char* dupliquer(char* str);
 
 int main()
 {
-  printf("%s",dupliquer("Massi"));
+  char* copy = dupliquer("Massi");
+  printf("%s",copy);
   return 0;
 } 
 

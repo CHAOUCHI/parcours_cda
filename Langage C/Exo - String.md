@@ -364,7 +364,7 @@ int main(){
 
     // Je convertis la string en float avec atof "1.70" devient 1.70.
     float taille = atof(buf);
-    printf("%f\n",age);
+    printf("%f\n",taille);
 
     return 0;
 }
