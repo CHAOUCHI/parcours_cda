@@ -1205,9 +1205,13 @@ int main() {
 
 En C, vous pouvez interagir avec le système de fichiers à l'aide de la bibliothèque `<stdio.h>` et des fonctions spécifiques :
 
-- **Ouverture de fichiers** : `fopen`
-- **Lecture/Écriture** : `fread`, `fwrite`, `fprintf`, `fscanf`
-- **Fermeture** : `fclose`
+- **Ouverture de fichiers** : `fopen()`
+- **Lecture/Écriture** : `fread()`, `fwrite()`, `fprintf()`, `fscanf()`
+- **Fermeture** : `fclose()`
+
+1. La première étape de la lecture d'un fichier est de créer une variable de type `FILE*` avec la fonction `fopen()`.
+2. Je n'oublie pas de précisier les droits d'accès au fichier : `"w"` pour l'écriture, `"r"` pour la lecture.
+
 
 Exemple d'utilisation :
 
@@ -1215,9 +1219,11 @@ Exemple d'utilisation :
 #include <stdio.h>
 
 int main() {
-    FILE* file = fopen("example.txt", "w"); // Ouvre un fichier en écriture
-    if (file != NULL) {
-        fprintf(file, "Hello, FileSystem!\n");
+    FILE* file = fopen("mon_fichier", "w"); // Ouvre un fichier en écriture
+    if (file != NULL) { // Je test si le pointeur d'adresse est nulle
+        int age = 24;
+        // J'écrit dans le fichier avec fprintf()
+        fprintf(file, "Salut tout le monde j'ai %d ans",age);
         fclose(file); // Ferme le fichier
     }
     return 0;
