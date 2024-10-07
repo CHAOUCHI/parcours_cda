@@ -1159,7 +1159,7 @@ int main() {
     return 0;
 }
 ```
-<!-- 
+
 
 ### Math
 
@@ -1215,7 +1215,7 @@ Exemple d'utilisation :
 #include <stdio.h>
 
 int main() {
-    FILE *file = fopen("example.txt", "w"); // Ouvre un fichier en écriture
+    FILE* file = fopen("example.txt", "w"); // Ouvre un fichier en écriture
     if (file != NULL) {
         fprintf(file, "Hello, FileSystem!\n");
         fclose(file); // Ferme le fichier
@@ -1223,7 +1223,7 @@ int main() {
     return 0;
 }
 ```
-
+<!--
 ## Connexion inter-process
 
 Les connexions inter-processus permettent à différents processus de communiquer.
