@@ -18,6 +18,15 @@ int main(){
 }
 ```
 
+> **Que se passe t'il si j'enleve return de la fonction somme**
+> Certain compilateur peuvent accepter le faite d'oublier le return dans une fonction.
+> Il passera parfois la dernière variable crée.
+> L'exemple du haut fonctionne donc aussi sans la ligne 
+>```c
+>return resultat;
+>```
+> Attention cependant ce n'est pas du tout un comportement normal et **il ne faut jamais oublier le return d'une fonction**.
+
 ## Déclaration d'une fonction
 **Attention !** pour qu'une fonction soit connu dans la fonction main il faut la déclarer avant la fonction `main()`
 
