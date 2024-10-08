@@ -49,3 +49,7 @@ int main() {
     return 0;
 }
 ```
+
+1. Enregistrer un fichier nommé profil dans le quel il y a noté 24
+2. Enregistrer un fichier nommé profil dans le quel il y a noté l'age d'un utilisateur récupéré via `fgets()`
+3. Ecrivez un programme demande à l'utilisateur : age, nom, métier. Ces données sont enregistrées dans un fichier et affichées au lancement du programme.
