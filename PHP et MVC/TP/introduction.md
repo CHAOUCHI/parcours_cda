@@ -144,6 +144,7 @@ $photo_url = "https://avatars.githubusercontent.com/u/34664499?v=4";
 </body>
 </html>
 ```
+
 ![alt text](image-3.png)
 
 # Syntaxe basique du PHP
@@ -669,4 +670,6 @@ header("Location: index.php");
 
 ## Les données d'un formulaire $_POST
 
-##
+## Les sessions avec $_GET - Conserver des infos entre les pages
+
+## Les bases de données avec SQL et PDO - Conserver des données sur le long terme
