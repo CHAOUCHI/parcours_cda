@@ -30,6 +30,9 @@ L'intérpreteur php est le programme qui va executer nos scripts php.
 
 
 ## Windows
+
+Lien officiel : https://windows.php.net/downloads/
+
 - https://windows.php.net/downloads/releases/php-8.3.12-nts-Win32-vs16-x64.zip
 - Décompresser l'archive dans un dossier nommé php et placé le dans le dossier Programme de votre disque dur.
 - Ajouter le chemin vers php.exe dans le PATH Windows
