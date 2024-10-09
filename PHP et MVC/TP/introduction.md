@@ -388,6 +388,30 @@ $eleve = [
 ```
 ![](image-3.png)
 
+2. A partir du tableau à double entrée suivant afficher le nom de tout les eleves.
+```php
+$eleves = [
+    [
+        "name" => "Massinissa",
+        "lastname" => "CHAOUCHI",
+        "age" => 24,
+        "metier" => "Chomeur"
+    ],
+    [
+        "name" => "Billy",
+        "lastname" => "Dubois",
+        "age" => 30,
+        "metier" => "Héritier"
+    ],
+    [
+        "name" => "Francis",
+        "lastname" => "Dumont",
+        "age" => 20,
+        "metier" => "Chanteur gratuit"
+    ],
+];
+```
+
 ## Les Conditions
 Les conditions en PHP sont similaire au condition des autres langages de programmation.
 ### if...else
