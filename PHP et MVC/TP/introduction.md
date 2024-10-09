@@ -156,9 +156,30 @@ En php il existe plusieurs types de données :
 - Float, les nombres à virgules
 - String, les textes
 - Boolean, les valeurs binaires : `true` ou `false`
-- Array, les tableaux
+- Array, les tableaux (Map ou List)
 - Object, les instances de classes.
 - NULL, la valeur d'une variable non déclarée.
+
+En PHP le typage est dynamique ce qui veut dire que je n'ai pas besoin de rajouter le type d'une variable avant de la déclarer.
+
+```php
+<?php
+$isGameOver = true;
+var_dump($isGameOver);
+```
+![alt text](image-4.png)
+
+
+1. Déclarer des variables des types : Integer, Float, String, Boolean. Donnez leurs des valeurs et affichés les avec `var_dump()`
+
+Pour déclarer un tableau il suffit de faire.
+```php
+<?php
+$notes = [10,8,19,20];
+var_dump($notes);
+```
+2. Afficher le contenu d'un tableau
+
 ### A propos de la concaténation 
 En PHP la concaténation de deux string se fait via l'opérateur point : `.`  . 
 ```php
@@ -172,6 +193,15 @@ echo "J'ai ".$age." ans !";     // => J'ai 24 ans !
 > echo "J'ai $age ans !";
 >``` 
 >
+
+1. Concatenez deux variables `$nom` et `$prenom` pour afficher la page suivante :
+
+![alt text](image-5.png)
+
+2. Faite la même choses sans utiliser le `.` pour afficher la page suivante :
+
+*Conseil : lisez la note juste en haut*
+![alt text](image-6.png)
 
 ## Les opérateurs en PHP
 Les opérateurs en `PHP` respecte la syntaxe classique de tout les langages qui hérite du C.
