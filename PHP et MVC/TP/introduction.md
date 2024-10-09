@@ -225,7 +225,7 @@ $age = 24;                  // Nombre
 $prenom = "Massinissa";     // String
 $isMajeur = $age >= 18;     // Boolean
 ```
-Pour utiliser une varible il faut toujours placer le dollar devant son nom.
+Pour utiliser une variable il faut toujours placer le *dollar* devant son nom.
 
  ```php
  
@@ -261,17 +261,29 @@ for ($i=0; $i < count($fruits); $i++) {
 ```
 ![alt text](image-1.png)
 
-#### Ajouter un élements à la liste
+0. Afficher le tableau de fruits avec var_dump(), Expliquez ce que vous voyez.
+1. Afficher tout les élements du tableau de fruits.
+2. Afficher les notes impaires du tableau suivants :
+```php
+<?php
+$notes = [20,10,15,12,9,3];
+```
+3. Afficher la moyenne des notes.
+4. Afficher la somme des notes.
+
+#### Ajouter un élement à la liste
 ```php
 $fruits[] = "orange";   // Ajoute à la fin du tableau.
 ```
-#### Modifier un élements de la liste
+
+#### Modifier un élement de la liste
 ```php
 echo $fruits[2];        // => poire
 $fruits[2] = "banane";   // Ajoute à la fin du tableau.
 echo $fruits[2];        // => banane
 ```
-#### Supprimer un éléments
+
+#### Supprimer un élément
 `array_splice` permet de supprimer des éléments dans un intervale donnée.
 
 **Définition :**
@@ -363,6 +375,18 @@ unset($fruits["lastname"]);
 >```php
 >var_dump($fruits);     // Ecrit le contenu du tableau dans le HTML
 >```
+
+0. Afficher le tableau $eleve dans un `var_dump()`
+1. A partir du tableau suivant reproduisez la maquette suivante.
+```php
+$eleve = [
+    "name" => "Massinissa",
+    "lastname" => "CHAOUCHI",
+    "age" => 24,
+    "metier" => "Programmeur"
+];
+```
+![](image-3.png)
 
 ## Les Conditions
 Les conditions en PHP sont similaire au condition des autres langages de programmation.
