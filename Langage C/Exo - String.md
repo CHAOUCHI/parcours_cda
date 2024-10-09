@@ -251,6 +251,30 @@ Je peux également déclarer un tableau et demander au compilateur de deviner sa
 char nom[] = "Chaouchi";
 ```
 
+### Différence entre char* et char buf[]
+Attention les char* sont des constantes.
+Ce qui signifie que les strings alloué avec un `char*` ne sont pas modifiable.
+
+*Erreur de segmentation, tentative de modification d'une string litéral read-only - lecture seule*
+```c
+char* str = "Salut";
+str[0] = 'd'
+printf("%s",str);
+```
+```
+Segmentation fault
+```
+
+*Tout va bien str est modifiable*
+```c
+char str[] = "Salut";
+str[0] = 'd'
+printf("%s",str);
+```
+```
+dalut
+```
+
 ### Le zéro est présent d'office
 Comme dit précédemment les strings litérales contiennent déjà le caratère `0` à la fin.
 
@@ -562,6 +586,17 @@ Sans utiliser la fonction `strlen()`, écrivez un programme qui calcule la longu
 3. une autre lettre qui doit remplacer toutes les occurrences de la première lettre.
 
 Le programme doit donc remplacer toutes les occurrences du premier caractère dans la chaîne par l'autre caractère choisi par l'utilisateur.
+
+Exemple : 
+```
+"Je suis une table"
+
+Quel lettre remplacer ?
+e
+Par quelle autre lettre ?
+z
+"Jz suis une tablz"
+```
 
 ### 5. **Compter les voyelles et les consonnes**
 Écrivez un programme qui lit une chaîne de caractères saisie par l'utilisateur et qui compte le nombre de voyelles et de consonnes dans cette chaîne. Ignorer les espaces et autres symboles.
