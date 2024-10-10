@@ -769,8 +769,365 @@ header("Location: index.php");
 
 
 # Le php dans le HTML
+Le php est un langage back-end, c'est à dire un langage qui tourne sur un serveur.
+
+Sont role est de fabriquer une page HTML et pour ça il a accès à toute les données de la requête HTTP du client (navigateur).
+
+## Comprendre les requête et réponse HTTP
+
+### Le navigateur effectue une requête HTTP
+Prenons le site suivant écrit dans un fichier `index.php`:
+```php
+<h1>Salut à tous</h1>
+```
+
+Je lance mon serveur sur le port 8080.
+
+```bash
+php -S localhost:8080
+```
+
+Lorsque je tape `localhost:8080` dans la barre de recherche de firefox j'effectue un **requête HTTP** vers le serveur que je viens de lancer.
+
+On le vois dans le terminal du serveur :
+
+```
+massinissa@massinissa-x1:~/Documents/php_tes$ php -S localhost:8080
+[Thu Oct 10 15:12:12 2024] PHP 8.2.20 Development Server (http://localhost:8080) started
+[Thu Oct 10 15:12:14 2024] [::1]:51366 Accepted
+[Thu Oct 10 15:12:14 2024] [::1]:51366 [200]: GET /
+[Thu Oct 10 15:12:14 2024] [::1]:51366 Closing
+```
+
+Je vois qu'une requête HTTP à été faite à 15:12 sur l'adresse `/` qui est par défaut le fichier `index.php`.
+
+La méthode HTTP GET est la méthode utilisée par firefox lorsque l'on tape dans la barre de recherche.
+
+### Effectuer une requête à la main avec REST Client sur VSCode
+Grâce à l'extension REST Client je peux essayer d'envoyer la même requête à la main pour comprendre comment marche la barre de recherche du navigateur.
+
+1. *Télécharger REST Client sur VSCode*
+
+![alt text](image-7.png)
+
+2. Créer un fichier `client.http` dans VSCode et écrivez la requête suivante :
+```http
+GET http://localhost:8080 HTTP/1.1
+```
+
+Normalement vous devez avoir la même chose que moi :
+- un fichier client.http qui contient la requete HTTP
+- Votre terminal sserveur en dessous qui affiche les requetes du serveur
+- Un lien cliquable *Send Request* apparu au dessus de la requête.
+
+![alt text](image-8.png)
+
+3. Cliquez sur *Send Request* pour envoyer la requête et observez comment le serveur reçoit la requête et renvoi la réponse qui est affichée dans VSCode par REST Client.
+
+![alt text](image-9.png)
+
+Une requete GET à été reçu et une réponse 200 à été répondu.
+
+> 200 signifie tout va bien.
+> 404 est le code le plus connu il signifie *"Ressource inconnu"*
+
+```
+massinissa@massinissa-x1:~/Documents/php_tes$ php -S localhost:8080
+[Thu Oct 10 15:18:06 2024] PHP 8.2.20 Development Server (http://localhost:8080) started
+[Thu Oct 10 16:32:30 2024] [::1]:55768 Accepted
+[Thu Oct 10 16:32:30 2024] [::1]:55768 [200]: GET /
+[Thu Oct 10 16:32:30 2024] [::1]:55768 Closing
+```
+
+Et REST Client à affiché la réponse HTTP 200 sur la droite de VSCode.
+
+```http
+HTTP/1.1 200 OK
+Host: localhost:8080
+Date: Thu, 10 Oct 2024 14:32:30 GMT
+Connection: close
+X-Powered-By: PHP/8.2.20
+Content-type: text/html; charset=UTF-8
+
+<h1>Salut à tous</h1>
+```
+
+Vous pouvez voir que la réponse HTTP du serveur PHP est fait en 3 parties :
+
+- Le code de status : 200 par défaut
+- Les headers : des infos utile au client, pas important pour vous pour l'instant
+- BODY HTML : Le html envoyé, `echo` permet d'écrire dedans.
+
+
+```http
+HTTP/1.1 code_status message
+Header : value
+Header : value
+Header : value
+Header : value
+...
+
+BODY HTML
+
+```
+
+### Résumé Requete et Réponse HTTP
+En résumé la requete HTTP envoyé par le navigateur web ressemble à ça :
+
+```http
+GET http://localhost:8080 HTTP/1.1
+```
+
+Et la réponse HTTP du serveur PHP ressemble à ceci :
+
+```http
+HTTP/1.1 200 OK
+Host: localhost:8080
+Date: Thu, 10 Oct 2024 14:32:30 GMT
+Connection: close
+X-Powered-By: PHP/8.2.20
+Content-type: text/html; charset=UTF-8
+
+<h1>Salut à tous</h1>
+```
+
+L'objectif du PHP ça va être de lire les informations de la requetes et modifier le body HTML en fonction de ces infos.
+
+Les informations de la requetes peuvent être :
+- Des données présente dans l'url d'un lien cliquable `<a href>`
+- Les données présente dans un formulaire HTML `<form>`
+
+C'est partie nous allons donc apprendre à envoyer et lire ces données.
 
 ## Les données de l'URL $_GET
+
+### $_GET et les variables d'url
+Les données de l'url sont récupérable via le tableau `$_GET`.
+
+Si je fournis une variable dans l'url comme ceci :
+```php
+GET http://localhost:8080?age=24 HTTP/1.1
+```
+
+Elle sera placée par PHP dans le tableau map `$_GET`.
+
+Je peux afficher $_GET dans le body HTMl de la réponse avec `var_dump()`.
+
+```php
+<?php
+var_dump($_GET);
+```
+
+La réponse contient donc ma variable age en tant que clé du map $_GET.
+
+Je le vois dans la réponse HTTP de REST Client
+```http
+HTTP/1.1 200 OK
+Host: localhost:8080
+Date: Thu, 10 Oct 2024 14:41:53 GMT
+Connection: close
+X-Powered-By: PHP/8.2.20
+Content-type: text/html; charset=UTF-8
+
+array(1) {
+  ["age"]=>
+  string(2) "24"
+}
+```
+
+Et je le vois évidement dans le navigateur.
+
+1. Je tape `http://localhost:8080/?age=24` dans la barre de recherche du navigateur.
+
+2. Il affiche ma variable car var_dump ecrit dans le body HTML de la réponse HTTP.
+
+![alt text](image-10.png)
+
+### Exercice :
+
+1. Tapez `http://localhost:8080/?prenom=massi` dans la barre de recherche et affichez :
+    - Le tableau `$_GET` avec un `var_dump()`
+    - Le prénom `massi` dans un `<h1>`
+
+### Utiliser la balise `<a href>` pour remplir `$_GET`
+
+La balise a href permet d'envoyer une requête http pour changer de page.
+
+Si je place une variable dans l'url de l'attribut `href` je peut **envoyer une variable d'une page à une autre**.
+
+*index.php*
+```html
+<h1>Page d'accueil</h1>
+
+<a href="/produit.php?id=1">Voir le produit numéro 1</a>
+```
+
+*product.php*
+```php
+<?php
+var_dump($_GET["id"]); // string(1) "1" 
+?>
+
+<h1>Page du produit</h1>
+```
+
+Prenons un tableau de produit.
+
+*product.php*
+```php
+<?php
+$products = [
+    [
+        "name"=>"Adidas taille 42",
+        "price"=> 100
+    ],
+    [
+        "name"=>"Airmax taille 45",
+        "price"=> 98
+    ],
+    [
+        "name"=>"Doliprane",
+        "price"=> 2.78
+    ]
+]
+?>
+
+<h1>Page du produit</h1>
+```
+
+> Habituelement ce tableau de produits serait fournit par une fonction qui requeterait la base de données. Mais pour des raison pédagogique nous écrivons ce tableau à la main.
+
+Je peux utiliser l'id passé en url pour afficher le produit en fonction de l'id passé en url.
+
+*product.php*
+```php
+<?php
+var_dump($_GET["id"]);
+$product_id = $_GET["id"];
+
+
+$products = [
+    [
+        "name"=>"Adidas taille 42",
+        "price"=> 100
+    ],
+    [
+        "name"=>"Airmax taille 45",
+        "price"=> 98
+    ],
+    [
+        "name"=>"Doliprane",
+        "price"=> 2.78
+    ]
+]
+
+?>
+
+<h1>Page du produit</h1>
+
+<p><?= $products[$product_id]["name"] ?></p>
+<p><?= $products[$product_id]["price"] ?></p>
+```
+
+Pour l'url suivante :
+```
+http://localhost:8080/produit.php?id=1
+```
+
+Je vois cette vue :
+![alt text](image-12.png)
+
+#### Exercices :
+1. Tapez dans la barre de recherche l'url neccessaire pour afficher le produit "Doliprane". Il doit s'afficher à l'écran.
+2. Dans le fichier `index.php` ajouter d'autre balise `<a>` pour pouvoir naviguer vers tout les produits possibles.
+3. Tester et afficher tout les produits possible avec les balises `<a>` nouvellement ajoutées.
+
+## require_once() importer un script PHP dans un autre
+Pour des raisons pratique je vais vous montrer comme importer un fichier php dans un autre.
+
+Dans un fichier `bdd.php` écrivez le tableua suivant :
+
+*bdd.php*
+```php
+<?php
+$products = [
+    [
+        "name"=>"Adidas taille 42",
+        "price"=> 100
+    ],
+    [
+        "name"=>"Airmax taille 45",
+        "price"=> 98
+    ],
+    [
+        "name"=>"Doliprane",
+        "price"=> 2.78
+    ]
+];
+?>
+```
+
+Nous allons rendre disponible ce tableau dans les deux pages précedentes, il nous servira de base de donnée.
+
+*product.php*
+```php
+<?php
+require_once("bdd.php");
+$product_id = $_GET["id"];
+
+?>
+
+<h1>Page du produit</h1>
+
+<p><?= $products[$product_id]["name"] ?></p>
+<p><?= $products[$product_id]["price"] ?></p>
+```
+
+Ajoutons le également dans le fichier `index.php` pour pouvoir faire les balises `<a>`.
+
+*index.php*
+```php
+<?php
+require_once("bdd.php");
+?>
+
+<h1>Page d'accueil</h1>
+
+```
+
+1. A l'aide du tableau et d'une boucle for afficher autant de balises `<a>` que de produit du tableau.
+2. Placer l'id des produits dans l'url pour créer un catalogue dynamique de produit.
+
+### Mini-projet - Boutique de fruit
+
+#### Récupérer le projet
+Clonez le projet et passez sur la branche `get` pour avoir la version du projet correspondant à ce tp.
+```bash
+git clone https://github.com/CHAOUCHI/grid-php.git
+cd grid-php
+git checkout get
+```
+
+Dans le fichier `bdd.php` vous trouverez un tableau de fruits.
+
+#### Objectif
+Créer une boutique en ligne de vente de fruit.
+
+#### Cahier des charges
+
+|Tache|Description|Contraintes|
+|-|-|-|
+|Page d'accueil|Afficher la photo de tout les produits dans la page index dans un display grid.<br> Les images doivent être des lien cliquable qui amène à la page produit correspondante|Attention le résultat doit être dynamique il faut donc utiliser `$_GET`.<br> **Respectez la maquette figma**|
+|Page de produit|Afficher les infos du produit. | **Respectez la maquette figma**|
+
+## Maquette figma
+Egalement dispo dans le readme du github.
+
+https://www.figma.com/proto/NY2o3BtVLyjrA3AbLnpnCa/Untitled?node-id=1-2&node-type=frame&t=lIt6CZhWWWwHW2Ey-1&scaling=min-zoom&content-scaling=fixed&page-id=0%3A1&starting-point-node-id=1%3A2
+
+![alt text](<maquette grid.png>)
+
+![alt text](<page produit.png>)
 
 ## Les données d'un formulaire $_POST
 
