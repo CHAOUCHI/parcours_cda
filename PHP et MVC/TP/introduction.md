@@ -376,8 +376,7 @@ unset($fruits["lastname"]);
 >var_dump($fruits);     // Ecrit le contenu du tableau dans le HTML
 >```
 
-0. Afficher le tableau $eleve dans un `var_dump()`
-1. A partir du tableau suivant reproduisez la maquette suivante.
+### Exercice Map
 ```php
 $eleve = [
     "name" => "Massinissa",
@@ -386,9 +385,15 @@ $eleve = [
     "metier" => "Programmeur"
 ];
 ```
+
+0. Afficher le tableau `$eleve` dans un `var_dump()`
+1. A partir du tableau `$eleve` reproduisez la maquette suivante. C'est le même exercice que précedemment seuelement maintenant nous utilisons un objet `Map`.
+
 ![](image-3.png)
 
-2. A partir du tableau à double entrée suivant afficher le nom de tout les eleves.
+Je peux accéder à un tableau dans un tableau, on appel ça un tableau à double entrées.
+
+Par exemple pour le tableau suivant je peux accéder au nom de l'element 1 :
 ```php
 $eleves = [
     [
@@ -410,7 +415,12 @@ $eleves = [
         "metier" => "Chanteur gratuit"
     ],
 ];
+
+echo $eleves[1]["name"];
 ```
+
+2. A partir du tableau à double entrée `$eleves` afficher le nom de tout les eleves dans une boucle `for`.
+
 
 ## Les Conditions
 Les conditions en PHP sont similaire au condition des autres langages de programmation.
@@ -442,6 +452,9 @@ while ($i < 3) {
 }
 ```
 1. Afficher tout les élements du tableau de fruits.
+2. Afficher tout les élements qui sont égaux à `"cerise"` grâce à l'opérateur `==`.
+> **Note** en PHP `==` fait également la comparaison des string, pas besoin de prendre en compte la caractère `'\0'` comme en C.
+3. Afficher tout les éléments qui commence par un `'p'`.
 
 ### La boucle for
 Le PHP supporte la syntaxe classique du `for` :
@@ -455,6 +468,10 @@ for ($i=0; $i < count($fruits); $i++) {
 */
 ```
 
+1. Afficher  tout les élements du tableau grâce à la fonction `count()`
+2. Ajouter des élements au tableau et vérifier si le code affiche toujours tout les élements.
+
+#### La boucle for pour afficher du HTML
 Je peux placer du html dans ma boucle for pour un meilleure affichage.
 ```php
 <?php
@@ -485,36 +502,6 @@ $fruits = ["cerise","pomme","poire"];
 </body>
 </html>
 ```
-
-# Exercice
-Reproduisez la maquette suivante en PHP.
-Le tableau de fruits est déjà déclarer dans le fichier index.php
-
-## 1. Cloner le projet et lancer le serveur
-
-*Lien du projet : https://github.com/CHAOUCHI/grid-php*
-
-```bash
-git clone https://github.com/CHAOUCHI/grid-php
-cd grid-php
-php -S localhost:7070
-```
-
-## 2. Consulter la maquette
-https://www.figma.com/proto/tS9BqogLtVrJV5PCLOjdqk/Untitled?node-id=55-2&node-type=frame&t=Bf6tC4Pb1Iyrsxmr-1&scaling=min-zoom&content-scaling=fixed&page-id=0%3A1
-
-![alt text](<maquette grid.png>)
-
-## 3. Consigne
-- A l'aide d'une boucle for et d'un display grid reproduisez la maquette vue plus en haut
-- Tout les assets png sont deja dans le répo github
-- les RGB sont sur la maquette figma
-- Regarder bien tout les fichiers du répo, normalement vous avez tout ce qu'il faut : 
-    - le tableau de fruits
-    - le fichier index.php
-    - le fichier style.css pour le style
-    - Les fichiers PNG pour les images
-- BONUS : Responsive avec les media query pour le nombre de colonnes.
 
 #### Le foreach
 La plupart du temps la syntaxe classique n'est pas utilisée car le `for` permet surtout de parcourir un tableau, pour ceci ont préfère utiliser `foreach`.
@@ -548,6 +535,19 @@ foreach($eleve as $key => $value){
  * */
 ```
 
+1. Afficher la clé de tout les élements du Map.
+2. Afficher le type de tout les élements du Map avec la fonction `gettype()`
+
+Je peut vérifier si une variable est d'un certain type avec la fonction `gettype()`.
+
+```php
+$i = 24;
+if(gettype($i) == gettype(1)){
+    echo "Je sui sun Int";
+}
+```
+3. Afficher la clé et la valeur des élements de type `String`.
+
 #### Correctement faire une boucle dans du HTML.
 Dans l'exemple précedent j'écrivait directement du HTML dans mon echo. C'est une mauvaise choses par ce que je rend difficle la lecture et l'écriture du code HTML.
 
@@ -573,7 +573,7 @@ $fruits = ["cerise","pomme","poire"];
 <body>    
     <?php
     for ($i=0; $i < count($fruits); $i++) { 
-        echo "<p>"; // Horrible j'ai écrit du HTML dans un echo
+        echo "<p>"; // HORRIBLE ! J'ai écrit du HTML dans un echo...
         echo $fruits[$i];
         echo "</p>";
     }
@@ -584,8 +584,7 @@ $fruits = ["cerise","pomme","poire"];
 
 Le plus simple est d'utiliser la boucle foreach avec la syntaxe `:`  similaire au python.
 
-Un code HTML comme celui-ci :
-
+**Un code HTML comme celui-ci :**
 
 ```html
 <!DOCTYPE html>
@@ -610,9 +609,10 @@ Un code HTML comme celui-ci :
 </body>
 </html>
 ```
-Doit être automatisé de cette façon :
+**Doit être automatisé de cette façon :**
 ```php
 <?php
+// Je déclare un tableau
 $fruits = ["cerise","pomme","poire"];
 ?>
 
@@ -643,7 +643,7 @@ $fruits = ["cerise","pomme","poire"];
 ```
 
 > **Foreach de préférence**
-> Note il est d'usage de carrement utiliser la syntaxe `foreach()` car le `$i` est inutile dans la plupart des cas.
+> Note il est d'usage d'utiliser la syntaxe `foreach()` plutot que for classique, car le `$i` est inutile dans la plupart des cas.
 
 <!--
 # Session PHP
