@@ -1123,6 +1123,8 @@ Créer une boutique en ligne de vente de fruit.
 ## Maquette figma
 Egalement dispo dans le readme du github.
 
+***La maquette est intérative.***
+
 https://www.figma.com/proto/NY2o3BtVLyjrA3AbLnpnCa/Untitled?node-id=1-2&node-type=frame&t=lIt6CZhWWWwHW2Ey-1&scaling=min-zoom&content-scaling=fixed&page-id=0%3A1&starting-point-node-id=1%3A2
 
 ![alt text](<maquette grid.png>)
