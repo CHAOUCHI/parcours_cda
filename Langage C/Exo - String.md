@@ -431,7 +431,12 @@ La bibliothèque `<string.h>` fournit des fonctions pour manipuler les chaînes 
 - **Copie une string dans un tableau de string** : `strcpy()`
 - **Concaténation de deux string** : `strcat()`
 - **Comparaison, égalité entre deux string** : `strcmp()`
+- **Initaliser un tableau** : `memset()`
 
+<!--
+// Rajouter le détails des fonctions précedentes. 
+// Modifier l apartie sur les exemples pour aborder toutes les fonctions du haut.
+-->
 Exemple d'utilisation :
 
 ```c
