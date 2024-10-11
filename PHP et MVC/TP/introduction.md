@@ -997,6 +997,14 @@ $products = [
 
 > Habituelement ce tableau de produits serait fournit par une fonction qui requeterait la base de données. Mais pour des raison pédagogique nous écrivons ce tableau à la main.
 
+Ce tableau est un tableau de tableau je peux accéder au différent produit avec son index et sa clé.
+
+```php
+echo $products[0]["name"]; // J'affiche Adidias taille 42
+echo $products[2]["name"]; // J'affiche Doliprane
+echo $products[1]["price"]; // J'affiche 98
+```
+
 Je peux utiliser l'id passé en url pour afficher le produit en fonction de l'id passé en url.
 
 *product.php*
