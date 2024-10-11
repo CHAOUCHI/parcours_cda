@@ -973,6 +973,14 @@ var_dump($_GET["id"]); // string(1) "1"
 
 Prenons un tableau de produit.
 
+|name|price|
+|-|-|
+|Adidas taille 42|100|
+|Airmax taille 45|98|
+|Doliprane|2.78|
+
+En PHP ont l'écrit comme ça.
+
 *product.php*
 ```php
 <?php
@@ -995,7 +1003,7 @@ $products = [
 <h1>Page du produit</h1>
 ```
 
-> Habituelement ce tableau de produits serait fournit par une fonction qui requeterait la base de données. Mais pour des raison pédagogique nous écrivons ce tableau à la main.
+> Habituellement ce tableau de produits serait fournit par une fonction qui requeterait la base de données. Mais pour des raison pédagogique nous écrivons ce tableau à la main.
 
 Ce tableau est un tableau de tableau je peux accéder au différent produit avec son index et sa clé.
 
