@@ -1149,6 +1149,145 @@ https://www.figma.com/proto/NY2o3BtVLyjrA3AbLnpnCa/Untitled?node-id=1-2&node-typ
 
 ## Les données d'un formulaire $_POST
 
+L'autre moyen d'effecuter une requête HTTP est le formulaire html.
+
+Un formulaire HTML permet d'envoyer une requête HTTP à une autre page du site.
+
+Cette requête HTTP contiendra tout les champs du formulaire, chaque champs est une variable qui sera valeur qui sera stockée dans la requête.
+
+### Formulaire HTML VS Requête HTTP
+
+Pour l'exemple je veux créer un formulaire de connexion qui envoi *pseudo* et *mot de passe* à un script php nommé `check_login.php`.
+
+1. Créez deux fichiers :
+    - `login.php` : il contient notre formulaire HTML
+    - `check_login.php` : il reçoit les données du formulaire
+
+Ainsi un formulaire HTML comme celui-ci :
+
+*login.php*
+```html
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    
+    <form action="check_login.php" method="post">
+        <input type="text" name="pseudo" placeholder="pseudo"><br>
+        <input type="password" name="pass" placeholder="********"><br>
+        <input type="submit" value="Se connecter">
+    </form>
+
+</body>
+</html>
+```
+
+Fabriquera cette requête HTTP :
+
+```http
+POST /check_login.php HTTP/1.1
+Host : localhost:8080
+Content-Type : application/x-www-form-urlencoded
+
+pseudo=massi&pass=lol
+```
+
+> Vous pouvez voir que les formulaires HTML utilise une en-tête spécial : `Content-Type : application/x-www-form-urlencoded`. Sans cette en-tête les infos ne seront pas prisent en compte par PHP.
+
+### Réception des données avec `$_POST`
+Les données fournit dans la requête par le formulaire sont disponibles dans un *array map* appelé : `$_POST`.
+
+Affichons les données du formulaire avec un `var_dump()` de `$_POST`.
+
+*check_login.php*
+```php
+<?php
+
+var_dump($_POST);
+
+```
+
+1. Dans le formulaire de la page *login* tapez un pseudo et un mot de passe et cliquez sur envoyer pour envoyer la requête.
+2. Observez les variables affichez par le `var_dump()`.
+3. Actuellement les clés de `$_POST` sont : *pseudo* et *pass*. Faite en sorte que les clés soient *username* et *password*.
+
+### Utiliser les données
+`$_GET` et `$_POST` ne sont pas garanties d'être présentes. 
+
+Les données seront absentes si il y a une faute de frappe dans l'attribut `name` des balises `input` ou si quelqu'un accède à la page sans passer par le fomulaire.
+
+
+Il faut donc vérifier si les clés existent, je peux le faire avec `isset()`.
+
+***Exemple :***
+```php
+<?php
+$age; // La valeur n'est pas défini
+var_dump(isset($age));  // false
+```
+
+#### `isset()` sur `$_POST` pour vérifier la présence des champs.
+Utilisez `isset()` dans un `if` avant de faire quoi que se soit avec les variables.
+
+```php
+<?php
+if(isset($_POST["pseudo"]) && isset($_POST["pass"])){
+    var_dump($_POST);
+}
+```
+
+La méthode classique pour utiliser des données de `$_POST` est d'**initaliser deux variables à `NULL`** pour ensuite **les remplir avec `$_POST`** dans **le `if` qui test si les champs sont défini** grâce à `isset()`.
+
+Je peux ensuite, par exemple, afficher les variables dans du HTML.
+
+```php
+<?php
+$pseudo = NULL;
+$password = NULL;
+var_dump($_POST);
+
+if(isset($_POST["pseudo"]) && isset($_POST["pass"])){
+    $pseudo = $_POST["pseudo"];
+    $password = $_POST["pass"];
+}
+
+?>
+
+<p><?= $pseudo ?></p>
+<p><?= $password ?></p>
+```
+
+#### Affichage en cas d'erreur
+Si jamais les champs sont absent il peut être pratique de mettre un valeur par défaut.
+
+Je peux utiliser l'opérateur `??` qui renvoi une opérande si la première opérande est *"fausse"* (`false` ou `NULL`).
+
+***L'opérateur `??` sert a définir un affichage par défaut.***
+
+```
+
+```php
+<?php
+$pseudo = NULL;
+$password = NULL;
+var_dump($_POST);
+
+if(isset($_POST["pseudo"]) && isset($_POST["pass"])){
+    $pseudo = $_POST["pseudo"];
+    $password = $_POST["pass"];
+}
+
+?>
+
+<p><?= $pseudo ?? "faux" ?></p>
+<p><?= $password ?></p>
+```
+
+
 ## Les sessions avec $_GET - Conserver des infos entre les pages
 
 ## Les bases de données avec SQL et PDO - Conserver des données sur le long terme
