@@ -122,6 +122,7 @@ app.listen(8000,()=>{
 > La fonction callback est appelée une fois que le serveur est bien lancé sur le port 8000.
 
 Allez on regarde dans un navigateur !
+
 5. Dans un navigateur tapez dans la barre de recherche : `localhost:8000/hello` pour lancer une requête HTTP GET sur la route /hello.
 
 ![alt text](image-1.png)
