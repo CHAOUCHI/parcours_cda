@@ -80,7 +80,7 @@ Par exemples :
 - GET /user/1, peut renvoyer un utilisateur avec pour id 1 par exemple.
 - POST /annonce, peut renvoyer une nouvelle annonce au serveur à rajouter dans une BDD SQL par exemple. La nouvelle annonce sera une donnée au format JSON transmit dans le body de la requête HTTP.
 - DELETE /task/3, peut supprimer la tache numéro 3.
-- PUT /task/3, peut modifier la tache numéro 3 avec les infos à modifier fournit en JSON dans le body.
+- PUT /task/3, peut modifier la tache numéro 3 avec les infos à modifier fournies en JSON dans le body.
 
 ## Hello World - créer une route avec express
 
