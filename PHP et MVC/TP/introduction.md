@@ -1440,6 +1440,12 @@ sequenceDiagram
 L'objectif est de créer un système de connexion similaire à celui du cours plus haut, **en respectant la maquette figma si-dessous**.
 
 ##### **Maquette Figma:**
+
+**Maquette Assets :**
+
+https://www.figma.com/design/ckiZKMGeyrIkWFOS0pQheE/Untitled?t=1Rn6WsZhs4ERfDJg-1
+
+**Prototype :**
 https://www.figma.com/proto/ckiZKMGeyrIkWFOS0pQheE/Untitled?node-id=1-2&node-type=frame&t=qQ35RsUuvK2Wlfk5-1&scaling=scale-down&content-scaling=fixed&page-id=0%3A1&starting-point-node-id=1%3A2
 
 ![alt text](image-13.png)
@@ -1454,6 +1460,13 @@ https://www.figma.com/proto/ckiZKMGeyrIkWFOS0pQheE/Untitled?node-id=1-2&node-typ
 #### 2. Connexion message d'erreurs
 Créer un système de connexion qui indique via des messages si l'utilisateur s'est trompé.
 ##### **Maquette Figma:**
+
+**Maquette Assets :**
+
+https://www.figma.com/design/ckiZKMGeyrIkWFOS0pQheE/Untitled?t=1Rn6WsZhs4ERfDJg-1
+
+**Prototype :**
+
 https://www.figma.com/design/ckiZKMGeyrIkWFOS0pQheE/Untitled?node-id=4-92&t=muKRGgaS7jiUEGSQ-1
 
 ![alt text](image-14.png)
