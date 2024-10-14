@@ -624,7 +624,9 @@ cd grid-php
 php -S localhost:7070
 ```
 #### 2. Consulter la maquette
-https://www.figma.com/design/tS9BqogLtVrJV5PCLOjdqk/Untitled?node-id=0-1&t=muKRGgaS7jiUEGSQ-1
+
+https://www.figma.com/design/tS9BqogLtVrJV5PCLOjdqk/Untitled?node-id=0-1&t=Zmfg9cyA549SaEWi-1
+
 ![alt text](<maquette grid.png>)
 #### 3. Consigne
 - A l'aide d'une boucle for et d'un display grid reproduisez la maquette vue plus en haut
@@ -1141,7 +1143,7 @@ Egalement dispo dans le readme du github.
 
 ***La maquette est intérative.***
 
-https://www.figma.com/proto/NY2o3BtVLyjrA3AbLnpnCa/Untitled?node-id=1-2&node-type=frame&t=lIt6CZhWWWwHW2Ey-1&scaling=min-zoom&content-scaling=fixed&page-id=0%3A1&starting-point-node-id=1%3A2
+https://www.figma.com/design/NY2o3BtVLyjrA3AbLnpnCa/Untitled?node-id=0-1&t=1Rn6WsZhs4ERfDJg-1
 
 ![alt text](<maquette grid.png>)
 
