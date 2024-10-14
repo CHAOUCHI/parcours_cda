@@ -1153,7 +1153,7 @@ L'autre moyen d'effecuter une requête HTTP est le formulaire html.
 
 Un formulaire HTML permet d'envoyer une requête HTTP à une autre page du site.
 
-Cette requête HTTP contiendra tout les champs du formulaire, chaque champs est une variable qui sera valeur qui sera stockée dans la requête.
+Cette requête HTTP contiendra tout les champs du formulaire, chaque champs est une variable qui sera stockée dans la requête.
 
 ### Formulaire HTML VS Requête HTTP
 
@@ -1196,12 +1196,18 @@ Content-Type : application/x-www-form-urlencoded
 pseudo=massi&pass=lol
 ```
 
+Notez bien que c'est l'attribut `action` de la balise `<form>` qui défini la page cible de la requête.
+
+Avec ce forumlaire je veux donc transmettre les champs :
+    - `pseudo`
+    - `pass`
+
 > Vous pouvez voir que les formulaires HTML utilise une en-tête spécial : `Content-Type : application/x-www-form-urlencoded`. Sans cette en-tête les infos ne seront pas prisent en compte par PHP.
 
 ### Réception des données avec `$_POST`
 Les données fournit dans la requête par le formulaire sont disponibles dans un *array map* appelé : `$_POST`.
 
-Affichons les données du formulaire avec un `var_dump()` de `$_POST`.
+Affichons les données du formulaire avec un `var_dump()`.
 
 *check_login.php*
 ```php
@@ -1213,12 +1219,13 @@ var_dump($_POST);
 
 1. Dans le formulaire de la page *login* tapez un pseudo et un mot de passe et cliquez sur envoyer pour envoyer la requête.
 2. Observez les variables affichez par le `var_dump()`.
-3. Actuellement les clés de `$_POST` sont : *pseudo* et *pass*. Faite en sorte que les clés soient *username* et *password*.
+3. Affichez les variables dans des balises `<p>`.
+4. Actuellement les clés de `$_POST` sont : *pseudo* et *pass*. Faite en sorte que les clés soient *username* et *password*.
 
 ### Utiliser les données
 `$_GET` et `$_POST` ne sont pas garanties d'être présentes. 
 
-Les données seront absentes si il y a une faute de frappe dans l'attribut `name` des balises `input` ou si quelqu'un accède à la page sans passer par le fomulaire.
+Les données seront absentes si il y a une faute de frappe dans l'attribut `name` des balises `input` ou si quelqu'un accède à la page sans passer par le formulaire.
 
 
 Il faut donc vérifier si les clés existent, je peux le faire avec `isset()`.
@@ -1231,7 +1238,7 @@ var_dump(isset($age));  // false
 ```
 
 #### `isset()` sur `$_POST` pour vérifier la présence des champs.
-Utilisez `isset()` dans un `if` avant de faire quoi que se soit avec les variables.
+Utilisez `isset()` dans un `if` ***avant de faire quoi que se soit avec les variables.***
 
 ```php
 <?php
@@ -1240,7 +1247,7 @@ if(isset($_POST["pseudo"]) && isset($_POST["pass"])){
 }
 ```
 
-La méthode classique pour utiliser des données de `$_POST` est d'**initaliser deux variables à `NULL`** pour ensuite **les remplir avec `$_POST`** dans **le `if` qui test si les champs sont défini** grâce à `isset()`.
+La méthode classique pour utiliser des données de `$_POST` est d'**initaliser deux variables à `NULL`** pour ensuite **les affecter avec `$_POST`** dans **le `if` qui test si les champs sont définis**.
 
 Je peux ensuite, par exemple, afficher les variables dans du HTML.
 
@@ -1248,7 +1255,6 @@ Je peux ensuite, par exemple, afficher les variables dans du HTML.
 <?php
 $pseudo = NULL;
 $password = NULL;
-var_dump($_POST);
 
 if(isset($_POST["pseudo"]) && isset($_POST["pass"])){
     $pseudo = $_POST["pseudo"];
@@ -1261,14 +1267,25 @@ if(isset($_POST["pseudo"]) && isset($_POST["pass"])){
 <p><?= $password ?></p>
 ```
 
-#### Affichage en cas d'erreur
-Si jamais les champs sont absent il peut être pratique de mettre un valeur par défaut.
+Voilà j'ai vérifier si mes variables sont définis. Cette mécanique peut, par exemple, vous permettre de vérifier si l'utilisateur à bien remplit tout les champs requis d'un formulaire.
 
-Je peux utiliser l'opérateur `??` qui renvoi une opérande si la première opérande est *"fausse"* (`false` ou `NULL`).
+#### Affichage en cas d'erreur
+Si jamais les champs sont absents, il peut être pratique d'afficher une valeur par défaut.
+
+Je peux utiliser l'opérateur `??` qui renvoi une seconde opérande si la première opérande est *"fausse"* (`false` ou `NULL`).
 
 ***L'opérateur `??` sert a définir un affichage par défaut.***
 
+```php
+<?php
+$eleve = [
+    "name" => "Thomas",
+    "age" => 29
+];
+echo $eleve["name"] ?? "Je n'ai pas de nom";
 ```
+
+`"Je n'ai pas de nom"` s'affiche si `$eleve` est `null` ou si la clé `name` s'existe pas.
 
 ```php
 <?php
@@ -1283,11 +1300,233 @@ if(isset($_POST["pseudo"]) && isset($_POST["pass"])){
 
 ?>
 
-<p><?= $pseudo ?? "faux" ?></p>
-<p><?= $password ?></p>
+<p>Bienvenue <?= $pseudo ?? "utilisateur" ?> !</p>
+<p><?= $password ?? "****"?></p>
 ```
 
+#### Rediriger l'utilisateur
+
+##### Avant propos
+Vous devez avoir les fichiers suivants :
+
+*index.php*
+```HTML
+<h1>Page d'accueil</h1>
+<h2>Bienvenue toi !</h2>
+<a href="login.php"><p>Se connecter</p></a>
+```
+
+*login.php*
+```html
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <h2>Login page</h2>
+    <form action="check_login.php" method="post">
+        <input type="text" name="pseudo" placeholder="pseudo"><br>
+        <input type="password" name="pass" placeholder="********"><br>
+        <input type="submit" value="Se connecter">
+    </form>
+
+</body>
+</html>
+```
+
+*bdd.php*
+```php
+<?php
+$user = [
+    "pseudo"=>"Billy",
+    "password"=>"lol",
+    "email"=>"billy@gmail.com"
+];
+```
+
+*check_login.php*
+```php
+<pre>
+<?php
+require_once("bdd.php");
+
+$pseudo = NULL;
+$password = NULL;
+
+if(isset($_POST["pseudo"]) && isset($_POST["pass"])){
+    $password = $_POST["pass"];
+    $pseudo = $_POST["pseudo"];
+
+    if($pseudo == $user["pseudo"] && $password == $user["password"]){
+        // user login OK redirection to home page
+        // code here...
+    }else{
+        // wrong login infos redirection to login page
+        // code here ...
+    }
+}
+?>
+</pre>
+```
+
+##### Faire le login form
+
+La fonction `header()` permet de rajouter une en-tête HTTP à la réponse. Nous allons ajouter l'en-tête `Location` pour redirgier l'utilisateur sur la page d'accueil si le mot de passe est correct.
+
+**1. Ajouter une donnée user dans la BDD.**
+
+Dans le fichier `bdd.php` vous trouverez un utilisateur.
+
+*bdd.php*
+```php
+<?php
+
+$user = [
+    "pseudo"=>"Billy",
+    "password"=>"lol",
+    "email"=>"billy@gmail.com"
+];
+```
+
+**2. Verifier les informations de l'utilisateur**
+
+Dans le fichier `check_login.php` j'utilise la fonction `header()` pour rediriger vers :
+- `index.php` si les identifiants sont bon.
+- `login.php` si les identifiants sont incorrect.
+
+*check_login.php*
+```php
+<?php
+require_once("bdd.php");
+$pseudo = NULL;
+$password = NULL;
+if(isset($_POST["pseudo"]) && isset($_POST["pass"])){
+    $password = $_POST["pass"];
+    $pseudo = $_POST["pseudo"];
+    
+    if($pseudo == $user["pseudo"] && $password == $user["password"]){
+        // user login OK redirection to home page
+        header("Location: index.php");
+    }else{
+        // wrong login infos redirection to login page
+        header("Location: login.php");
+    }
+}
+
+?>
+```
+
+Pour vous aider à comprendre ce qu'il s'est passé, voici un diagramme de séquence qui montre l'enchainement des actions entre les différents fichiers.
+
+*Diagramme du fonctionnement du "login system"*
+```mermaid
+
+sequenceDiagram
+    login.php->>check_login.php : Remplir le formulaire
+    check_login.php->>bdd.php : importer $user 
+    bdd.php->>check_login.php : exporter $user
+    check_login.php->>index.php : identifiants corrects
+    check_login.php->>login.php : identifiants incorrects
+```
+
+### Mini-Projets $_POST
+
+#### 1. Connexion
+L'objectif est de créer un système de connexion similaire à celui du cours plus haut, **en respectant la maquette figma si-dessous**.
+
+##### **Maquette Figma:**
+https://www.figma.com/proto/ckiZKMGeyrIkWFOS0pQheE/Untitled?node-id=1-2&node-type=frame&t=qQ35RsUuvK2Wlfk5-1&scaling=scale-down&content-scaling=fixed&page-id=0%3A1&starting-point-node-id=1%3A2
+
+![alt text](image-13.png)
+
+##### Cahier des charges
+|Tache|Description|Contraintes|
+|-|-|-|
+|Formulaire de connexion|Le formulaire de connexion doit ammener sur la page dashboard.|Redirection vers dashboard si les identifiants sont bons. Sinon retour au formulaire de connexion.|
+|Maquette|Il vous faut respecter la maquette figma|Responsive mobile et PC avec des media querys|
+|Retour HOME| Le titre du site dans le header renvoi à la page de connexion|
+
+#### 2. Connexion message d'erreurs
+Créer un système de connexion qui indique via des messages si l'utilisateur s'est trompé.
+##### **Maquette Figma:**
+https://www.figma.com/design/ckiZKMGeyrIkWFOS0pQheE/Untitled?node-id=4-92&t=muKRGgaS7jiUEGSQ-1
+
+![alt text](image-14.png)
+
+##### Cahier des charges
+|Tache|Description|Contraintes|
+|-|-|-|
+|Formulaire de connexion|Le formulaire de connexion doit ammener sur la page dashboard.|Redirection vers dashboard si les identifiants sont bons. Sinon retour au formulaire de connexion.|
+|Maquette|Il vous faut respecter la maquette figma|Responsive mobile et PC avec des media querys|
+|Retour HOME| Le titre du site dans le header renvoi à la page de connexion|
+|**Affichez des messages d'erreurs si les champs sont incorrects.**
+
+##### Astuce Messages d'erreur.
+
+Pour faire des messages d'erreurs je peux demander à un formulaire de faire une requete sur la page où il se trouve.
+
+Ainsi vous aurez accès au données du formualire **SUR** la page du formulaire. 
+
+Vous pouvez ensuite utiliser un `if` pour afficher un message d'erreur si les identifiants sont incorrects.
+
+Ici le formulaire cible sa propre page.
+
+*index.php*
+```php
+<form action="index.php" method="post">
+    <input type="text" name="login">
+    <input type="password" name="login">
+    <input type="submit" value="Se connecter">
+</form>
+```
+
+Ensuite je peux afficher des messages d'erreur sous une certaine condition.
+
+*login.php*
+```php
+<?php
+
+require_once("bdd.php");
+$login = NULL;
+$password = NULL;
+
+$error_login = false;
+
+if(isset($_POST["login"]) && isset($_POST["password"])){
+    $login = $_POST["login"];
+    $password = $_POST["password"];
+    if($login == $user["login"]){
+        header("Location: dashboard.php");
+    }else{
+        $error_login = true;
+    }
+}
+
+?>
+
+<form action="index.php" method="post">
+    <input type="text" name="login"><br>
+    <?php if($error_login == true):?>
+        <p>Login incorrect</p>
+    <?php endif;?>
+    <input type="password" name="password"><br>
+    <input type="submit" value="Se connecter">
+</form>
+```
+
+#### 3. Barre de recherche
+
+#### 4. Fiche de personnage Donjon et dragon
 
 ## Les sessions avec $_GET - Conserver des infos entre les pages
+
+### Mini-projets $_SESSION
+
+#### Session de connexion
+
+#### Panier de commande
 
 ## Les bases de données avec SQL et PDO - Conserver des données sur le long terme
