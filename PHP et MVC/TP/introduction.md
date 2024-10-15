@@ -624,7 +624,7 @@ Le tableau de fruits est déjà déclarer dans le fichier index.php
 git clone https://github.com/CHAOUCHI/grid-php
 cd grid-php
 ```
-2. Faite en en un répo sur votre github
+2. Faite en un répo sur votre github
 ```bash
 sudo rm -r .git # Supprimer le .git du répo d'origine
 git init        # initialiser le projet
@@ -1131,11 +1131,24 @@ require_once("bdd.php");
 
 #### Récupérer le projet
 Clonez le projet et passez sur la branche `get` pour avoir la version du projet correspondant à ce tp.
+
+1. Cloner le projet
 ```bash
-git clone https://github.com/CHAOUCHI/grid-php.git
+git clone https://github.com/CHAOUCHI/grid-php
 cd grid-php
 git checkout get
 ```
+2. Faite en un répo sur votre github
+```bash
+sudo rm -r .git # Supprimer le .git du répo d'origine
+git init        # initialiser le projet
+git repo create # créer un répo distant
+```
+Lancer le serveur
+```bash
+php -S localhost:7070
+```
+
 
 Dans le fichier `bdd.php` vous trouverez un tableau de fruits.
 
