@@ -1544,6 +1544,84 @@ if(isset($_POST["login"]) && isset($_POST["password"])){
 
 #### 3. Barre de recherche
 
+A partir de votre projet fruitz.
+
+Mettre en place une barre de recherche qui cherche un produit en fonction de son nom.
+
+Voici la bdd à importer dans les scripts qui en ont besoin.
+
+> Rappel utilisez `require_once("bdd.php")` pour importer le script dans un autre script.
+
+*bdd.php*
+```php
+<?php
+
+$fruits = [
+    [
+        "photo" => "ananas.png",
+        "name" => "Ananas Jaune",
+        "stock" => 13
+    ],
+    [
+        "photo" => "tomate.png",
+        "name" => "Tomate rouge",
+        "stock" => 18
+    ],
+    [
+        "photo" => "banana.png",
+        "name" => "Banane Jaune",
+        "stock" => 5
+    ],
+    [
+        "photo" => "pomme.png",
+        "name" => "Pomme Verte",
+        "stock" => 12
+    ],
+    [
+        "photo" => "orange.png",
+        "name" => "Orange",
+        "stock" => 20
+    ],
+    [
+        "photo" => "fraise.png",
+        "name" => "Fraise",
+        "stock" => 30
+    ],
+    [
+        "photo" => "kiwi.png",
+        "name" => "Kiwi",
+        "stock" => 25
+    ],
+    [
+        "photo" => "poire.png",
+        "name" => "Poire",
+        "stock" => 7
+    ],
+    [
+        "photo" => "mangue.png",
+        "name" => "Mangue",
+        "stock" => 9
+    ]
+];
+?>
+```
+
+##### Maquette
+https://www.figma.com/design/jgd5mHPPNypTfo75iyPD8B/fruitz-search-bar?node-id=0-1&t=uAfqWMS7D4scXhaC-1
+
+##### Cahier des charges
+
+Le cahier des charges est le même que le projet fruitz précedent mais avec la barre de recherche en plus.
+
+|Tache|Description|Contrainte|
+|-|-|-|
+|Page d'accueil|Afficher la photo de tout les produits dans la page index dans un display grid.<br> Les images doivent être des lien cliquable qui amène à la page produit correspondante|Attention le résultat doit être dynamique il faut donc utiliser `$_GET`.<br> **Respectez la maquette figma**|
+|Page de produit|Afficher les infos du produit. | **Respectez la maquette figma**|
+| Barre de recherche| Faite un formulaire `HTML` qui redirige vers un page de recherche dans lequel s'affiche un produit en fonction de son nom|
+| BONUS Meilleure recherche | La barre de recherche prends en compte : `nom`, `prix` ou `index`|
+| BONUS Meilleure recherche souple | La barre de recherche prends en compte le `nom` même si il est partiellement écrit.<br><br> Par exemple : `"ate"` fonctionne pour trouver `"tomate"` et `"patate"`|
+| BONUS Filtre par prix| Sur la page d'accueil ajoutez un formulaire qui redirige vers la page d'accueil et qui permet de filtre les produits affiché par prix : max et min.| 
+
 #### 4. Fiche de personnage Donjon et dragon
 
 ## Les sessions avec $_GET - Conserver des infos entre les pages
