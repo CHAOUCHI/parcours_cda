@@ -1425,7 +1425,17 @@ Pour vous aider à comprendre ce qu'il s'est passé, voici un diagramme de séqu
 
 *Diagramme du fonctionnement du "login system"*
 ```mermaid
+flowchart
+    root
+    home
+    bernard
+    guest
+    root-->home
+    home-->bernard
+    home-->guest
+```
 
+```mermaid
 sequenceDiagram
     login.php->>check_login.php : Remplir le formulaire
     check_login.php->>bdd.php : importer $user 
