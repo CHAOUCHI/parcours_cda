@@ -1572,6 +1572,8 @@ A partir de votre projet fruitz.
 
 Mettre en place une barre de recherche qui cherche un produit en fonction de son nom.
 
+![alt text](<INDEX BONUS FILTRE.png>)
+
 Voici la bdd à importer dans les scripts qui en ont besoin.
 
 > Rappel utilisez `require_once("bdd.php")` pour importer le script dans un autre script.
@@ -1632,6 +1634,8 @@ $fruits = [
 
 ##### Maquette
 https://www.figma.com/design/jgd5mHPPNypTfo75iyPD8B/fruitz-search-bar?node-id=0-1&t=uAfqWMS7D4scXhaC-1
+
+![alt text](<INDEX BONUS FILTRE-1.png>)
 
 ##### Cahier des charges
 
