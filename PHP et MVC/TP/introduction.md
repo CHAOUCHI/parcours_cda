@@ -618,9 +618,20 @@ Reproduisez la maquette suivante en PHP.
 Le tableau de fruits est déjà déclarer dans le fichier index.php
 #### 1. Cloner le projet et lancer le serveur
 *Lien du projet : https://github.com/CHAOUCHI/grid-php*
+
+1. Cloner le projet
 ```bash
 git clone https://github.com/CHAOUCHI/grid-php
 cd grid-php
+```
+2. Faite en en un répo sur votre github
+```bash
+sudo rm -r .git # Supprimer le .git du répo d'origine
+git init        # initialiser le projet
+git repo create # créer un répo distant
+```
+Lancer le serveur
+```bash
 php -S localhost:7070
 ```
 #### 2. Consulter la maquette
