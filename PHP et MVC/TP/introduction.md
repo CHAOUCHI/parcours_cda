@@ -1152,6 +1152,34 @@ php -S localhost:7070
 
 Dans le fichier `bdd.php` vous trouverez un tableau de fruits.
 
+Vous pouvez importer ce fichier avec require_once et la constante __DIR__ qui contient le chemin absolue du site.
+
+*index.php*
+
+```php
+<?php
+
+require_once(__DIR__."/src/common/bdd.php");
+?>
+
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <title>Shop fruitz</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="index.css">
+</head>
+<body>
+    <img src="public/ananas.png" alt="">
+    
+</body>
+</html>
+```
+
+
+
+
 #### Objectif
 Créer une boutique en ligne de vente de fruit.
 
