@@ -628,7 +628,7 @@ cd grid-php
 ```bash
 sudo rm -r .git # Supprimer le .git du répo d'origine
 git init        # initialiser le projet
-git repo create # créer un répo distant
+gh repo create # créer un répo distant
 ```
 Lancer le serveur
 ```bash
@@ -1142,7 +1142,7 @@ git checkout get
 ```bash
 sudo rm -r .git # Supprimer le .git du répo d'origine
 git init        # initialiser le projet
-git repo create # créer un répo distant
+gh repo create # créer un répo distant
 ```
 Lancer le serveur
 ```bash
