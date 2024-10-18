@@ -122,7 +122,223 @@ Habituelement dans la fonction start on écrit les actions d'initalisation de l'
 > 2. Installer l'extension `C#` et `Unity` toute deux publiées par Microsoft.
 > Plus d'infos sur l'intellisense de Unity et VSCode ici : https://www.youtube.com/watch?v=ihVAKiJdd40&t=45s
 
+Dans la vraie vie pour déplacer un objet je doit ajouter une force sur son corps, le pousser !
+
+Je dois donc *"addForce to the Rigidbody"*.
+
 Déplacer un joueur se fait en deux étapes :
 1. Obtenir une variable de type RigidBody2D qui représente le rigidbody.
+2. Appeler la fonction addForce() de la classe RigidBody2D pour appliquer une force sur l'objet.
+
+### Obtenir le rigidbody
+
+Dans le script de mouvement créer un attribut de classe et initalisé la avec le composant Rigidbody2D dans la fonction Start(), comme suit :
+
+> Dites vous que les attributs de classes sont comme des variables globales à la classe. La variable est donc dispo dans les fonctions Start() et Update().
+
+
+```cs
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+
+public class move : MonoBehaviour
+{
+    Rigidbody2D rb;
+    // Start is called before the first frame update
+    void Start()
+    {
+        rb = GetComponent<Rigidbody2D>();
+    }
+
+    // Update is called once per frame
+    void Update()
+    {
+    }
+}
+
+```
+
+Ensuite vous pouvez appellez la fonction addForce en prenant soin de lui donner un Vecteur `x,y` pour indiquer la direction de pousser.
+
+
+```cs
+using System.Collections;
+using System.Collections.Generic;
+using System.Numerics;
+using UnityEngine;
+using Vector2 = UnityEngine.Vector2;
+
+public class move : MonoBehaviour
+{
+    Rigidbody2D rb;
+    // Start is called before the first frame update
+    void Start()
+    {
+        rb = GetComponent<Rigidbody2D>();
+    }
+
+    // Update is called once per frame
+    void Update()
+    {
+        // J'appel la fonction AddForce et je lui fournit la direction de poussé.
+        rb.AddForce(new Vector2(10,0));
+    }
+}
+```
 
 ## Input.GetAxis() - Les entrées utilisateurs
+
+La fonction Input.GetAxis() fournit une valeur en tre -1 et 1 :
+
+- 0 signifie que le joueur n'appuie sur aucune touche de déplcement(q ou d) ou n'a pas bougé le joystick
+- -1 signifie joystick à gauche ou la touche `q`
+- 1 signifie joystick à droite ou la touche `d`
+
+```cs
+using System.Collections;
+using System.Collections.Generic;
+using System.Numerics;
+using UnityEngine;
+using Vector2 = UnityEngine.Vector2;
+
+public class move : MonoBehaviour
+{
+    Rigidbody2D rb;
+    // Start is called before the first frame update
+    void Start()
+    {
+        rb = GetComponent<Rigidbody2D>();
+    }
+
+    // Update is called once per frame
+    void Update()
+    {
+        rb.AddForce(new Vector2(10*Input.GetAxis("Horizontal"),0));
+    }
+}
+```
+
+### Variable public 
+
+Je peux rendre la vitesse facilement modifiable en en faisant un attribut publique modifiable directement depuis Unity Editor.
+
+```cs
+using System.Collections;
+using System.Collections.Generic;
+using System.Numerics;
+using UnityEngine;
+using Vector2 = UnityEngine.Vector2;
+
+public class move : MonoBehaviour
+{
+    Rigidbody2D rb;
+    float speed  = 10;
+    // Start is called before the first frame update
+    void Start()
+    {
+        rb = GetComponent<Rigidbody2D>();
+    }
+
+    // Update is called once per frame
+    void Update()
+    {
+        // Je remplace 10 par la variable speed
+        rb.AddForce(new Vector2(speed*Input.GetAxis("Horizontal"),0));
+    }
+}
+```
+
+La variable speed est modifiable dans l'onglet composant Script du gameobject personnage dans l'editeur.
+
+Vous pouvez même modifier en temps réel pendant l'execution la valeurs d'un attribut publique pour tester directement la bonne valeur pendant le jeu.
+
+## Detecter une collision 
+
+Pour detecter une collision il faut rajouter une fonction d'évenement dans le script qui va être appelé quand le gameobject touche un autre gameobject.
+
+```cs
+using System.Collections;
+using System.Collections.Generic;
+using System.Numerics;
+using Unity.VisualScripting;
+using UnityEngine;
+using Vector2 = UnityEngine.Vector2;
+
+public class move : MonoBehaviour
+{
+    Rigidbody2D rb;
+    float speed  = 10;
+    // Start is called before the first frame update
+    void Start()
+    {
+        rb = GetComponent<Rigidbody2D>();
+    }
+
+    // Update is called once per frame
+    void Update()
+    {
+        rb.AddForce(new Vector2(speed*Input.GetAxis("Horizontal"),0));
+    }
+
+    void OnCollisionEnter2D(Collision2D other) {
+
+    }
+}
+```
+
+Cette fonction est appelé quand un autre objet appelé `other` le touche.
+
+La méthode classique est d'attribuer un tag au gameObject plateforme pour le reconnaitre facilement et d'utiliser ce tag dans un if pour savoir si le joueur touche la plateforme
+
+
+J'applique la même logique à l'évenement Exit pour définir si le joueur touche ou non le sol.
+
+j'utilise un attribut binaire `bool` pour me souvenir de l'état du joueur, ce sera utile pour coder un saut.
+```cs
+using System.Collections;
+using System.Collections.Generic;
+using System.Numerics;
+using Unity.VisualScripting;
+using UnityEngine;
+using Vector2 = UnityEngine.Vector2;
+
+public class move : MonoBehaviour
+{
+    bool isTouchingGround = false;
+    Rigidbody2D rb;
+    float speed  = 10;
+    // Start is called before the first frame update
+    void Start()
+    {
+        rb = GetComponent<Rigidbody2D>();
+    }
+
+    // Update is called once per frame
+    void Update()
+    {
+        rb.AddForce(new Vector2(speed*Input.GetAxis("Horizontal"),0));
+    }
+
+    void OnCollisionEnter2D(Collision2D other) {
+        if (other.gameObject.tag == "plateforme"){
+            isTouchingGround = true;
+        }
+        
+    }
+
+    void OnCollisionExit2D(Collision2D other) {
+        if (other.gameObject.tag == "plateforme"){
+            isTouchingGround = false;
+        }
+    }
+}
+```
+
+
+
+# Coder un saut.
+
+Pour coder un saut il faut que je fasse un `rigidbody.AddForce()` **SI** je touche le sol.
+
+1. Coder le saut du joueur en utilisant la variable isTouchingGround et la fonction AddForce().
