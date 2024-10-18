@@ -342,3 +342,51 @@ public class move : MonoBehaviour
 Pour coder un saut il faut que je fasse un `rigidbody.AddForce()` **SI** je touche le sol.
 
 1. Coder le saut du joueur en utilisant la variable isTouchingGround et la fonction AddForce().
+
+Correction : 
+```cs
+using System.Collections;
+using System.Collections.Generic;
+using System.Numerics;
+using Unity.VisualScripting;
+using UnityEngine;
+using Vector2 = UnityEngine.Vector2;
+
+public class move : MonoBehaviour
+{
+    bool isTouchingGround = false;
+    Rigidbody2D rb;
+    float speed  = 10;
+    float jumpForce  = 100;
+    // Start is called before the first frame update
+    void Start()
+    {
+        rb = GetComponent<Rigidbody2D>();
+    }
+
+    // Update is called once per frame
+    void Update()
+    {
+        rb.AddForce(new Vector2(speed*Input.GetAxis("Horizontal"),0));
+        
+        // Je saute si je touche le sol 
+        if(isTouchingGround == true){
+            rb.AddForce(new Vector2(0,jumpForce));
+        }
+    }
+
+    void OnCollisionEnter2D(Collision2D other) {
+        if (other.gameObject.tag == "plateforme"){
+            isTouchingGround = true;
+        }
+        
+    }
+
+    void OnCollisionExit2D(Collision2D other) {
+        if (other.gameObject.tag == "plateforme"){
+            isTouchingGround = false;
+        }
+    }
+}
+
+```
