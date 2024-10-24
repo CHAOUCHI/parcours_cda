@@ -42,7 +42,7 @@ Les rêgles d'accès sont les suivantes :
 |r|oui|||START
 |r+|oui|oui||START
 |w||oui|oui|START
-|w+||oui|oui|START
+|w+|oui|oui|oui|START
 |a||oui||END (only)
 |a+|oui|oui||END (only)
 
