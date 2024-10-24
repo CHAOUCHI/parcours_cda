@@ -13,10 +13,12 @@ Un clone de l'application Note disponible sur IOS ou Android.
 L'utilisateur écrit dans un `<textarea>` des notes comme : ses courses, des notes de cours, de reunion, etc.
 
 ## Cahier des charges
-- L'utilisateur peut consulter ses notes.
-- L'utilisateur peut ajouter, supprimer ou modifier une note
-- L'utilisateut peut `liker` des notes. Les notes likées sont affichées en premières dans la liste des notes.
-- Les notes sont enregistrées dans une BDD SQL en back-end.
+|Tache|Description|
+|-|-|
+|L'utilisateur peut consulter ses notes.||
+|L'utilisateur peut ajouter, supprimer ou modifier une note||
+|L'utilisateut peut `liker` des notes. Les notes likées sont affichées en premières dans la liste des notes.||
+|Les notes sont enregistrées dans une BDD SQL en back-end.||
 
 ## Consignes
 1. Faite un diagramme de cas d'utilisation, puis appellez moi pour le valider.
