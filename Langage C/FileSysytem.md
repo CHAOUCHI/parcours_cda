@@ -28,6 +28,17 @@ char filename[] = "mon_fichier";
 FILE* fd = fopen(filename,"w"); // crée le fichier mon_fichier
 ```
 
+## Créer une fichier si il n'existe pas
+
+Si je ne suis pas sur que mon fichier existe je peux le créer avec `fopen()` et le mode append `a`.
+
+```c
+FILE* fdAppend = fopen("mon_fichier","a");
+fclose(fdAppend);
+```
+
+Un fichier `mon_fichier` à été crée si il n'existe pas. L'interet de `a` par rapport à `w` c'est que `a` ne supprime pas les données précédentes.
+
 ## Les rêgles d'accès
 
 Les rêgles d'accès sont les suivantes :
@@ -431,6 +442,8 @@ Résultat érroné : `HP` et le `:` ont étés confondus en un seul token `HP:`
 ```
 HP: -1
 ``` 
+
+
 
 # Ecrire dans un fichier
 
