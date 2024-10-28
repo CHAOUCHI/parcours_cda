@@ -443,6 +443,17 @@ int main() {
 1. Créer un programme fiche_de_perso qui demande des infos au joueur et lui créer un personnage. Il enregistre ensuite un fichier binaire qui est la fiche de personnage du joueur.
 2. Au début du programme on demande son nom au joueur et charge les données de sa fiche dans une struct. Affichez ensuite ses données.
 
+## Lire un fichier binaire
+Pour lire un fichier binaire il faut utiliser `fread()` et lui fournir :
+- Un buffer à remplir
+- le nombre d'élément à enregistrer
+- La taille en octet d'un element
+
+```c
+// fread(BUFFER,NB_ELEMENTS,SIZEOF_ELEMENT,FILE*);
+fread(buf,sizeFile,sizeof(char),fd);
+printf("%s\n",buf);
+```
 
 <!-- ## Exercices
 
