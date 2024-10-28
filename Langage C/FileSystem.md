@@ -220,6 +220,38 @@ int main(){
 }
 ```
 
+### Connaitre le nombre de caractère (la taille) d'un fichier
+
+Pour connaitre la taille d'un fichier nous procederons en deux étapes :
+1. Déplacer le curseur à la fin du fichier
+2. Lire la position du curseur pour connaitre le nombre le `char`(octet) du fichier.
+
+```c
+FILE* fd = fopen("mon_fichier","r");
+fseek(fd,0,SEEK_END);
+int sizeFile = ftell(fd);
+```
+
+Un char étant un octet la taille du fichier est donc sa taille en octet.
+C'est particulierement utile à savoir pour parcourir un fichier `char` après `char`.
+
+```c
+FILE* fd = fopen("mon_fichier","r");
+
+// Je place le curseur à la fin du fichier
+fseek(fd,0,SEEK_END);
+int sizeFile = ftell(fd); // Je récupère la position du curseur, la taille de mon fichier
+
+char buf[sizeFile];memset(buf,0,sizeFile);
+fseek(fd,0,SEEK_SET);  // Je replace le curseur au début pour pouvoir lire du début.
+fread(buf,sizeFile,sizeof(char),fd); // Remplir le buf de tout les char(octet) du fichier 
+
+for(int i =0;i<sizeFile;i++){
+    printf("%c",buf[i]);  // j'affiche tout les caractères...
+}
+```
+
+
 ### Lire à une ligne spécifique
 
 A l'aide d'une boucle for je peux facilement concevoir une fonction qui lit la ligne demandée et remplit un buffer.
