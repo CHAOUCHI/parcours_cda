@@ -155,7 +155,7 @@ int main()
 
 ---
 
-### Exercice 2 : Déclaration et instanciation d'une struct pour de livre
+### Exercice 2 : Déclaration et instanciation d'une struct pour des livres
 
 
 1. Créez une struct appelée `struct book` avec les attributs suivants :
@@ -221,7 +221,7 @@ int main() {
 }
 ```
 
-1. Créer une fonction qui prend en paramètre un pointeur sur `struct movie` et des champs à remplir. Cette fonction permet d'affecter des valeurs en une struct en vérifiant que l'utilisateur ne rentre pas n'importe quoi. Mettez en place cette fonction pour la `struct movie`. 
+1. Créer une fonction qui prend en paramètre un pointeur sur `struct movie`. Cette fonction permet d'affecter des valeurs en une struct en vérifiant que l'utilisateur ne rentre pas n'importe quoi. Mettez en place cette fonction pour la `struct movie` en demandant les infos d'un film à l'utilisateur.
 
 Return value : 
 - 1 si la struct à bien été edité
@@ -233,7 +233,7 @@ Vérifiez bien que :
 - rating entre 0 et 10 inclus.
 
 ```c
-int createMovie(struct movie* s_movie,char* titre,int relaseYear, int rating);
+int createMovie(struct movie* s_movie);
 ```
 
 ## Faire un tableau de struct
