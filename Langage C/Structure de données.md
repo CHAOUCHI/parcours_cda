@@ -202,7 +202,7 @@ Passer une struct par référence permet de la modifier dans une fonction. En pa
 struct player {
     int pv;
     int endurance;
-    char* name;
+    char name[255];
 };
 
 void damagePlayer(struct player *p, int damage) {
@@ -212,7 +212,10 @@ void damagePlayer(struct player *p, int damage) {
 }
 
 int main() {
-    struct player player_one = {89, 100, "Billy"};
+    struct player player_one = {89, 100};
+    char buf[255];memset(buf,0,255);
+    fgets(buf,255,stdin)
+    strcpy(player_one.name,buf);
     
     damagePlayer(&player_one, 10);  // Passe l'adresse de `player_one`
     printf("%s a maintenant %d PV\n", player_one.name, player_one.pv);
