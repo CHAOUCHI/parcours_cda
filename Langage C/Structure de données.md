@@ -361,7 +361,7 @@ int main() {
 
    // Je peux ensuite accèder au attribut des struct pointé grâce à ->
 
-   printf("Je suis %s et ma mère s'appelle : %s",jerome.name,jerome->mother.name);
+   printf("Je suis %s et ma mère s'appelle : %s",jerome.name,jerome.mother->name);
 
    return 0;
 }
