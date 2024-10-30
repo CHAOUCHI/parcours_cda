@@ -1680,6 +1680,29 @@ Le cahier des charges est le même que le projet fruitz précedent mais avec la 
 
 #### 4. Fiche de personnage Donjon et dragon
 
+Créer un outil qui permet à un utilisateur de rentrer les données de son personnage donjon et dragon dans un formulairee HTML. Le site va ensuite lui afficher les données de son personnage dans une page de fiche de personnage.
+
+|Taches|Description|Contraintes|
+|-|-|-|
+|Réaliser la maquette| Faite la maquette Figma du site pour les pages de création et d'affichage du personage| La maquette doit ce baser sur les infos présentes dans l'exemple de fiche de perso D&D présente en Annexe.
+|La page *create_player.php*|Page composée d'un formulaire HTML qui permet une fois remplit d'amener à la page du personnage(*show_player.php*)| Vérifiez la validité de TOUT les champs du formulaire|
+|La page *show_player.php*| Afficher la fiche de personnage du joueur|Les données proviennent du formulaire de la page *create_player.php*|
+|BONUS Page *consult_player.php* - enregistrer les données du personnage| Enregistrer les données du personne dans un fichier| Si l'utilsiateur tape localhost:8080/consult_player.php?name=billy. Il voir s'afficher la page du perso demandé. <br><br> **La difficulté sera de vous renseigner sur l'utilisation du FileSystem en PHP, rassuré ou c'est plus facile qu'en C**|
+
+##### Annexe 1 - Exemple de fiche de perso.
+Je vous conseil d'ajouter d'abord les champs les plus importants puis au fur et à mesure ajouter toutes les données.
+
+*Fiche de personnage exemple*
+![alt text](image-15.png)
+
+##### Annexe 2 - Documantion PHP FileSystem
+Je vous conseil d'ecrire des fonctions en PHP pour vous s'implifier la taches : 
+
+1. https://www.w3schools.com/php/php_functions.asp
+1. https://www.php.net/manual/fr/book.filesystem.php
+2. https://www.w3schools.com/php/func_filesystem_fgets.asp
+
+
 ## Les sessions avec $_GET - Conserver des infos entre les pages
 
 ### Mini-projets $_SESSION
