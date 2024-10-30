@@ -32,7 +32,7 @@ Le code ressemble donc à ceci.
 struct player{
   int pv;
   int endurance;
-  char* name;
+  char name[255];
 };
 
 int main()
@@ -51,7 +51,7 @@ Une fois ma `struct` crée je peux m'en servir comme un type classique pour cré
 struct player{
   int pv;
   int endurance;
-  char* name;
+  char name[255];
 };
 
 int main()
@@ -80,20 +80,20 @@ Je peux même leurs affecter une valeurs.
 struct player{
   int pv;
   int endurance;
-  char* name;
+  char name[255];
 };
 
 int main()
 {
    struct player player_one;
-   player_one.name = "Billy";
+   strcpy(player_one.name,"Billy");
    player_one.pv = 89;
    player_one.endurance = 100;
 
    struct player player_two;
-   player_one.name = "Hector";
-   player_one.pv = 20;
-   player_one.endurance = 6;
+   strcpy(player_two.name,"Hector");
+   player_two.pv = 20;
+   player_two.endurance = 6;
 
    return 0;
 }
@@ -108,7 +108,7 @@ Et même accéder à ses attributs.
 struct player{
   int pv;
   int endurance;
-  char* name;
+  char name[255];
 };
 
 void showPlayerInfo(struct player player){
@@ -120,12 +120,13 @@ void showPlayerInfo(struct player player){
 int main()
 {
    struct player player_one;
-   player_one.name = "Billy";
+   strcpy(player_one.name,"Billy");
+
    player_one.pv = 89;
    player_one.endurance = 100;
 
    struct player player_two;
-   player_two.name = "Hector";
+   strcpy(player_two.name,"Hector");
    player_two.pv = 20;
    player_two.endurance = 6;
    
@@ -142,7 +143,7 @@ int main()
 **Objectif : Prendre en main la syntaxe de base des struct en C.**
 
 1. Créez une struct appelée `struct car` avec les attributs suivants :
-   -  `char* brand` (marque de la voiture),
+   -  `char brand[255]` (marque de la voiture),
    -  `int year` (année de fabrication),
    -  `float price` (prix).
 
@@ -159,8 +160,8 @@ int main()
 
 
 1. Créez une struct appelée `struct book` avec les attributs suivants :
-   - `char* title` (titre du livre),
-   - `char* author` (auteur),
+   - `char title[255]` (titre du livre),
+   - `char author[255]` (auteur),
    - `float price` (prix).
 
 2. Déclarez une instance de `struct book` nommée `myBook` et affectez les valeurs suivantes :
@@ -177,7 +178,7 @@ int main()
 **Objectif** : Maîtriser la déclaration et l'instanciation de struct en créant des "objets" variés.
 
 1. Créez une struct appelée `struct movie` avec les attributs suivants :
-   - `char* title` (titre du film),
+   - `char title[255]` (titre du film),
    - `int releaseYear` (année de sortie),
    - `float rating` (note sur 10).
 
@@ -269,7 +270,7 @@ int main() {
 ### Exercice 4 : Création d'un tableau de structs pour des étudiants
 
 1. Déclarez une struct appelée `struct student` avec les attributs suivants :
-   - `char* name` (nom de l’étudiant),
+   - `char name[255]` (nom de l’étudiant),
    - `int age` (âge),
    - `float grade` (note).
 
@@ -286,7 +287,7 @@ int main() {
 ### Exercice 5 : Tableau de structs pour des produits en magasin
 
 1. Déclarez une struct appelée `struct product` avec les attributs suivants :
-   - `char* name` (nom du produit),
+   - `char name[255]` (nom du produit),
    - `int stock` (quantité en stock),
    - `float price` (prix).
 
@@ -340,7 +341,7 @@ Je peux également défini un pointeur sur struct en tant qu'attribut ce qui me 
 #include <stdio.h>
 
 struct human {
-    char* name;
+    char name[255];
     int age;
     struct human* father;
     struct human* mother;
@@ -372,7 +373,7 @@ int main() {
 #include <stdio.h>
 
 struct human {
-    char* name;
+    char name[255];
     int age;
     struct human* father;
     struct human* mother;
@@ -395,7 +396,7 @@ Pour enregistrer les informations d'une struct dans un fichier texte, on peut ut
 struct player {
     int pv;
     int endurance;
-    char* name;
+    char name[255];
 };
 
 int main() {
