@@ -552,3 +552,86 @@ Réponse 1, "Je le mord au visage !"
 |----------------------------------|
 
 ```
+
+
+# Rappel de GitHub
+
+GitHub est un site internet qui permet de stocker et d'administrer des répo git.
+
+Vous pouvez travaillez à plusieurs sur un seul répo.
+
+1. Un de vous deux crée un nouveau répo
+2. Il ajoute son collègue en *Collaborators* (Onglet *Settings>Collaborators*)
+
+
+## Cloner le projet
+Vous trouverez l'url du projet sur la page github(bouton *Code* vert).
+
+```bash
+git clone http://mon-projet
+cd mon-projet
+```
+
+## Push des modifications
+0. Ne faite JAMAIS de PUSH SUR LA BRANCHE MASTER.
+
+Pour co
+
+1. Créez une branche qui porte le nom de votre fonctionnalité
+
+```bash
+git branch save-player-inventory
+git switch save-player-inventory
+```
+
+2. Codez...
+
+
+3. Créer un commit et envoyez le sur la branch distante(github)
+```bash
+git add .
+git commit -m "Ajout du systeme de sauvegarde"
+git push
+```
+> Si git vous demande de *set-upstream* faite la commande qui vous propose dan le terminal
+
+## Pull les modifications de votre collègue
+
+Pour pull les modifications il va falloir fusioné (*merge*) la branche save-player-inventory avec la branch *main*.
+
+La méchanique de base de github c'est les pull request : les demandes de fusion.
+
+Quand un dev à fini de coder quelque chose il fait un requete de pull, *pull request*.
+
+Cette requete est ensuite vu de tout les devs de l'équipe. Ils peuvent discuter du code et voir les changements avant de les appliquer à la branche main.
+
+Une fois les changements vu de tous on peut valide la pull request grâce à une fusion *Merge request*
+
+Sur github :
+
+1. Allez dans *Pull request* et créez un *pull request*
+
+![alt text](image.png)
+
+2. Choisissez quelle branche doit aller dans `main` (faite attention au sens de la flèche)
+
+![alt text](image-1.png)
+
+3. Disctuer avec vos collègues des changements, ils sont visibles de tous les autres dev.
+
+4. Quand tout le monde est d'accord. Fusionnez la *pull request* avec le bouton *merge*.
+
+3. Votre collègue doit *pull* les changements pour mettre à jour sa branche `main` local.
+
+```bash
+git switch main
+git pull
+```
+
+- **Si** vous avez des **changements non remisés**, cela signifie que vous n'avez pas sauvegarder vos changements avec un commit. Et donc, *git pull* refuse de *pull*. Faite donc un *git commit* pour sauvegarder vos changements avant de faire un *git push*.
+
+- **Si** vous avez besoin du travail de votre collègue vous pouvez merge une branche dans une autre branche sans passer par `main`, cela évite de salir la branche `main`.
+
+## ATTENTION à la branche `main`
+
+- **Ne travaillez JAMAIS sur la branche `main`**, elle doit contenir l'application propre et doit TOUJOURS compiler.Vous pouvez interdire les *pushs* sur cette branche dans les paramètres pour plus de sécurité.
