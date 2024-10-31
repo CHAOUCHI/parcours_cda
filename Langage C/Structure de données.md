@@ -502,18 +502,26 @@ printf("%s\n",buf);
 ## Projet - RPG Textuel
 *voir également le projet dans le dossier Langage C/Projets*
 
-Voici un projet de RPG texutel qui neccessite les structs.
+Voici un projet de RPG texutel qui néccessite les structs.
 
 Vous allez faire un *Donjons et dragons like* en ligne de commande
 
-|Tache|Description|
-|-|-|
-|Boucle d'évenement| Le jeu est une suite de question réponse, ou le joueur se voit poser une question comme : <br> "Quel porte ouvir ? <br> 1.Droite <br> 2. gauche <br> <br> Ces décision entraine des pertes ou des gains de caratéristiques (les attributs de sa struct). |
-|Game Over| Si le joueur arrives à 0 point de vie le jeu s'arrête. 
-|WIN | Le joueur obtient 1000piece d'or le jeu s'arrete.|
-| Interface | Vous utiliserez system("clear") pour effacer l'écran à chaque fin de boucle et réafficher l'interface avec les nouvelles valeurs (pv piece).|
-|BONUS (pauvreté) |Si le joueur arrives à zéro pièce d'or il va perdre 1pv et 1point d'endurance par tour|
-|BONUS (fatigue extreme)| Si le joueur atteint 0 ENDurance Il va perdre 1pv par tour (cumulable avec l'effet pauvreté). Des évenement comme une auberge ou une cannette de redbull peuvent faire remonter l'endurance|
+# Cahier des charges du jeu
+
+| Tâche                         | Description                                                                                                                                                                                                                                     | Contraintes                                                                                                                                                       |
+|-------------------------------|-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|-------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| **Boucle d'événements**       | Le jeu est une suite de questions/réponses, où le joueur se voit poser une question comme :<br> "Quelle porte ouvrir ? <br> 1. Droite <br> 2. Gauche" <br><br> Ces décisions entraînent des pertes ou des gains de caractéristiques (attributs de sa struct). |                                                                                                                                                                   |
+| **Système de sauvegarde des quêtes**    | Il doit être possible d'ajouter ou de modifier des quêtes dans un ou plusieurs fichiers texte.                                                                                                                                             |                                                                                                                                                                   |
+| **Système de sauvegarde du personnage** | L'inventaire du personnage doit être stocké dans un fichier `inventaire.save`.                                                                                                                                                           |                                                                                                                                                                   |
+| **Game Over**                 | Si le joueur atteint 0 point de vie, le jeu s'arrête.                                                                                                                                                                                         |                                                                                                                                                                   |
+| **Victoire**                       | Lorsque le joueur obtient 1000 pièces d'or, le jeu s'arrête.                                                                                                                                                                                  |                                                                                                                                                                   |
+| **Interface**                 | Utiliser `system("clear")` pour effacer l'écran à chaque fin de boucle et réafficher l'interface avec les nouvelles valeurs (points de vie, pièces).                                                   |                                                                                                                                                                   |
+| **BONUS : Pauvreté**          | Si le joueur atteint 0 pièce d'or, il perd 1 point de vie et 1 point d'endurance par tour.                                                                                                                                                    |                                                                                                                                                                   |
+| **BONUS : Fatigue extrême**   | Si le joueur atteint 0 point d'endurance, il perd 1 point de vie par tour (cumulable avec l'effet de pauvreté). Des événements comme une auberge ou une boisson énergisante peuvent restaurer l'endurance. |                                                                                                                                                                   |
+| **Gestion de projet (GitHub)**| - Projet en groupe de 2 personnes<br>- Un seul dépôt GitHub par projet<br>- Chaque fonctionnalité doit être développée dans une branche dédiée<br>- Chaque "chose à faire" doit être consignée dans les *issues* GitHub<br>- En cas de bug sur une fonctionnalité précédemment fonctionnelle, créer une *issue* GitHub correspondante. |                                                                                                                                                                   |
+| **Objectif BONUS : Multijoueur**         | Deux joueurs peuvent jouer ensemble en alternance.                                                                                                                                                                                    |                                                                                                                                                                   |
+| **Objectif BONUS : Multi-Initiative** | Deux joueurs peuvent jouer ensemble sur le même événement.<br><br>- Ajouter une statistique d'initiative pour les joueurs.<br>- Le joueur avec l'initiative la plus élevée joue en premier.<br>- Les événements du jeu peuvent également influencer l'initiative. |                                                                                                                                                                   |
+
 
 ### Interface du jeu
 ```c
@@ -537,7 +545,7 @@ Réponse 1, "Je le mord au visage !"
 -199 pv
 +1 EVENT
 
-"Vous sautez au viasage de l'ours et lui mordez l'oeil ! Mais malheursement il lève une patte fablement et vous déchire en deux..."
+"Vous sautez au visage de l'ours et lui mordez l'oeil ! Mais malheursement il lève une patte fablement et vous déchire en deux..."
 |----------------------------------|
         GAME OVER 
 |----------------------------------|
