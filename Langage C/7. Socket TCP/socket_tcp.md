@@ -62,6 +62,9 @@ Alors que le serveur lui possède autant de tuyaux que de clients dont la connex
 
 On ne peut donc ni lire ni écrire directement sur le socket server. Comme dit plus haut pour communiquer avec un client le serveur doit écrire/lire sa copie du socket client. 
 
+## Exemple de code d'un serveur web ici :
+https://github.com/CHAOUCHI/tcp-socket/settings
+
 >Il ne fait pas de sens pour un serveur de vouloir écrire dans son propre socket, ce socket ne sert qu’à gérer les connexions. 
 
 > Le socket client est toujours synchronisé avec sa copie côté serveur. 
