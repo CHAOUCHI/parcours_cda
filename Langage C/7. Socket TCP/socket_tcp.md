@@ -59,7 +59,288 @@ Alors que le serveur lui possède autant de tuyaux que de clients dont la connex
 
 On ne peut donc ni lire ni écrire directement sur le socket server. Comme dit plus haut pour communiquer avec un client le serveur doit écrire/lire sa copie du socket client. 
 
-## 
+# Créer un socket
+Que se soit pour un client ou un serveur la création d'un socket se passe toujours de la même façon.
+
+1. La **création** d'un file descriptor et donc d'un **socket** avec la fonctin `socket()`
+2. La liaison (`bind()`) du socket à une **adresse ip** et un **port**.
+```mermaid
+flowchart TB
+    socket["server_fd = socket()"]
+    bind["bind(server_fd, config)"]
+    
+    socket-->bind
+```
+# Initaliser un socket
+```c
+#include <stdio.h>
+#include <stdlib.h>
+#include <sys/socket.h>
+#include <netdb.h>
+#include <arpa/inet.h>
+#include <unistd.h>
+#include <string.h>
+
+
+#define SOCKET_PORT 3000
+
+int main(){
+
+    /**
+    * socket
+    * Je crée le socket client
+    */
+    int socket_fd = socket(AF_INET,SOCK_STREAM,0);perror("socket");
+    // Si la création échoue je ferme mon programme
+    if(socket_fd == -1) return EXIT_FAILURE;
+
+    /**
+     * bind
+     * Je relie le socket à un port et une ip avec la fonction bind()
+     */
+    struct sockaddr_in socket_addr = {
+        .sin_addr.s_addr = INADDR_ANY, // Adresse localhost et LAN
+        .sin_family = AF_INET,
+        .sin_port = htons(SOCKET_PORT)
+    };
+    int error = bind(socket_fd,(struct sockaddr*)&socket_addr,sizeof socket_addr);perror("bind");
+    if(error == -1) { close(socket_fd); return EXIT_FAILURE; }
+
+
+    //...
+
+    return EXIT_SUCCESS;
+}
+```
+> `perror()` affiche le contenu de la constante `errno`. Cette constante est remplit par le kernel linux quand un appel système (comme `socket()`, `bind()` ou `write()`) échoue.
+
+## L'appel système socket()
+La définition de la fonction socket est la suivante :
+
+```c
+#include <sys/socket.h>
+
+int socket(int domain, int type, int protocol);
+```
+
+Notre appel ressemble à ça :
+
+```c
+socket(AF_INET,SOCK_STREAM,0);
+```
+
+- Le `domain` correspond au type de réseau du socket. `AF_INET` permet de parcourir de domaine `IP`. J'aurais écrit `AF_UNIX` pour communiquer unqiuement en local sur la machine *UNIX-like*.
+
+- Le `type` défini le type de données transmisent. `SOCK_STREAM` divise le données en petites parties appelés `paquet`, le **TCP** fonctionne anisi. `SOCK_DATAGRAM` envoit les données en un bloc entier appelé datagramme (comme un télégramme), l'*UDP* fonctionne anisi.
+
+- `0` ne défini aucun protocole en particulié pour notre socket. La fonction socket choisi donc automatiquement un protocole adapté en fonction des domaine et type fournit précedemment.
+
+### Paramètre du socket TCP
+***Nous voulons faire un socket TCP il nous faut donc :***
+
+- domain :  `AF_INET`
+- type :  `SOCK_STREAM`
+- protocole : `0`
+
+
+```c
+socket(AF_INET,SOCK_STREAM,0);
+```
+
+
+> Retrouvez tout les paramètres possibles sur la manpage de socket
+>```bash
+>man socket
+>```
+
+## L'appel système bind()
+La liaison d'un socket à un port et une adresse ip se fait comme ceci : 
+
+1. Je crée une struct qui contient le port, l'adresse ip et le domain du socket.
+
+2. J'appel bind et je fournit :
+    - le socket
+    - la structure de configuration
+    - la taille de la structure
+
+
+```c
+    /**
+     * bind
+     * Je relie le socket à un port et une ip avec la fonction bind()
+     */
+    struct sockaddr_in socket_addr = {
+        .sin_addr.s_addr = INADDR_ANY,
+        .sin_family = AF_INET,
+        .sin_port = htons(SOCKET_PORT)
+    };
+    
+    int error = bind(socket_fd,(struct sockaddr*)&socket_addr,sizeof socket_addr);perror("bind");
+    
+    if(error == -1) { close(socket_fd); return EXIT_FAILURE; }
+```
+
+### INADDR_ANY
+INADDR_ANY est une constante qui définir l'addresse ip du socket comme etant :
+- 127.0.0.1, le localhost. Il permet de communiquer uniquement sur son PC en local.
+- 192.168.10.x le LAN. Il permet de communiquer avec un autre oridnateur.
+
+L'avantage de INADDR_ANY c'est qu'il fonctionne automatiquement et ne nécessite pas de connaitre à l'avance l'adresse IP de l'hôte (PC) qui va lancer le programme. Cela évite d'ecrire en dur l'IP dans le code.
+
+Je peux aussi utiliser la fonction `inet_addr` comme ceci pour définir une addresse IP précise :
+```c
+struct sockaddr_in client_addr = {
+    // .sin_addr.s_addr = inet_addr("192.168.10.3"), // Dispo sur le LAN
+    .sin_addr.s_addr = inet_addr("127.0.0.1"),      // Dispo en localhost
+    .sin_family = AF_INET,
+    .sin_port = htons(SOCKET_PORT)
+};
+```
+
+### htons()
+htons() permet de convertir le port de int vers un binaire correct.
+
+### `struct sockaddr_in` ou `struct sockaddr` ?
+
+La structure sockaddr_in défini des champs comme l'ip ou le port qui conviennent au socket TCP.
+Par défaut la fonction `bind()` demande une `struct sockaddr`, seuelement les champs de cette structure sont brut de décofrage et difficile à manipuler. On préfère donc utilise la structure `struct sockaddr_in`.
+
+Etant donné que `bind()` nous demande tout de même un `struct sockaddr*` j'effectue un transtypage vers ce type pour éviter un warning à la compilation.
+
+### La deconnexion : l'appel système close()
+L'appel système close ferme un file descriptor et le supprime du PC. Les sockets etant des fichiers close permet de couper la connexion.
+
+Je ferme toutjours mes sockets si une errur fatale se produit.
+
+> Il est possible de savoir si un utilisateur s'est déconnecté en observant la valeur de retour de la fonction `recv()`, si elle renvoi `0`alors le client est déconnecté.
+> Nous verrons `recv()` plus tard dans le cours.
+
+
+# Créer un serveur
+Le TCP est protocle client-serveur il nous faut donc DEUX programmes : un client pour le socket client et un serveur pour le socket serveur.
+Pour créer un serveur il faut :
+
+```mermaid
+flowchart TB
+    socket["server_fd = socket()"]
+    bind["bind(server_fd)"]
+    listen["listen(server_fd)"]
+    accept["client_fd = accept()"]
+    suite["Communication avec le client..."]
+    
+    socket-->bind-->listen-->accept-->suite
+```
+
+```c 
+#include <stdio.h>
+#include <stdlib.h>
+#include <sys/socket.h>
+#include <netdb.h>
+#include <arpa/inet.h>
+#include <unistd.h>
+#include <string.h>
+#include <errno.h>
+
+#include SERVER_PORT 3001
+
+char buf[BUFSIZ];
+
+int main(){
+
+    /**
+     * SOCKET
+     * Je crée le socket serveur
+     */
+    int server_fd = socket(AF_INET,SOCK_STREAM,0);perror("socket");
+    // Si la création échoue je ferme mon programme
+    if(server_fd == -1) return EXIT_FAILURE;
+
+    /**
+    * BIND
+    * Je relie le socket à un port et une ip avec la fonction bind()
+    */
+    struct sockaddr_in server_addr = {
+        .sin_addr.s_addr = INADDR_ANY,
+        .sin_family = AF_INET,
+        .sin_port = htons(SERVER_PORT)
+    };
+    int error = bind(server_fd,(struct sockaddr*)&server_addr,sizeof server_addr);perror("bind");
+    if(error == -1) { close(server_fd); return EXIT_FAILURE; }
+
+
+    /**
+     * LISTEN obligatoire 
+     */
+    error = listen(server_fd,BUFSIZ);perror("listen");
+    if(error == -1) { close(server_fd); return EXIT_FAILURE; }
+
+    printf("Server listen on port : %d\n",SERVER_PORT);
+    
+
+    /**
+     * ACCEPT
+     * J'attend qu'un client se connecter grâce à la fonction bloquante accept()
+     * accept renvoi le client accepté ou -1 en cas d'erreur.
+     */
+    struct sockaddr_in client_addr;
+    socklen_t len;
+    int client_fd = accept(server_fd,(struct sockaddr*)&client_addr,&len);
+    
+    // LE PROGRAMME EST EN PAUSE ET ATTEND UN CLIENT ...
+
+    perror("accept");
+    if(client_fd == -1){ close(client_fd); close(server_fd); return EXIT_FAILURE; }
+ 
+    // Prêt à communiquer avec le client
+    // ...
+    
+
+
+    close(client_fd);
+    close(server_fd);
+    return EXIT_SUCCESS;    
+}
+```
+
+## L'appel système `listen()`
+Listen n'est pas très complexe il lance l'écoute du serveur et configure la congestion de celui-ci.
+
+```c 
+/**
+* LISTEN obligatoire 
+*/
+
+error = listen(server_fd,BUFSIZ);perror("listen");
+
+if(error == -1) { close(server_fd); return EXIT_FAILURE; }
+
+printf("Server listen on port : %d\n",SERVER_PORT);
+```
+
+## L'appel système `accept()` (BLOQUANTE)
+
+La fonction `accept()` est une **fonction bloquante**. C'est à dire qu'elle met en pause l'execution du programme jusqu'à ce qu'un client veuille se connecter.
+
+- BLOQUANTE : Lorsque le client se connecter accept() est déclenché et renvoi le file descriptor du client.
+
+- Return value : ***Le `client_fd` est très important et nous allons l'utiliser dans chacune de nos communications :  en reception, comme en envoi.***
+
+- accept return `-1` en cas d'erreur.
+
+- struct : `accept()` prend en paramètre une nouvelle `struct sockaddr_in`  complement vide. Cette struct sera rempli par accept à la connexion du client et contiendra son IP et son PORT si besoin.
+
+
+> La fonction `accept()` agit de façon similaire à un `sleep()`
+
+# Créer un client
+
+# Le Client envoie un message
+
+# Le Serveur reçoit un message
+
+# Le Serveur envoie un message
+
+# Le Client reçoit un message
 
 ## Exemple de code d'un serveur web ici :
 https://github.com/CHAOUCHI/tcp-socket/settings
