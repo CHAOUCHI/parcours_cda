@@ -335,7 +335,7 @@ La fonction `accept()` est une **fonction bloquante**. C'est à dire qu'elle met
 # Créer un client
 Créer un client consite à :
 1. Créer un socket et le bind à un port et une ip (comme pour tout socket).
-2. Connecter le socket au serveur en lui fournissant l'ip et le port via une `struct addr_in`.
+2. Connecter le socket au serveur en lui fournissant l'ip et le port du serveur via une variable de type `struct addr_in` contenant les infos du serveur.
 
 
 ```mermaid
@@ -389,8 +389,7 @@ int main(){
      * Je connecte mon socket client au socket server situé en 127.0.0.1:SERVER_PORT
      */
     struct sockaddr_in server_addr = {
-        // .sin_addr.s_addr = INADDR_ANY,
-        .sin_addr.s_addr = inet_addr("127.0.0.1"),
+        .sin_addr.s_addr = inet_addr("127.0.0.1"), // Attention à ne pas mettre INADDR_ANY !
         .sin_family = AF_INET,
         .sin_port = htons(SERVER_PORT)
     };
@@ -407,8 +406,147 @@ int main(){
 }
 ```
 
+Si `connect : Sucessful` s'affiche votre client c'est bien connecté au serveur, faite bien attention à démarrer votre serveur AVANT votre client.
 
-# Le Client envoie un message
+Attention à bien mettre des ports différents pour le client et le serveur Deux services TCP ne peuvent pasé avoir le même port.
+
+
+## inet_addr()
+Il faut préciser l'ip du serveur. Je ne peux pas me servir de INADDR_ANY car habituellement client et serveur ont des IP différente.
+Le programme client étant suposer tourner sur un autre PC que le serveur je précise donc l'ip exact du serveur.
+Ici j'utilise `127.0.0.1` car je suis entrain de faire tourner mon serveur en localhost sur le même PC que le client.
+
+La fonction iner_addr() converti une string contenant une ip valide en une donnée binaire accepté par la `struct sockaddr_in`.
+
+```c
+inet_addr("127.0.0.1") // Addresse localhost
+```
+```c
+inet_addr("192.168.10.x") // Addresse LAN
+```
+```c
+inet_addr("back.monsite.com") // Nom de domaine DNS
+```
+
+# Envoyer un message du client au serveur
+Que vous soyez un client ou un serveur l'envoi d'un message se fait toujours via la fonction `send()`.
+
+```mermaid
+flowchart TB
+    socket["client_fd = socket()"]
+    bind["bind(client_fd)"]
+    connect["connect(infos_du_serveur)"]
+    send["send(client_fd)"]
+    
+    socket-->bind-->connect-->send
+```
+
+
+L'envoi d'une donnée se fait toujours via le socket client.
+
+Pour envoyer `"Hello World !"` la fonction sera ecrite comme suit :
+
+## Définition de la fonction `send()`: 
+```c
+send(int sockfd,void* buf, int buf_size, int flags);
+```
+
+### Exemple 1 :
+*Un simple envoi sur le serveur d'un Hello World !*
+```c
+char message[] =  "Hello World !";
+send(client_fd,message,strlen(message),0);
+```
+
+### Exemple 2:
+Sur un client *tchat* je demande son message au client puis l'envoyer au serveur.
+```c
+// Je demande le message à l'utilsiateur
+char message[BUFSIZ];memset(message,0,BUFSIZ);
+fgets(message,BUFSIZ,stdin);
+
+// Je formate le message dans un buffer
+// [heure]pseudo : message...
+char buf[BUFSIZ];memset(buf,0,BUFSIZ);
+sprintf(buf,"[%d]%s:%s",time(NULL),pseudo,message);
+
+// J'envoi le message au serveur du salon de discussion
+send(client_fd,buf,strlen(buf),0);
+```
+ 
+## Code complet d'un client qui envoi un message au serveur
+
+```c
+#include <stdio.h>
+#include <stdlib.h>
+#include <sys/socket.h>
+#include <netdb.h>
+#include <arpa/inet.h>
+#include <unistd.h>
+#include <string.h>
+
+#define SERVER_PORT 3001
+#define CLIENT_PORT 4001
+
+int main(){
+
+    /**
+     * socket
+     * Je crée le socket client
+     */
+    int client_fd = socket(AF_INET,SOCK_STREAM,0);perror("socket");
+    // Si la création échoue je ferme mon programme
+    if(client_fd == -1) return EXIT_FAILURE;
+
+    /**
+     * bind
+     * Je relie le socket à un port et une ip avec la fonction bind()
+     */
+    struct sockaddr_in client_addr = {
+        .sin_addr.s_addr = INADDR_ANY,
+        .sin_family = AF_INET,
+        .sin_port = htons(CLIENT_PORT)
+    };
+    int error = bind(client_fd,(struct sockaddr*)&client_addr,sizeof client_addr);perror("bind");
+    if(error == -1) { close(client_fd); return EXIT_FAILURE; }
+
+
+
+    /**
+     * connect
+     * Je connecte mon socket client au socket server situé en 127.0.0.1:SERVER_PORT
+     */
+    struct sockaddr_in server_addr = {
+        .sin_addr.s_addr = inet_addr("127.0.0.1"), // Attention à ne pas mettre INADDR_ANY !
+        .sin_family = AF_INET,
+        .sin_port = htons(SERVER_PORT)
+    };
+    error = connect(client_fd,(struct sockaddr*)&server_addr,sizeof server_addr);perror("connect");
+    if(error == -1) { close(client_fd); return EXIT_FAILURE; }
+
+    // SOCKET CLIENT PRET A COMMUNIQUER !
+    int error = 0;
+    while(error != -1){
+        // Je demande le message à l'utilsiateur
+        char message[BUFSIZ];memset(message,0,BUFSIZ);
+        fgets(message,BUFSIZ,stdin);
+
+        // Je formate le message dans un buffer
+        // [heure]pseudo : message...
+        char buf[BUFSIZ];memset(buf,0,BUFSIZ);
+        sprintf(buf,"[%d]%s:%s",time(NULL),pseudo,message);
+
+        // J'envoi le message au serveur du salon de discussion
+        error = send(client_fd,buf,strlen(buf),0);
+    }
+
+    close(client_fd);
+
+    return EXIT_SUCCESS;
+
+}
+```
+
 
 # Le Serveur reçoit un message
 
