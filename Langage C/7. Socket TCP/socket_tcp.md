@@ -114,7 +114,7 @@ int main(){
 ```
 > `perror()` affiche le contenu de la constante `errno`. Cette constante est remplit par le kernel linux quand un appel système (comme `socket()`, `bind()` ou `write()`) échoue.
 
-## L'appel système socket()
+## L'appel système `socket()`
 La définition de la fonction socket est la suivante :
 
 ```c
@@ -153,7 +153,7 @@ socket(AF_INET,SOCK_STREAM,0);
 >man socket
 >```
 
-## L'appel système bind()
+## L'appel système `bind()`
 La liaison d'un socket à un port et une adresse ip se fait comme ceci : 
 
 1. Je crée une struct qui contient le port, l'adresse ip et le domain du socket.
@@ -333,7 +333,7 @@ La fonction `accept()` est une **fonction bloquante**. C'est à dire qu'elle met
 > La fonction `accept()` agit de façon similaire à un `sleep()`
 
 # Créer un client
-Créer un client consite à :
+Créer un client consiste à :
 1. Créer un socket et le bind à un port et une ip (comme pour tout socket).
 2. Connecter le socket au serveur en lui fournissant l'ip et le port du serveur via une variable de type `struct addr_in` contenant les infos du serveur.
 
@@ -347,6 +347,9 @@ flowchart TB
     
     socket-->bind-->connect-->suite
 ```
+
+## L'appel système `connect()` 
+La fonction `connect()`
 
 ```c
 #include <stdio.h>
@@ -411,7 +414,7 @@ Si `connect : Sucessful` s'affiche votre client c'est bien connecté au serveur,
 Attention à bien mettre des ports différents pour le client et le serveur Deux services TCP ne peuvent pasé avoir le même port.
 
 
-## inet_addr()
+### inet_addr()
 Il faut préciser l'ip du serveur. Je ne peux pas me servir de INADDR_ANY car habituellement client et serveur ont des IP différente.
 Le programme client étant suposer tourner sur un autre PC que le serveur je précise donc l'ip exact du serveur.
 Ici j'utilise `127.0.0.1` car je suis entrain de faire tourner mon serveur en localhost sur le même PC que le client.
@@ -428,7 +431,7 @@ inet_addr("192.168.10.x") // Addresse LAN
 inet_addr("back.monsite.com") // Nom de domaine DNS
 ```
 
-# Envoyer un message du client au serveur
+# `send()` - Envoyer un message du client au serveur
 Que vous soyez un client ou un serveur l'envoi d'un message se fait toujours via la fonction `send()`.
 
 ```mermaid
@@ -451,14 +454,14 @@ Pour envoyer `"Hello World !"` la fonction sera ecrite comme suit :
 send(int sockfd,void* buf, int buf_size, int flags);
 ```
 
-### Exemple 1 :
+### Exemple 1 : Hello World
 *Un simple envoi sur le serveur d'un Hello World !*
 ```c
 char message[] =  "Hello World !";
 send(client_fd,message,strlen(message),0);
 ```
 
-### Exemple 2:
+### Exemple 2: Tchat
 Sur un client *tchat* je demande son message au client puis l'envoyer au serveur.
 ```c
 // Je demande le message à l'utilsiateur
@@ -474,6 +477,9 @@ sprintf(buf,"[%d]%s:%s",time(NULL),pseudo,message);
 send(client_fd,buf,strlen(buf),0);
 ```
  
+> Pour l'instant il ne se passera pas grand chose sur le client visuellement.
+> Pour que le serveur reçoivent bien notre send() il faudra utilisez la fonction recv() coté serveur donc.
+
 ## Code complet d'un client qui envoi un message au serveur
 
 ```c
@@ -546,15 +552,156 @@ int main(){
 
 }
 ```
+> Voir *"le Code omplet d'un serveur qui reçoit le message d'un client"* pour la reception du message par le serveur.
+
+# `recv()` - Le Serveur reçoit un message
+La reception d'un message se fait via la fonction `recv()`.
+
+Pour réagir au `send()` d'un client le serveur doit donc appeler un `recv()` sur le file descriptor du  client émetteur.
+
+*J'accepte une connexion client pour obtenir son socket fd*
+```c
+//...
+int client_fd = accept(server_fd,(struct sockaddr*)&client_addr,&len);
+    
+// LE PROGRAMME EST EN PAUSE ET ATTEND UN CLIENT ...
+perror("accept");
+if(client_fd == -1){ close(client_fd); close(server_fd); return EXIT_FAILURE; }
+```
+
+*Je remplit un buffer de char avec *
+```c
+// Prêt à communiquer avec le client
+// ...
+char buf[BUFSIZ];memset(buf,0,BUFSIZ);
+
+recv(client_fd,buf,BUFSIZ,0);perror("recv()");
+printf("%s\n",buf);
+```
 
 
-# Le Serveur reçoit un message
+
+## Code complet d'un serveur qui reçoit un message du client
+
+```c
+
+#include <stdio.h>
+#include <stdlib.h>
+#include <sys/socket.h>
+#include <netdb.h>
+#include <arpa/inet.h>
+#include <unistd.h>
+#include <string.h>
+#include <errno.h>
+
+#include SERVER_PORT 3001
+
+char buf[BUFSIZ];
+
+int main(){
+
+    /**
+     * SOCKET
+     * Je crée le socket serveur
+     */
+    int server_fd = socket(AF_INET,SOCK_STREAM,0);perror("socket");
+    // Si la création échoue je ferme mon programme
+    if(server_fd == -1) return EXIT_FAILURE;
+
+    /**
+    * BIND
+    * Je relie le socket à un port et une ip avec la fonction bind()
+    */
+    struct sockaddr_in server_addr = {
+        .sin_addr.s_addr = INADDR_ANY,
+        .sin_family = AF_INET,
+        .sin_port = htons(SERVER_PORT)
+    };
+    int error = bind(server_fd,(struct sockaddr*)&server_addr,sizeof server_addr);perror("bind");
+    if(error == -1) { close(server_fd); return EXIT_FAILURE; }
+
+
+    /**
+     * LISTEN obligatoire 
+     */
+    error = listen(server_fd,BUFSIZ);perror("listen");
+    if(error == -1) { close(server_fd); return EXIT_FAILURE; }
+
+    printf("Server listen on port : %d\n",SERVER_PORT);
+    
+
+    /**
+     * ACCEPT
+     * J'attend qu'un client se connecter grâce à la fonction bloquante accept()
+     * accept renvoi le client accepté ou -1 en cas d'erreur.
+     */
+    struct sockaddr_in client_addr;
+    socklen_t len;
+    int client_fd = accept(server_fd,(struct sockaddr*)&client_addr,&len);
+    
+    // LE PROGRAMME EST EN PAUSE ET ATTEND UN CLIENT ...
+
+    perror("accept");
+    if(client_fd == -1){ close(client_fd); close(server_fd); return EXIT_FAILURE; }
+ 
+    // Prêt à communiquer avec le client
+    // ...
+    char buf[BUFSIZ];memset(buf,0,BUFSIZ);
+    
+    recv(client_fd,buf,BUFSIZ,0);perror("recv()");
+    printf("%s\n",buf);
+
+
+    close(client_fd);
+    close(server_fd);
+    return EXIT_SUCCESS;
+}
+```
 
 # Le Serveur envoie un message
 
+Le serveur envoie un message de la même manière que le client.
+
+```mermaid
+flowchart TB
+    socket["server_fd = socket()"]
+    bind["bind(server_fd,infos)"]
+    listen["listen()"]
+    accept["client_fd = accept()"]
+    send["send(client_fd,msg)"]
+    
+    socket-->bind-->listen-->accept-->send
+```
+
+Le serveur accepte un client puis lui envoie une donnée.
+
+
+
 # Le Client reçoit un message
 
+Le client reçoit des messages avec la fonction recv() comme le serveur.
+
+
 # Gérer la deconnexion
+Pour déconnecter un socket il faut utiliser la fonction close().
+
+```c
+close(fd);
+```
+
+Lorsque l'on close une connexion on envoie message de deconnexion au serveur.
+
+Pour savoir si un client c'est déconnecté il faut traiter les valeurs de retour de `recv()`.
+
+- Si recv() renvoi 0 : Le client c'est deconnecté avec close() ou pour une autre raison : fermeture innopiné de l'application client, perte de connexion internet, plus de batterie sur son PC.
+
+- Si recv() renvoi -1 alors une erreur est apparue.
+
+Dans les deux cas la connexion est interompue.
+
+```c
+recv()
+```
 
 # Gérer plusieurs clients à la fois avec le multithreading
 
