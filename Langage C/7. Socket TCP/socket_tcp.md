@@ -572,10 +572,12 @@ if(client_fd == -1){ close(client_fd); close(server_fd); return EXIT_FAILURE; }
 *Je remplit un buffer de char avec *
 ```c
 // Prêt à communiquer avec le client
-// ...
-char buf[BUFSIZ];memset(buf,0,BUFSIZ);
 
+// Je crée mon buffer de char
+char buf[BUFSIZ];memset(buf,0,BUFSIZ);
+// Je remplis le Buffer quand je reçoit le send du client
 recv(client_fd,buf,BUFSIZ,0);perror("recv()");
+// J'affiche le message du client si je le souhaite
 printf("%s\n",buf);
 ```
 
@@ -660,7 +662,7 @@ int main(){
 
 # Le Serveur envoie un message
 
-Le serveur envoie un message de la même manière que le client.
+Le serveur envoie un message de la même manière que le client avec `send(client_fd)`.
 
 ```mermaid
 flowchart TB
@@ -681,6 +683,17 @@ Le serveur accepte un client puis lui envoie une donnée.
 
 Le client reçoit des messages avec la fonction recv() comme le serveur.
 
+```mermaid
+flowchart TB
+    socket["server_fd = socket()"]
+    bind["bind(server_fd,infos)"]
+    listen["listen()"]
+    accept["client_fd = accept()"]
+    send["send(client_fd,msg)"]
+    
+    socket-->bind-->listen-->accept-->send
+```
+
 
 # Gérer la deconnexion
 Pour déconnecter un socket il faut utiliser la fonction close().
@@ -700,7 +713,12 @@ Pour savoir si un client c'est déconnecté il faut traiter les valeurs de retou
 Dans les deux cas la connexion est interompue.
 
 ```c
-recv()
+int error = recv(client_fd,buf,BUFSIZ,0);perror("recv()");
+if(error == -1 || error == 0){
+    // Error client déconnecté
+    // Ici je gère la deconnexion
+    close(client_fd);
+}
 ```
 
 # Gérer plusieurs clients à la fois avec le multithreading
