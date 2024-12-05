@@ -467,7 +467,7 @@ Sur un client *tchat* je demande son message au client puis l'envoyer au serveur
 // Une fois le client connecté
 
 while(1){
-    // Je demande le message à l'utilsiateur
+    // Je demande le message à l'utilisateur
     char message[BUFSIZ];memset(message,0,BUFSIZ);
     fgets(message,BUFSIZ,stdin);
 
@@ -485,7 +485,6 @@ while(1){
 > Pour que le serveur reçoivent bien notre send() il faudra utilisez la fonction recv() coté serveur donc.
 
 ## Code complet d'un client qui envoi un message au serveur
-
 ```c
 #include <stdio.h>
 #include <stdlib.h>
