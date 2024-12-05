@@ -30,8 +30,7 @@ int main(){
 ```
 
 ## Exemple 2 - execvp - Utiliser un tableau pour des paramètre dynamique
-Il est possible ne fournir un tableau plutot que d'écrire en dur les paramètres du programme.
-
+Il est possible de fournir un tableau plutôt que d'écrire en dur les paramètres du programme.
 
 ```c
 
