@@ -71,7 +71,7 @@ flowchart TB
     
     socket-->bind
 ```
-# Initaliser un socket
+## Initaliser un socket
 ```c
 #include <stdio.h>
 #include <stdlib.h>
@@ -464,17 +464,21 @@ send(client_fd,message,strlen(message),0);
 ### Exemple 2: Tchat
 Sur un client *tchat* je demande son message au client puis l'envoyer au serveur.
 ```c
-// Je demande le message à l'utilsiateur
-char message[BUFSIZ];memset(message,0,BUFSIZ);
-fgets(message,BUFSIZ,stdin);
+// Une fois le client connecté
 
-// Je formate le message dans un buffer
-// [heure]pseudo : message...
-char buf[BUFSIZ];memset(buf,0,BUFSIZ);
-sprintf(buf,"[%d]%s:%s",time(NULL),pseudo,message);
+while(1){
+    // Je demande le message à l'utilsiateur
+    char message[BUFSIZ];memset(message,0,BUFSIZ);
+    fgets(message,BUFSIZ,stdin);
 
-// J'envoi le message au serveur du salon de discussion
-send(client_fd,buf,strlen(buf),0);
+    // Je formate le message dans un buffer
+    // [heure]pseudo : message...
+    char buf[BUFSIZ];memset(buf,0,BUFSIZ);
+    sprintf(buf,"[%d]%s:%s",time(NULL),pseudo,message);
+
+    // J'envoi le message au serveur du salon de discussion
+    send(client_fd,buf,strlen(buf),0);
+}
 ```
  
 > Pour l'instant il ne se passera pas grand chose sur le client visuellement.
@@ -552,10 +556,15 @@ int main(){
 
 }
 ```
-> Voir *"le Code omplet d'un serveur qui reçoit le message d'un client"* pour la reception du message par le serveur.
 
-# `recv()` - Le Serveur reçoit un message
+> Voir *"le Code complet d'un serveur qui reçoit le message d'un client"* pour la reception du message par le serveur.
+
+# `recv()` - Le Serveur reçoit un message (BLOQUANTE)
 La reception d'un message se fait via la fonction `recv()`.
+
+Comme `accept()` ou `sleep()` la fonction `recv()` est bloquante, c'est à dire que lorsque elle est appelée elle met en pause l'execution du fil d'execution jusqu'à ce que le socket reçoivent des données grâce à la fonction `send()`.
+
+Etant donné que `recv()` attend des données du `send()` ou peut dire que chaque= appel de recv() sur le serveur doit correspondre à un appel de `send()` sur le client et vis versa.
 
 Pour réagir au `send()` d'un client le serveur doit donc appeler un `recv()` sur le file descriptor du  client émetteur.
 
