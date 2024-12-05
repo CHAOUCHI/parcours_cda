@@ -729,5 +729,66 @@ if(error == -1 || error == 0){
 }
 ```
 
-# Gérer plusieurs clients à la fois avec le multithreading
+# Gérer plusieurs clients à la fois avec le *multithreading*
+
+Le *multithreading* c'est la possibilité d'un programme de faire plusieurs choses à la fois.
+
+Par défaut un programme ne continent qu'un seul fil d'execution appelé *thread*.
+
+Ce thread est la fonction `main`.
+
+> Les threads sont toujours des fonctions.
+
+Un programme continent un ou plusieurs *threads*, la plupart des programmes n'en contiennent qu'un :  le *main thread*.
+
+<!-- ```mermaid
+// diagram todo
 // TODO
+``` -->
+
+## `pthread_create()` - Lancer un autre thread
+
+L'appel système `pthread_create()` permet de créer un autre fil d'execution et donc de faire plusieurs choses en même temps.
+
+```c
+pthread_t my_thread;
+pthread_create(&my_thread,NULL,second_thread_fonction,NULL); // Run thread
+```
+
+Il me faut créer une fonction pour ce thread.
+
+```c
+void* second_thread_fonction(void* arg){
+    return 4;
+}
+```
+
+> Les fonctions thread renvoi toujours `void*` et prennent toujours un seul et unique paramètre de type `void*`
+
+## pthread_join() - attendre qu'un thread se finisse
+Un thread etant une action asyncrone, la fonction main n'attend pas la fin d'un thread avant de ce terminer. Ce qui a pour concequence la potentiel non-execution du thread.
+
+### Exemple sans récupération de valeur de retour
+```c
+pthread_join(my_thread,NULL);
+```
+
+### Exemple avec récupération de valeur de retour
+```c
+void* return_value_thread = NULL;
+pthread_join(my_thread,return_value_thread);
+printf("Valeur de retour du thread %d\n",(int)*(return_value_thread));
+```
+
+> Je récupère le contenu pointé avec `*`. Ici le contenu pointé est égal à 4.
+
+Il faut donc utilise la fonction pthread_join() avant le return du main thread pour attendre la fin du second thread avant de terminer le programme.
+
+
+<!-- ### Exemple complet
+
+```c
+
+``` -->
+<!-- 
+### Passer des arguments à un thread -->
