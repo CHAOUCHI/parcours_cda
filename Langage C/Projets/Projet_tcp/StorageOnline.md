@@ -56,6 +56,8 @@ J'ai 2 fichiers sur mon serveur.
 
 ## Annexe
 
-Pour des fichiers volumineux l'api socket TCP divise la donnée en plusieurs `recv` pour un même `send`. Ce qui peut résulter en un fichier partielement récupéré.
+Pour des fichiers volumineux l'api socket TCP divise la donnée en plusieurs `recv` pour un même `send`. Ce qui peut résulter en un fichier partiellement récupéré.
 
-Il vous faudra multiplier les `recv` pour récupérer l'image complète. :) 
+Il vous faudra multiplier les `recv` pour récupérer l'image complète. 
+
+Dans un premier temps faite fonctionner l'appli pour des petits fichier, quand ça fonctionne vous pourrez faire une branche et réfléchir à une solution pour les gros fichiers. :)
