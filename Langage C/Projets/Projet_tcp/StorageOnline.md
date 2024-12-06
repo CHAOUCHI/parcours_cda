@@ -52,3 +52,10 @@ J'ai 2 fichiers sur mon serveur.
 |DOWNLOAD| Mettre en place la commande `storage download *file_name*` pour télécharger un fichier *file_name* sur le serveur|Définir et implémenter les cas critiques : le fichier demandé n'existe pas, etc...|
 
 > Toute question vis à vis du projet doit être posée dans le canal *AIDE*.
+
+
+## Annexe
+
+Pour des fichiers volumineux l'api socket TCP divise la donnée en plusieurs `recv` pour un même `send`. Ce qui peut résulter en un fichier partielement récupéré.
+
+Il vous faudra multiplier les `recv` pour récupérer l'image complète. :) 
