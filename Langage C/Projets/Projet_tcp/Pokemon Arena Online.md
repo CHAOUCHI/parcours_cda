@@ -109,7 +109,7 @@ Je peut utiliser un objet comme ceci :
 [pokemon-arena]$ use item potion_soin
 
 Salamèche regagne 10PV !     
-```
+``` 
 
 #### Fuite
 Le joueur peut abandonner le combat en fuyant avec la commande `fuite`.
@@ -122,7 +122,8 @@ Abandonner le combat renvoi au menu principale.
 |-|-|-|
 |Connexion|| |
 |Voir les joueurs connectés|Afficher les joueurs connectés (LIBRE ou EN COMBAT) | Seuls les joueurs LIBRES peuvent être défiés en combat. |
-|Quitter le jeu(Déconnexion)| | |
+|Quitter le jeu(Déconnexion)| 
+ | |
 |Lancer un combat|Lance un combat contre un joueur connecté en piochant un pokemon au hasard dans une liste de pokémon| La liste est un ou plusieurs fichiers éditables par n'importe qui, a vous de réfléchir au format textuel.|
 |Attaquer| Le joueur attaque le pokemon adverse | |
 |Voir son inventaire| | |
