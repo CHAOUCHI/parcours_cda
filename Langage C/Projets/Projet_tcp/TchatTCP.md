@@ -1,6 +1,6 @@
 # TchatTCP
 
-Une application CLI de Tchat où des joueurs peuvent rejoindre des salons de discutions ou envoyer un message privé à un autre utilisateur connecté.
+Une application CLI de Tchat où des joueurs peuvent rejoindre des salons de discutions ou envoyer des messages privés à d'autres utilisateurs connectés.
 
 ## Utilisation de l'application
 
@@ -46,11 +46,11 @@ La command `exit` permet de revenir en arrière :
 ```
 
 ### Les salons de discussion publique
-Un salon de discution publique est un tchat publique dans le lequel tout les utilisateurs peuvent discuter entre eux.
+Un salon de discution publique est un tchat publique dans lequel tout les utilisateurs peuvent discuter entre eux.
 
 #### Créer un salon publique
 
-La commande suivante créer un salon publique
+La commande suivante crée un salon publique
 
 ```
 [Massi]> create salon
@@ -63,13 +63,15 @@ Un joueur peut envoyer des messages privés à un autre en créant un salon priv
 [Massi]> join user *user_id*
 ```
 
-Vous pouvez à présent discuter avec l'utilisateur ciblé
+Vous pouvez à présent discuter avec l'utilisateur.
+
+> Si le salon existe déjà cela signifie que quelqu'un vous attend dans le salon. Un nouveau salon n'est pas crée et vous rejoignez directement le salon privé de l'utilisateur ciblé.
 
 ### Voir les utilisateurs connectés
 ```bash
 [Massi]$ list users
 
-user_id     Nom du créateur
+user_id     Nom Utilisateur
 3           Arnaud 
 2           Massi 
 ```
@@ -96,12 +98,14 @@ Le salon world est un salon créer automatiquement au lancement du serveur.
 
 Tout le monde peut y rentrer et discuter.
 
+#### Rejoindre un salon privé
+Rejoindre un salon privé se fait avec la commande `join user` voir la section ***Créer un salon privé***.
 
 #### [BONUS] Notifications
 
-Si quelqu'un vous envoi un message alors que vous n'etes pas dans le bon salon une notification.
+Si quelqu'un vous envoi un message alors que vous n'êtes pas dans le bon salon une notification apparait ! 
 
-La notifications peut apparaitre sous la forme d'un message de ce genre :
+La notification peux apparaitre sous la forme d'un message de ce genre :
 
 ```
 *Nouveau message de la part de [salon_id | user_id]*
@@ -117,11 +121,12 @@ Les salons privés peuvent demander un mot de passe et une limite d'utilisateur 
 
 ### Cas critiques
 
-- Un Utilisateur peut être dans un seul salon à la fois
+- Un utilisateur peut être dans un seul salon à la fois
 - Un salon peut héberger de un à plusieurs utilisateurs en même temps (que le salon soit privé ou public)
 
 - Un salon privé ne contient que deux utilisateurs maximum
 
+*Diagramme des rélations entres les entitiés de l'applications.*
 ```mermaid
 erDiagram
     User
@@ -130,6 +135,12 @@ erDiagram
     User ||--|| Salon : join
     Salon ||--|{ User : host
 ```
+
+> Les *||* singifie 1
+> Les fourches signifie plusieurs
+> On peux lire : 
+> - **1** salon host **plusieurs** utilisateurs
+> - **1** utilisateur rejoint **1** salon.
 
 
 ## Cahier des charges
