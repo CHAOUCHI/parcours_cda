@@ -75,3 +75,7 @@ Affiche le résultat suivant
 
 # Projet Minishell TCP
 
+Créer un client TCP qui envoi les commandes tapées par l'utilisateur sur un serveur TCP. Ce serveur utilise le minishell pour executer les commandes tapez sur le client puis envoi le résultat au client.
+
+
+En somme cela permet de controler un ordinateur à distance.
