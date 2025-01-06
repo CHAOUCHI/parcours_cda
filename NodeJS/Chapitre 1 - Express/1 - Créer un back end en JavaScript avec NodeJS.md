@@ -1,6 +1,6 @@
 # NodeJS
 
-Habitulement le JavaScript tourne sur le navigateur du client, coté front-end donc. Il est donc impossible pour du JavaScript coté front-end d'accéder à une BDD SQL, d'envoyer des mails ou de gérer la connexion d'un utilisateur.
+Habituellement le JavaScript tourne sur le navigateur du client, coté front-end donc. Il est donc impossible pour du JavaScript coté front-end d'accéder à une BDD SQL, d'envoyer des mails ou de gérer la connexion d'un utilisateur.
 
 Voilà pourquoi il faut un programme coté serveur qui peut exécuter du JavaScript coté Back-End. Ce programme s'appelle NODEJS.
 
