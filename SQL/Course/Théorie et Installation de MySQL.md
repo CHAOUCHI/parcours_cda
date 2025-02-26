@@ -198,7 +198,7 @@ Pour se connecter à un serveur mysql il faut renseigner :
 - **le mot de passe**, par défault il n'y en a pas, sauf pour docker.
 - **l'adresse ip du serveur**, par défault localhost
 
-Il faut executer la commande mysql avec les trois paramètre precedemment décrit.
+Il faut executer la commande mysql avec les trois paramètres precedement décrit.
 ```
 mysql -unomutilisateur -pmotdepasse -hadresseip 
 ```

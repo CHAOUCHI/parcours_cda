@@ -101,8 +101,6 @@ app.use((req,res,next)=>{
 
 L'ajout de ce code permet de demander au navigateur du client 127.0.0.1:3000 d'autoriser la réponse HTTP du serveur lorsque elle est émise par un `fetch()`.
 
-
-
 Comme souvent avec nodejs un paquet existe pour évité de tapez tout ce code à chaque fois.
 
 C'est le paquet `cors`.
