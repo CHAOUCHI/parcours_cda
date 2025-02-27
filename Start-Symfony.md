@@ -36,6 +36,14 @@ Concrètement il va falloir créer des points d'entrée pour notre application s
 
 Notre base de données contiendra les tâches d'une to-do liste. 
 
+|id | titre | description |
+|-|-|-|
+|1|Faire les courses| des bananes, tomates et deux courgettes|
+|2|Faire une fusée | Du sans plomp et du budget|
+|...|
+|19| faires des vitres | ajax vitres et un chiffon.|
+
+
 Comme nous créons une API REST, il n'est pas nécessaire de fabriquer le HTML et le Css. Le travail du développeur Backend est uniquement d'accéder à la base de données et de fournir au client les données demandées dans la réponse Http.
 
 ### Quelques exemples des routes de notre application :
@@ -49,15 +57,31 @@ Comme nous créons une API REST, il n'est pas nécessaire de fabriquer le HTML e
 - symfony-cli create new project
 - symfony start server
 
-## Creer des routes (url de mon application)
+## Le Controller - associer des url a des fonctions
+Un contrôleur est une classe PHP. Elle contient plusieurs fonctions appelées méthodes.
+Le principe est simple, chaque URL de mon application se voit affecter une fonction.
 
-### Ajouter une route 
+Par exemple, si l'utilisateur tape **/all-tasks** la fonction *getAllTasks()* s'exécutera et envera les tâches à l'utilisateur.
 
-### Tester une route
+### Creer le controller 
 
-### Envoyer des données JSON
+// todo
 
-## Creer et connzcter une base de données 
+### GET - envoyer des données au clients
+
+// todo 
+
+### POST - préparer la route d'ajout de tache
+
+pour l'instant, notre application ne possède pas encore de base de données.
+
+Nous allons donc simplement préparer une fonction vide; nous la remplissons de la requête d'ajout de tâche plus tard une fois notre base de données mise en place.
+
+// todo
+
+
+
+## Creer et connecter une base de données 
 
 ### Le Model - Mon objet métier, ma tâche.
 
@@ -80,13 +104,13 @@ Imaginez notre future table de données comme ceci :
 |19| faires des vitres | ajax vitres et un chiffon.|
 
 
-#### Créer la structure des données à enregistrer.
+### Créer le TaskModel
 
 make model
 
 make migration pour creer ou mettre a jour la bdd a partir de notre model.
 
-### Le Controller - associer des url a des fonctions
+### Le Controller - utiliser mon model 
 
 #### GET - envoyer le contenu de ma BDD au client
 
