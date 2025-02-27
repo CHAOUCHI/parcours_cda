@@ -16,7 +16,9 @@ Symphony permet de créer trois types d'applications :
 > La différence principale entre une API reste et un site Web réside dans le format des données envoyées par le serveur : un site Web, m'envoie du HTML et donc l'affichage final à l'utilisateur, alors qu'une API REST envoie des données "brutes". 
 > Ces Données sont destinées à des développeurs front-end qui, à partir de ces données vont fabriquer l'interfaces utilisateur pour une application application Web ou une application mobile. 
 
-- une application en ligne de commande CLI. PHP, étant une sur Ouche du langage C, il possède donc tous les Appel système nécessaires à la fabrication d'un programme en ligne de commande, le Framework Symphony propose des modules de qualité pour créer facilement des applications en ligne commande. 
+- Une application en ligne de commande CLI. 
+
+> PHP étant une sur-couche du langage C, il possède donc tous les appels système nécessaires à la fabrication d'un programme en ligne de commande, le Framework Symphony propose donc des modules de qualité pour créer facilement des applications en ligne commande. 
 
 ## La Philosophie de Symfony
 
