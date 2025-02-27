@@ -10,9 +10,11 @@ Le plus souvent les applications symphony, et donc les scripts PHP, sont exécut
 
 Symphony permet de créer trois types d'applications :
 
-– Un site Web, c'est-à-dire une application qui envoie du HTML au client et se connecte le plus souvent à une base de données. Un Site Web classique en somme.
+- Un site Web, c'est-à-dire une application qui envoie du HTML au client et se connecte le plus souvent à une base de données. Un Site Web classique en somme.
+- Une API REST, c'est-à-dire une application qui envoie des données le plus souvent au format JSON, mais également en binaire dans le cas de transfert de fichier. 
 
-– Une API REST, c'est-à-dire une application qui envoie des données le plus souvent au format J sonne, mais également parfois en binaire dans le cas de transfert de fichier. principal entre une API reste et un site Web réside dans le format des données envoyées par le serveur : un site Web, m'envoie du HTML et donc l'affichage final à l'utilisateur, alors qu'une API reste envoie des données "brutes". Données sont souvent destiné à des développeurs Fronte qui, à partir de ces données vont fabriquer l'interfaces utilisateur pour une application application Web ou une application mobile. 
+> La différence principale entre une API reste et un site Web réside dans le format des données envoyées par le serveur : un site Web, m'envoie du HTML et donc l'affichage final à l'utilisateur, alors qu'une API REST envoie des données "brutes". 
+> Ces Données sont destinées à des développeurs front-end qui, à partir de ces données vont fabriquer l'interfaces utilisateur pour une application application Web ou une application mobile. 
 
 - une application en ligne de commande CLI. PHP, étant une sur Ouche du langage C, il possède donc tous les Appel système nécessaires à la fabrication d'un programme en ligne de commande, le Framework Symphony propose des modules de qualité pour créer facilement des applications en ligne commande. 
 
