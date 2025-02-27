@@ -135,7 +135,6 @@ Voixi quelques exemples classiques de la stack des projets modernes d'entreprise
 - Android studio, Spring, docker, Pipeline gitlab cicd.
 
 ### temp note perso 
-Voici des commandes que vous pouvez inclure dans votre cours sur Symfony :
 
 1. Installation des prérequis :
    ```bash
