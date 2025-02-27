@@ -59,7 +59,7 @@ Comme nous créons une API REST, il n'est pas nécessaire de fabriquer le HTML e
 
 ## Creer et connzcter une base de données 
 
-### Model - Mon objet métier, ma tâche.
+### Le Model - Mon objet métier, ma tâche.
 
 Lorsque l'on crée un back-end, la première étape consiste toujours à réfléchir à la structure des données à envoyer aux clients.
 
@@ -86,6 +86,7 @@ make model
 
 make migration pour creer ou mettre a jour la bdd a partir de notre model.
 
+### Le Controller - associer des url a des fonctions
 
 #### GET - envoyer le contenu de ma BDD au client
 
@@ -93,17 +94,73 @@ make migration pour creer ou mettre a jour la bdd a partir de notre model.
 
 ## Conclusion 
 
-Je vais concevoir un back-end Symphony. Vous pouvez le connecter à n'importe quel client qui sait communiquer en http, comme une application mobile ou en site Web codé en JavaScript par exemples.
+Vous savez concevoir un back-end Symphony. Vous pouvez a present le connecter à n'importe quel client qui sait communiquer en http, comme une application mobile ou en site Web codé en JavaScript par exemples.
 
-Le Grey Work Angular est une solution idéale pour la partie front de notre application.
+Le framework Angular est une solution idéale pour la partie front de notre application.
 
 En developpement web il est très courant aujourd'hui de concevoir un serveur Web sous la forme d'une API REST avec un framework backend comme Symphony(PHP) ou Spring(Java), pour ensuite le connecter à une application frontend codé avec le Framework Angular.
 
 Voixi quelques exemples classiques de la stack des projets modernes d'entreprise :
 
-– Angular, Symphony, docker, pipeline gitlab cicd.
+- Angular, Symphony, docker, pipeline gitlab cicd.
 – Angular, Spring, docker, pipeline gitlab cicd.
 – Flutter (framework app mobile), Symfony, pipeline gitlab cicd.
 - Android studio, Spring, docker, Pipeline gitlab cicd.
 
+### temp note perso 
+Voici des commandes que vous pouvez inclure dans votre cours sur Symfony :
+
+1. Installation des prérequis :
+   ```bash
+   sudo apt install php-cli unzip
+   ```
+
+2. Créer un nouveau projet Symfony :
+   ```bash
+   symfony new my_project_name --full
+   ```
+
+3. Démarrer le serveur Symfony :
+   ```bash
+   symfony server:start
+   ```
+
+4. Ajouter une route :
+   ```php
+   // Dans src/Controller/TaskController.php
+   use Symfony\Component\Routing\Annotation\Route;
+
+   class TaskController extends AbstractController {
+       /**
+        * @Route("/all-tasks", name="all_tasks")
+        */
+       public function allTasks() {
+           // utiliser le model pour get les tasks
+        
+          // ensuite les sens en json
+       }
+   }
+   ```
+
+5. Tester une route :
+   ```bash
+   curl http://127.0.0.1:8000/all-tasks
+   ```
+
+6. Envoyer des données JSON (POST) :
+   ```bash
+   curl -X POST http://127.0.0.1:8000/new-task -H "Content-Type: application/json" -d '{"title": "New Task", "description": "Task description"}'
+   ```
+  > faut creer une autre finction dans le controller
+
+7. Créer un modèle :
+   ```bash
+   php bin/console make:entity Task
+   ```
+
+8. Créer et exécuter une migration :
+   ```bash
+   php bin/console make:migration
+   php bin/console doctrine:migrations:migrate
+   ``` 
 
