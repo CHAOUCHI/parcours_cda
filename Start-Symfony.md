@@ -57,18 +57,18 @@ Comme nous créons une API REST, il n'est pas nécessaire de fabriquer le HTML e
 
 ## Creer et connzcter une base de données 
 
-### Model - Mon objet métier 
+### Model - Mon objet métier, ma tâche.
 
-Lorsque l'on crée un bac and la première étape consiste toujours à réfléchir à la structure des données à envoyer aux clients.
+Lorsque l'on crée un back-end, la première étape consiste toujours à réfléchir à la structure des données à envoyer aux clients.
 
-Ici notre donné est une tâche composée de deux attributs :
+Ici notre donnée est une tâche composée de deux attributs :
 
 – un titre, une chaîne de caractère donc.
-– une description, également une chaîne de caractère
+– une description, également une chaîne de caractère.
 
-C'est tout, sur ce TP, nous utilisons une structure de données très simple qui vous permettra de comprendre facilement les mécaniques de base du Framework symphony.
+C'est tout. Sur ce TP, nous utilisons une structure de données très simple qui vous permettra de comprendre facilement les mécaniques de base du Framework symphony.
 
-imaginez notre future table de données comme ceci :
+Imaginez notre future table de données comme ceci :
 
 |id | titre | description |
 |-|-|-|
@@ -89,6 +89,19 @@ make migration pour creer ou mettre a jour la bdd a partir de notre model.
 
 #### POST - ajouter un element fournit par le client dans ma BDD
 
+## Conclusion 
 
+Je vais concevoir un back-end Symphony. Vous pouvez le connecter à n'importe quel client qui sait communiquer en http, comme une application mobile ou en site Web codé en JavaScript par exemples.
+
+Le Grey Work Angular est une solution idéale pour la partie front de notre application.
+
+En developpement web il est très courant aujourd'hui de concevoir un serveur Web sous la forme d'une API REST avec un framework backend comme Symphony(PHP) ou Spring(Java), pour ensuite le connecter à une application frontend codé avec le Framework Angular.
+
+Voixi quelques exemples classiques de la stack des projets modernes d'entreprise :
+
+– Angular, Symphony, docker, pipeline gitlab cicd.
+– Angular, Spring, docker, pipeline gitlab cicd.
+– Flutter (framework app mobile), Symfony, pipeline gitlab cicd.
+- Android studio, Spring, docker, Pipeline gitlab cicd.
 
 
