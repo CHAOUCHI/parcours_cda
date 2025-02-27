@@ -51,7 +51,9 @@ Comme nous créons une API REST, il n'est pas nécessaire de fabriquer le HTML e
 
 ## Creer des routes (url de mon application)
 
-### Tester les routes
+### Ajouter une route 
+
+### Tester une route
 
 ### Envoyer des données JSON
 
