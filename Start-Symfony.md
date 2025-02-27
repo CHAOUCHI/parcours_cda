@@ -127,8 +127,11 @@ En developpement web il est très courant aujourd'hui de concevoir un serveur We
 Voixi quelques exemples classiques de la stack des projets modernes d'entreprise :
 
 - Angular, Symphony, docker, pipeline gitlab cicd.
+
 – Angular, Spring, docker, pipeline gitlab cicd.
+
 – Flutter (framework app mobile), Symfony, pipeline gitlab cicd.
+
 - Android studio, Spring, docker, Pipeline gitlab cicd.
 
 ### temp note perso 
