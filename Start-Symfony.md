@@ -63,8 +63,8 @@ Lorsque l'on crée un back-end, la première étape consiste toujours à réflé
 
 Ici notre donnée est une tâche composée de deux attributs :
 
-– un titre, une chaîne de caractère donc.
-– une description, également une chaîne de caractère.
+- un **titre**, une chaîne de caractère donc.
+- une **description**, également une chaîne de caractère.
 
 C'est tout. Sur ce TP, nous utilisons une structure de données très simple qui vous permettra de comprendre facilement les mécaniques de base du Framework symphony.
 
