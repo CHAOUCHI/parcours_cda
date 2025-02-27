@@ -1,4 +1,4 @@
- # Symfony - API REST Introduction 
+# Symfony - API REST Introduction 
 
 Symfony est un Framework Web back end. 
 
@@ -38,8 +38,9 @@ Notre base de données contiendra les tâches d'une to-do liste.
 
 Comme nous créons une API REST, il n'est pas nécessaire de fabriquer le HTML et le Css. Le travail du développeur Backend est uniquement d'accéder à la base de données et de fournir au client les données demandées dans la réponse Http.
 
-Quelques exemples des routes de notre application :
-– **GET /all-tasks**, cette URL renvoie un tableau de tâches au format JSON.
+### Quelques exemples des routes de notre application :
+
+- **GET /all-tasks**, cette URL renvoie un tableau de tâches au format JSON.
 - **POST /new-task**, cette URL ne renvoie pas particulièrement de données, mais ajoute une nouvelle tâche dans la base de données.
 
 ## Pre-requis et Hello world 
