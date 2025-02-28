@@ -273,6 +273,14 @@ Nous allons donc simplement préparer une fonction cide; nous la rempliront de l
 
 En http l'ajout de donnée se fait avec la méthode POST, rien de nouveau simplement une info en plus néccessaire.
 
+Je ne peux pas tester ma route dans firefox par ce que firefox ne fait que des GET.
+
+J'utilise donc `curl` pour faire la requete http à la main.
+
+```bash
+curl -X POST http://localhost:8000/new-task
+```
+
 
 
 ## Creer et connecter une base de données 
