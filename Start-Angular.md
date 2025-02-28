@@ -20,6 +20,9 @@ C'est ça qu'on appelle la réactivité, c'est la raison d'être d'Angular.
 
 ## pre requis et hello world
 ### Installation 
+
+// todo
+
 - nodejs et npm
 - angular cli 
 - ng new
@@ -27,17 +30,39 @@ C'est ça qu'on appelle la réactivité, c'est la raison d'être d'Angular.
 
 
 ### hello world
+
+// todo
+
 - le composant App - le point d'entrée de l'appli 
 - two way data binding {} et attribut public
 - event onClick et fonction publique 
 - ngModel input 
 
 ## maquette de l'appli 
+//todo
 
 ## intégration 
 
+Angular est un framework orienté composant. Ce qui signifie que notre code HTML ne se trouvera pas entièrement dans le index.html, mais sera répartie dans plusieurs dossiers.
+
+Chaque dossier s'appelle un COMPONENT et possède trois fichiers :
+- .html
+- .css
+- .ts
+
+> le code source des applications Angular est codé en TypeScript.
+
 ### composant task 
-### composant list task 
+//todo
+
+### composait list task 
+//todo
+
 ### routing - route /list 
+//todo
+
 ### routing - route /add-task 
+//todo
+
 ### ajouter une nav barre 
+// todo
