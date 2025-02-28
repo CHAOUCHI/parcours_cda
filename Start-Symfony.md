@@ -116,7 +116,7 @@ code .
 
 ### Installer make
 
-make nous permettra d'ajouter facilement des element à notre site installé le :
+make nous permettra d'ajouter facilement des element à notre site installé le (tapez 0):
 
 ```
 composer require symfony/make-bundle --dev
