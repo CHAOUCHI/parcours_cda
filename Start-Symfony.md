@@ -14,7 +14,8 @@ Symfony permet de créer trois types d'applications :
 - Une API REST, c'est-à-dire une application qui envoie des données le plus souvent au format JSON, mais également en binaire dans le cas de transfert de fichier. 
 
 > La différence principale entre une API reste et un site Web réside dans le format des données envoyées par le serveur : un site Web, m'envoie du HTML et donc l'affichage final à l'utilisateur, alors qu'une API REST envoie des données "brutes". 
-> Ces Données sont destinées à des développeurs front-end qui, à partir de ces données vont fabriquer l'interfaces utilisateur pour une application application Web ou une application mobile. 
+
+> Ces données sont destinées à des développeurs front-end qui, à partir de ces données vont fabriquer l'interfaces utilisateur pour une application application Web ou une application mobile. 
 
 - Une application en ligne de commande CLI. 
 
@@ -212,13 +213,50 @@ Changer le code pour :
 
 ![alt text](image-2.png)
 
+### Renommer la route 
+
+1. La route s'appelle `/task` renommée la `/all-task` .
+
+```php
+#[Route('/task', name: 'app_task')]
+```
+
+```
+#[Route('/task', name: 'app_task')]
+```
+
+2. Et renommé la fonction `getAllTask()` pour la clarté du code
+
+```php
+<?php
+
+namespace App\Controller;
+
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\JsonResponse;
+use Symfony\Component\Routing\Attribute\Route;
+
+final class TaskController extends AbstractController
+{
+    #[Route('/all-tasks', name: 'app_task')]
+    public function getAllTasks(): JsonResponse
+    {
+        return $this->json([
+            'title' => 'Faire les courses',
+            'description' => 'des bananes, tomates et deux courgettes',
+        ]);
+    }
+}
+```
+
+
 ### POST - préparer la route d'ajout de tache
 
 pour l'instant, notre application ne possède pas encore de base de données.
 
 Nous allons donc simplement préparer une fonction vide; nous la remplissons de la requête d'ajout de tâche plus tard une fois notre base de données mise en place.
 
-// todo
+2. Dans la class TaskController ajouté uen
 
 
 
