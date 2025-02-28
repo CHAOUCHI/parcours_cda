@@ -344,16 +344,17 @@ Imaginez notre future table de données comme ceci :
 
 ### Créer le TaskModel
 
+#### Configuration 
 Installez le paquet ORM pour accéder à une bdd.
 
 > Tapez entrer et laissez par défaut.
 
 ```
-composer require orm
+composer require symfony/orm-pack
+composer require --dev symfony/maker-bundle
 ```
 
-
-Dans le fichier .env à la racine du projet changer le DATABASE_URL pour utilise sqlite.
+Dans le fichier `.env `à la racine du projet changer le `DATABASE_URL` pour utilise sqlite.
 
 > sqlite est une systeme de gestion de base de donnée portable qui ne neccessite aucune installation particulière on lu'tilise ici à la place de postgre ou mysql pour gagner du temps sur le TP. :)
 
@@ -390,7 +391,13 @@ DATABASE_URL="sqlite:///%kernel.project_dir%/var/data.db"
 ###< doctrine/doctrine-bundle ###
 ```
 
+##### Créer la database
 
+```
+php bin/console doctrine:database:create
+```
+
+#### Créer le TaskModel
 
 
 ### Le Controller - utiliser mon model 
