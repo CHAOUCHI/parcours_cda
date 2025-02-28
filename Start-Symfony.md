@@ -183,9 +183,32 @@ final class TaskController extends AbstractController
 
 Ici on peut voir que la fonction `index()` *return* un tableau php au format JSON grâce à la fonction `$this->json()`.
 
-### GET - envoyer des données au clients
+```php
+[
+   'message' => 'Welcome to your new controller!',
+   'path' => 'src/Controller/TaskController.php',
+]
+```
 
-// todo 
+
+1. Tapez la route dans firefox : `http://localhost:8000/task`.
+
+![alt text](image-1.png)
+
+#### Envoyer une tache
+
+C'est un objet qui possède des attributs message et path mais vous pouvez envoyer les données que vous souhaite.
+
+Changer le code pour :
+
+```php
+[
+   'title' => 'Faire les courses',
+   'description' => 'des bananes, tomates et deux courgettes',
+]
+```
+
+2. Recharger la page /task et observez les changements.
 
 ### POST - préparer la route d'ajout de tache
 
