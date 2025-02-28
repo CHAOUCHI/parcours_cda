@@ -6,9 +6,9 @@ Symfony est un Framework Web back end.
 
 Il permet de créer un serveur Web http en PHP. 
 
-Le plus souvent les applications symphony, et donc les scripts PHP, sont exécutés par un serveur http. Comme apache ou ngx.
+Le plus souvent les applications symfony, et donc les scripts PHP, sont exécutés par un serveur http. Comme apache ou ngx.
 
-Symphony permet de créer trois types d'applications :
+Symfony permet de créer trois types d'applications :
 
 - Un site Web, c'est-à-dire une application qui envoie du HTML au client et se connecte le plus souvent à une base de données. Un Site Web classique en somme.
 - Une API REST, c'est-à-dire une application qui envoie des données le plus souvent au format JSON, mais également en binaire dans le cas de transfert de fichier. 
@@ -18,7 +18,7 @@ Symphony permet de créer trois types d'applications :
 
 - Une application en ligne de commande CLI. 
 
-> PHP étant une sur-couche du langage C, il possède donc tous les appels système nécessaires à la fabrication d'un programme en ligne de commande, le Framework Symphony propose donc des modules de qualité pour créer facilement des applications en ligne commande. 
+> PHP étant une sur-couche du langage C, il possède donc tous les appels système nécessaires à la fabrication d'un programme en ligne de commande, le Framework Symfony propose donc des modules de qualité pour créer facilement des applications en ligne commande. 
 
 ## La Philosophie de Symfony
 
@@ -44,7 +44,7 @@ Notre base de données contiendra les tâches d'une to-do liste.
 |19| faires des vitres | ajax vitres et un chiffon.|
 
 
-Comme nous créons une API REST, il n'est pas nécessaire de fabriquer le HTML et le Css. Le travail du développeur Backend est uniquement d'accéder à la base de données et de fournir au client les données demandées dans la réponse Http.
+Comme nous faisont une API REST, il n'est pas nécessaire de fabriquer le HTML et le Css. Le travail du développeur Backend est uniquement d'accéder à la base de données et de fournir au client les données demandées dans la réponse Http.
 
 ### Quelques exemples des routes de notre application :
 
@@ -57,15 +57,131 @@ Comme nous créons une API REST, il n'est pas nécessaire de fabriquer le HTML e
 - symfony-cli create new project
 - symfony start server
 
+https://symfony.com/doc/current/setup.html
+
+### PHP 
+
+```bash
+apt update
+apt install php-common libapache2-mod-php php-cli php-xml
+```
+
+### Composer
+
+```bash
+php -r "copy('https://getcomposer.org/installer', 'composer-setup.php');"
+php -r "if (hash_file('sha384', 'composer-setup.php') === 'dac665fdc30fdd8ec78b38b9800061b4150413ff2e3b6f88543c636f7cd84f6db9189d43a81e5503cda447da73c7e5b6') { echo 'Installer verified'.PHP_EOL; } else { echo 'Installer corrupt'.PHP_EOL; unlink('composer-setup.php'); exit(1); }"
+php composer-setup.php
+php -r "unlink('composer-setup.php');"
+```
+
+```
+sudo mv composer.phar /usr/local/bin/composer
+```
+
+### Symfony CLI
+
+```
+curl -1sLf 'https://dl.cloudsmith.io/public/symfony/stable/setup.deb.sh' | sudo -E bash
+
+sudo apt install symfony-cli
+```
+https://symfony.com/download
+
+## Vérifier si tout est bien installer
+Pour vérifier si tout à bien été installé symfony cli offre une commande toute prête.
+
+Tapez la commande suivante pour vérifier si vous n'avez loupé aucune étape.
+
+```
+symfony check:requirements
+```
+
+> Si le check ne passe pas appelez moi. Si il vous dit par exemple XML manquant tapez : `sudo apt install php-xml`.
+
+### Créer un nouveau projet
+
+Créer un projet symfony :
+
+```bash
+symfony new todo-back --version="7.2.x"
+cd todo-back
+``` 
+
+Puis ouvrez le dans VSCode.
+
+```
+code .
+```
+
+### Installer make
+
+make nous permettra d'ajouter facilement des element à notre site installé le :
+
+```
+composer require symfony/make-bundle --dev
+```
+
+### Lancer le server
+
+```
+symfony server:start
+```
+
+Le server écoute sur http://localhost:8000/
+
+Rendez-vous à cette adresse sur votre navigateur web.
+
+Vous devriez voir ceci :
+
+*Page de démarrage d'un projet symfony*
+![alt text](image.png)
+
 ## Le Controller - associer des url a des fonctions
 Un contrôleur est une classe PHP. Elle contient plusieurs fonctions appelées méthodes.
 Le principe est simple, chaque URL de mon application se voit affecter une fonction.
 
 Par exemple, si l'utilisateur tape **/all-tasks** la fonction *getAllTasks()* s'exécutera et envera les tâches à l'utilisateur.
 
-### Creer le controller 
 
-// todo
+### Creer le controller 
+https://symfony.com/doc/current/page_creation.html
+
+1. Créer le controller TaskController
+
+```
+symfony console make:controller TaskController
+```
+> Appuiez sur entrer pour configurer le controller par défaut.
+
+
+Symfony vous a créer un fichier *TaskController.php* dans le dossier `src/Controller`.
+
+Le voici :
+
+```php
+<?php
+
+namespace App\Controller;
+
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\JsonResponse;
+use Symfony\Component\Routing\Attribute\Route;
+
+final class TaskController extends AbstractController
+{
+    #[Route('/task', name: 'app_task')]
+    public function index(): JsonResponse
+    {
+        return $this->json([
+            'message' => 'Welcome to your new controller!',
+            'path' => 'src/Controller/TaskController.php',
+        ]);
+    }
+}
+```
+
+Ici on peut voir que la fonction `index()` *return* un tableau php au format JSON grâce à la fonction `$this->json()`.
 
 ### GET - envoyer des données au clients
 
@@ -118,15 +234,15 @@ make migration pour creer ou mettre a jour la bdd a partir de notre model.
 
 ## Conclusion 
 
-Vous savez concevoir un back-end Symphony. Vous pouvez a present le connecter à n'importe quel client qui sait communiquer en http, comme une application mobile ou en site Web codé en JavaScript par exemples.
+Vous savez concevoir un back-end Symfony. Vous pouvez a present le connecter à n'importe quel client qui sait communiquer en http, comme une application mobile ou en site Web codé en JavaScript par exemples.
 
 Le framework Angular est une solution idéale pour la partie front de notre application.
 
-En developpement web il est très courant aujourd'hui de concevoir un serveur Web sous la forme d'une API REST avec un framework backend comme Symphony(PHP) ou Spring(Java), pour ensuite le connecter à une application frontend codé avec le Framework Angular.
+En developpement web il est très courant aujourd'hui de concevoir un serveur Web sous la forme d'une API REST avec un framework backend comme Symfony(PHP) ou Spring(Java), pour ensuite le connecter à une application frontend codé avec le Framework Angular.
 
 Voixi quelques exemples classiques de la stack des projets modernes d'entreprise :
 
-- Angular, Symphony, docker, pipeline gitlab cicd.
+- Angular, Symfony, docker, pipeline gitlab cicd.
 
 – Angular, Spring, docker, pipeline gitlab cicd.
 
