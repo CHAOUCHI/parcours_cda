@@ -222,7 +222,7 @@ Changer le code pour :
 ```
 
 ```
-#[Route('/all-task', name: 'app_task')]
+#[Route('/all-tasks', name: 'app_task')]
 ```
 
 2. Et renommé la fonction `getAllTask()` pour la clarté du code
