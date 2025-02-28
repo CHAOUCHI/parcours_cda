@@ -208,7 +208,9 @@ Changer le code pour :
 ]
 ```
 
-2. Recharger la page /task et observez les changements.
+2. Recharger la page */task* et observez les changements.
+
+![alt text](image-2.png)
 
 ### POST - préparer la route d'ajout de tache
 
