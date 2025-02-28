@@ -221,7 +221,7 @@ Changer le code pour :
 #[Route('/task', name: 'app_task')]
 ```
 
-```
+```php
 #[Route('/all-tasks', name: 'app_task')]
 ```
 
@@ -249,6 +249,7 @@ final class TaskController extends AbstractController
 }
 ```
 
+Testez la route elle marche toujours normalement. :)
 
 ### POST - préparer la route d'ajout de tache
 
