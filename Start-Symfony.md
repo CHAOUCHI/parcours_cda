@@ -255,9 +255,23 @@ Testez la route elle marche toujours normalement. :)
 
 pour l'instant, notre application ne possède pas encore de base de données.
 
-Nous allons donc simplement préparer une fonction vide; nous la remplissons de la requête d'ajout de tâche plus tard une fois notre base de données mise en place.
+Nous allons donc simplement préparer une fonction cide; nous la rempliront de la requête d'ajout de tâche plus tard une fois notre base de données mise en place.
 
-2. Dans la class TaskController ajouté uen
+2. Dans la class TaskController ajoutez une noucelle fonction nommée `addTask()`.
+
+```php
+#[Route('/new-task', name:'app_task', methods:['POST'])]
+    public function addTask() : JsonResponse
+    {
+
+        $new_task = [];
+
+
+        return $this->json($new_task);
+    }
+```
+
+En http l'ajout de donnée se fait avec la méthode POST, rien de nouveau simplement une info en plus néccessaire.
 
 
 
