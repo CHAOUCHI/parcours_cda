@@ -261,14 +261,14 @@ Nous allons donc simplement préparer une fonction cide; nous la rempliront de l
 
 ```php
 #[Route('/new-task', name:'app_task', methods:['POST'])]
-    public function addTask() : JsonResponse
-    {
+   public function addTask() : JsonResponse
+   {
 
-        $new_task = [];
+      $new_task = [];
 
 
-        return $this->json($new_task);
-    }
+      return $this->json($new_task);
+   }
 ```
 
 En http l'ajout de donnée se fait avec la méthode POST, rien de nouveau simplement une info en plus néccessaire.
@@ -279,6 +279,42 @@ J'utilise donc `curl` pour faire la requete http à la main.
 
 ```bash
 curl -X POST http://localhost:8000/new-task
+```
+
+
+Le class finale ressemble à ça : 
+
+```php
+<?php
+
+namespace App\Controller;
+
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\JsonResponse;
+use Symfony\Component\Routing\Attribute\Route;
+
+final class TaskController extends AbstractController
+{
+    #[Route('/all-tasks', name: 'app_task')]
+    public function getAllTasks(): JsonResponse
+    {
+        return $this->json([
+            'title' => 'Faire les courses',
+            'description' => 'des bananes, tomates et deux courgettes',
+        ]);
+    }
+
+    #[Route('/new-task', name:'app_task', methods:['POST'])]
+    public function addTask() : JsonResponse
+    {
+
+        $new_task = [];
+
+
+        return $this->json($new_task);
+    }
+}
+
 ```
 
 
