@@ -92,7 +92,7 @@ app.listen(8080,()=>{
         
         // Pour l'envoi de fichier je n'utilise pas le format JSON 
         // mais FormData()
-        const formData = new FormData(form);
+        const formData = new FormData(e.target);
 
         const data = await fetch("http://localhost:8080/upload",{
             method : "post",
