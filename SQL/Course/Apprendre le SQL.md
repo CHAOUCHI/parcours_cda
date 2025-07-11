@@ -658,8 +658,8 @@ CREATE TABLE product(
 CREATE TABLE CategoryProduct(
     fk_category INT,
     fk_product INT,
-    PRIMARY KEY (fk_category,fk_product)
-    FOREIGN KEY (fk_category) REFERENCES category(pk_id)
+    PRIMARY KEY (fk_category,fk_product),
+    FOREIGN KEY (fk_category) REFERENCES category(pk_id),
     FOREIGN KEY (fk_product) REFERENCES product(pk_id)
 );
 ```
