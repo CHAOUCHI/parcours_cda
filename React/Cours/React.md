@@ -884,6 +884,7 @@ const [compteur, setCompteur] = useState(0);
 ```
 Le cas le plus commun de la modification d'un state est en réaction à un événement : clic, recherche, entrées clavier.
 
+<!--
 Par exemple ici je raconte une "blague à papa" quand je clic sur un bouton.
 ```jsx
 import { useState } from "react";
@@ -908,7 +909,7 @@ export function DadJoke(){
     );
 }
 ```
-
+-->
 Il est interdit de modifier directement la constante `compteur` car c'est la méthode `setCompteur` qui va déclancher le rafrachissement de la page.
 C'est d'ailleurs pour ça que l'on précise que `compteur` est une constante et non une variable via le mot clé `const`.
 
